@@ -1,20 +1,17 @@
+import { Text, StyleSheet } from "react-native";
 
-
-import { Text, StyleSheet } from 'react-native'
-import Constants from 'expo-constants'
-
-const AppText = ({ children, ...appStyle }) => {
+const AppText = ({ children, style, ...otherProps }) => {
   return (
-    <Text style={[styles.text, appStyle.style]}  >{children}</Text>
-  )
-}
-
+    <Text style={[styles.text, style]} {...otherProps}>
+      {children}
+    </Text>
+  );
+};
 
 const styles = StyleSheet.create({
   text: {
     fontSize: 18,
-    color: 'white',
-    
-    }
-})
-export default AppText
+  },
+});
+
+export default AppText;
