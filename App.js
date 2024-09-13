@@ -9,14 +9,14 @@ import Screen from './components/Screen';
 
 
 export default function App() {
-console.log(Constants.statusBarHeight)
+
   
   return (
     
     
         
-    < Screen >
-    <AppText style={{color: 'light'}}>dfgsghhsfhsgdvcsvvvvvxvvverh</AppText>
+    < Screen style={{backgroundColor: 'purple', flex: 1}} statusBarColor='light'>
+    <AppText style={{color: 'white'}}>dfgsghhsfhsgdvcsvvvvvxvvverhbolaji</AppText>
     </Screen >
    
       

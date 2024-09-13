@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Screen = ({ children, color, style, ...otherProp }) => {
+const Screen = ({ children, statusBarColor, style, ...otherProp }) => {
   return (
     <SafeAreaView style={style}> 
       {children}
-          <StatusBar style={color} {...otherProp} />
+          <StatusBar style={statusBarColor} {...otherProp} />
     </SafeAreaView>
   );
 };
