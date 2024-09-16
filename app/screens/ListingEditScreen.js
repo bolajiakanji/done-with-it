@@ -113,12 +113,12 @@ function ListingEditScreen() {
           price: "",
           description: "",
           category: null,
-          // images: [],
+           images: [],
         }}
         onSubmit={console.log('submit') }
         validationSchema={validationSchema}
       >
-        {/* <FormImagePicker name="images" /> */}
+         <FormImagePicker name="images" /> 
         <FormField maxLength={255} name="title" placeholder="Title" />
         <FormField
           keyboardType="numeric"
@@ -140,7 +140,7 @@ function ListingEditScreen() {
           multiline
           name="description"
           numberOfLines={3}
-          placeholder="Description"
+          placeholder="Description"5
         />
         <SubmitButton title="Post" />
       </Form>
