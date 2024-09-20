@@ -46,7 +46,7 @@ function LoginScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 16,
   },
   logo: {
     width: 80,

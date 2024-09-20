@@ -3,7 +3,7 @@
     "name": "my_app_",
     "slug": "my_app_",
     "version": "1.0.0",
-    "orientation": "defaults",
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
