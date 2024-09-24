@@ -21,7 +21,14 @@ function UploadScreen({ onDone, progress = 0, visible = false }) {
             loop={false}
             onAnimationFinish={onDone}
             source={require("../assets/animations/done.json")}
-            style={styles.animation}
+              style={styles.animation}
+              colorFilters={[
+                {
+                  keypath: 'button',
+                  color:  "#fc5c65"
+                },
+                
+              ]}
           />
         )}
       </View>
@@ -32,6 +39,7 @@ function UploadScreen({ onDone, progress = 0, visible = false }) {
 const styles = StyleSheet.create({
   animation: {
     width: 150,
+    flex: 1
   },
   container: {
     alignItems: "center",

@@ -88,9 +88,9 @@ function ListingEditScreen() {
   const handleSubmit = async (listing, { resetForm }) => {
     
     setProgress(0);
-    setUploadVisible(false);
+    setUploadVisible(true);
     try {
-      ;
+      
       await listingsApi.addListing(
         { ...listing },
         (progress) => setProgress(progress)
@@ -113,7 +113,7 @@ function ListingEditScreen() {
 
   
   return (
-    <Screen style={styles.container} statusBarColor='light'>
+    <Screen style={styles.container} statusBarColor='dark'>
 
             <Form
         initialValues={{
@@ -153,7 +153,7 @@ function ListingEditScreen() {
         <SubmitButton title="Post" />
       </Form>
       <UploadScreen
-        onDone={() => setUploadVisible(false)}
+        onDone={() => setTimeout(() => setUploadVisible(false), 2000)}
         progress={progress}
         visible={uploadVisible}
       />
