@@ -14,18 +14,15 @@
 
 // export default App
 
-import React from "react";
-import NetInfo from '@react-native-community/netinfo';
+
+import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 
 
 import { View, Text } from 'react-native'
 import React from 'react'
 
 export default function App() {
-  NetInfo.fetch.then(netinfo =>console.log(netinfo))
-  return (
-    <View>
-      <Text>App</Text>
-    </View>
-  )
+  const netInfo = useNetInfo()
+  return netInfo.isInternetReachable ? <View></View> : <View></View> 
+  
 }
