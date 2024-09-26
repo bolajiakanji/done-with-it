@@ -1,7 +1,8 @@
-import axios from 'axios';
+import { create } from "apisauce"
+
 import cache from '../utility/cache'
 
-const apiClient = axios.create({
+const apiClient = create({
     baseURL: 'http://192.168.81.87:9000/api',  
 })
 
