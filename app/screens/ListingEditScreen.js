@@ -89,22 +89,23 @@ function ListingEditScreen() {
     
     setProgress(0);
     setUploadVisible(true);
-    try {
+    
       
-      await listingsApi.addListing(
+      const response = await listingsApi.addListing(
         { ...listing },
         (progress) => setProgress(progress)
-     );
+    );
+    
      
-      
-    } catch (error) {
+      if (!response.ok) {
+    
       console.log(new Error(error))
       
         setUploadVisible(false);
         return alert("Could not save the listing");
+      }
       
-      
-    }
+    
     
 
     

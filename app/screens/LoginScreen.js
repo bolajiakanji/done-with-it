@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Image, StyleSheet } from "react-native"
 import * as Yup from "yup"
+import { jwtDecode } from "jwt-decode"
 
 import Wrapper from "../components/Wrapper"
 import {
@@ -29,7 +30,8 @@ const LoginScreen = () => {
 
         if (!response.ok) return setLoginError(response.data.message)
 
-        setLoginError(null)
+      setLoginError(null)
+     const user = jwtDecode(response.data)
         auth.login(response.data)
     }
 

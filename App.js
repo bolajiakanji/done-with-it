@@ -1,28 +1,26 @@
-// import React from 'react'
-// import ListingEditScreen from './app/screens/ListingEditScreen'
-// import { NavigationContainer } from '@react-navigation/native'
-// import AuthNavigator from './app/navigation/AuthNavigator'
-// import AppNavigator from './app/navigation/AppNavigator'
+import React, { useEffect, useState } from "react"
+import AppLoading from "expo-app-loading"
+import { StatusBar } from "expo-status-bar"
+import { NavigationContainer } from "@react-navigation/native"
 
-// const App = () => {
-//   return (
-//     <NavigationContainer>
-//       <AppNavigator />
-//     </NavigationContainer>
-//   )
-// }
+import { AuthNavigator, TabNavigator } from "./app/navigation"
+import navigationTheme from "./app/navigation/theme"
+import OfflineNotice from "./app/components/OfflineNotice"
+import AuthContext from "./app/auth/context"
+import authStorage from "./app/auth/storage"
+import { navigationRef } from "./app/navigation/rootNavigation"
 
-// export default App
-
-
-import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
-
-
-import { View, Text } from 'react-native'
-import React from 'react'
-
-export default function App() {
-  const netInfo = useNetInfo()
-  return netInfo.isInternetReachable ? <View></View> : <View></View> 
-  
+const App = () => {
+    const [user, setUser] = useState(null)
+       return (
+        <AuthContext.Provider value={{ user, setUser }}>
+            <StatusBar style={"auto"} />
+            <NavigationContainer ref={navigationRef} theme={navigationTheme}>
+                {user ? <TabNavigator /> : <AuthNavigator />}
+            </NavigationContainer>
+            <OfflineNotice />
+        </AuthContext.Provider>
+    )
 }
+
+export default App
