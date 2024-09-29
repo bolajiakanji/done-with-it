@@ -10,7 +10,8 @@ import {
     SubmitButton,
 } from "../components/forms"
 import authApi from "../api/auth"
-import  useApi  from "../hooks/useApi"
+import userApi from "../api/user"
+import useAuth from "../auth/useAuth"
 //import { useApi, useAuth } from "../hooks"
 import ActivityIndicator from "../components/ActivityIndicator"
 
@@ -25,17 +26,26 @@ const Register = () => {
     const [error, setError] = useState(null)
     const auth = useAuth()
 
-    const handleRegistration = async ({ email, name, password }) => {
-        const response = await registerApi.request(name, email, password)
+    const handleSubmit = async ({ email, name, password }) => {
+        const response = await userApi.register({ name, email, password })
 
         if (!response.ok) {
-            return setError(
-                response.data.message || "An unexpected error occured"
-            )
+            if (response.data) setError(response.data.error)
+            
+            
+            else {
+                setError('An unexpected error occured.')
+            }
+            return;
         }
 
-        setError(null)
-        auth.login(response.data)
+        const { data: authToken } = await authApi.login({
+            email,
+            password}
+        )
+        auth.login(authToken)
+        
+
     }
 
     return (
@@ -48,7 +58,7 @@ const Register = () => {
                 />
                 <Form
                     initialValues={{ email: "", name: "", password: "" }}
-                    onSubmit={handleRegistration}
+                    onSubmit={handleSubmit}
                     validationSchema={validationSchema}
                 >
                     <ErrorMessage error={error} visible={error} />
@@ -77,7 +87,8 @@ const Register = () => {
                         secureTextEntry
                         textContentType="password"
                     />
-                    <SubmitButton title="Register" color="secondary" />
+                    <SubmitButton title="Register" color="secondary"  />
+
                 </Form>
             </Screen>
         </>

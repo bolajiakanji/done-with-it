@@ -30,9 +30,13 @@ const LoginScreen = () => {
     
 
     const handleLogin = async ({ email, password }) => {
-        const response = await authApi.login(email, password)
-
-        if (!response.ok) return setLoginError(response.data.message)
+        console.log('bolaji')
+        const response = await authApi.login({ email, password })
+console.log('gafar')
+        if (!response.ok) {
+            console.log('akan')
+            return setLoginError(response.data.error)
+        }
 
         setLoginError(false)
         login(response.data)
@@ -51,7 +55,7 @@ const LoginScreen = () => {
                     onSubmit={handleLogin}
                     validationSchema={validationSchema}
                 >
-                    <ErrorMessage error={loginError} visible={loginError} />
+                    <ErrorMessage error={loginError} visible={true} />
                     <FormField
                         autoCapitalize="none"
                         autoCorrect={false}

@@ -92,6 +92,8 @@ function ListingEditScreen() {
     
       
       const response = await listingsApi.addListing(
+        
+
         { ...listing },
         (progress) => setProgress(progress)
     );
