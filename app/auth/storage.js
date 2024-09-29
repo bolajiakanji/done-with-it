@@ -13,7 +13,10 @@ const storeToken = async (token) => {
 
 const getToken = async () => {
     try {
-        return await SecureStore.getItemAsync(key)
+        const tok = await SecureStore.getItemAsync(key)
+        console.log(tok)
+        return;
+        
     } catch (error) {
         console.error("Error occured while getting the auth token")
     }
@@ -24,7 +27,7 @@ const getUser = async () => {
         const token = await getToken()
         return token ? jwtDecode(token) : null
     } catch (error) {
-        console.error("Error occured while removing the auth token")
+        console.error("Error occured while getting user")
     }
 }
 

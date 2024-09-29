@@ -4,7 +4,12 @@ import client from "./client";
 
 const endpoint = "/listings";
 
-const getListings = () => client.get(endpoint);
+const getListings = () => {
+  console.log('calling')
+  return client.get(endpoint)
+  console.log('end calling')
+}
+  ;
 
 export const addListing =  (listing, onUploadProgress) => {
   const data = new FormData();

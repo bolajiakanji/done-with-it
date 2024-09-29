@@ -20,8 +20,8 @@ apiClient.get = async (url, data, axiosConfig) => {
    const result =  await get(url, data, axiosConfig)
     
     if (result.ok) {
-        cache.store(url, Response.data)
-        return response
+        cache.store(url, result.data)
+        return result
     }
     const response = await cache.get(url)
     return response ? { ok: true, data }: response

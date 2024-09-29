@@ -13,6 +13,7 @@ import theme from "./app/navigation/theme"
 import OfflineNotice from "./app/components/OfflineNotice"
 import AuthContext from "./app/auth/context"
 import authStorage from "./app/auth/storage"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 //import { navigationRef } from "./app/navigation/rootNavigation"
 
 //SplashScreen.preventAutoHideAsync();
@@ -59,7 +60,10 @@ const App = () => {
         }}
             //onLayout={onLayoutRootView}
         >
-        <AuthContext.Provider value={{ user, setUser }}>
+                        <GestureHandlerRootView>
+
+            <AuthContext.Provider value={{ user, setUser }}>
+                
             {/* <StatusBar style={"auto"} /> */}
                 <NavigationContainer
                    // ref={navigationRef}
@@ -68,6 +72,7 @@ const App = () => {
             </NavigationContainer>
             <OfflineNotice />
             </AuthContext.Provider>
+            </GestureHandlerRootView>
             </View>
     )
 }

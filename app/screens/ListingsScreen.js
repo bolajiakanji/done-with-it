@@ -27,20 +27,22 @@ function ListingsScreen({ navigation }) {
           <Button title="Retry" onPress={loadListings} />
         </>
       }
-      <ActivityIndicator visible={getListingsApi.loading}/>
-      <FlatList
+      <ActivityIndicator visible={getListingsApi.loading} /> 
+      
+       <FlatList
         data={getListingsApi.data}
         keyExtractor={(listing) => listing.id.toString()}t
         renderItem={({ item }) => (
           <Card
             title={item.title}
             subTitle={"$" + item.price}
-            imageUrl={item.images[0].url}
+             imageUrl={item.images[0].url}
             onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-            thumnailUrl={item.images[0].thumnailUrl}
+             thumnailUrl={item.images[0].thumnailUrl}
           />
         )}
-      />
+        /> 
+        
     </Screen>
   );
 }

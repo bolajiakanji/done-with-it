@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AccountNavigator from "./AccountNavigator"
 import FeedNavigator from "./FeedNavigator"
 import ListingEditScreen from "../screens/ListingEditScreen"
-//import TabActionButton from "./TabActionButton"
+import TabActionButton from "./TabActionButton"
 import Routes from "./routes"
 //import pushTokenApi from "../api/expoPushToken"
 //import { useNotifications } from "../hooks"
@@ -14,15 +14,11 @@ import Routes from "./routes"
 const Tab = createBottomTabNavigator()
 
 const TabNavigator = () => {
-    const { expoPushToken, response } = useNotifications()
+    
 
-    useEffect(() => {
-        if (expoPushToken) pushTokenApi.register(expoPushToken)
-    }, [expoPushToken])
+    
 
-    useEffect(() => {
-        if (response) Navigation.navigate("Account")
-    }, [response])
+    
 
     return (
         <Tab.Navigator>

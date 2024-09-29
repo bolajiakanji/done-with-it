@@ -1,11 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Image } from 'expo-image';
 
 
 import Text from "./Text";
 import colors from "../config/colors";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+
 
 function Card({ title, subTitle, imageUrl, onPress, thumnailUrl }) {
   return (
@@ -21,7 +21,7 @@ function Card({ title, subTitle, imageUrl, onPress, thumnailUrl }) {
           </Text>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+     </TouchableWithoutFeedback>
   );
 }
 
