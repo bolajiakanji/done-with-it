@@ -11,9 +11,10 @@ import {
     SubmitButton,
 } from "../components/forms"
 import authApi from "../api/auth"
-//import { useAuth, useApi } from "../hooks"
+import  useAuth from "../auth/useAuth"
 import ActivityIndicator from "../components/ActivityIndicator"
 import Screen from "../components/Screen"
+import { useApi } from "../hooks"
 
 
 
@@ -24,21 +25,30 @@ const validationSchema = Yup.object().shape({
 })
 
 const LoginScreen = () => {
-    const [loginError, setLoginError] = useState(null)
+    const loginApi = useApi(authApi.login)
+    const [error, setError] = useState(null)
+
     const { login }=useAuth()
     
     
 
     const handleLogin = async ({ email, password }) => {
-        console.log('bolaji')
-        const response = await authApi.login({ email, password })
+        
+        const response = await loginApi.request({ email, password })
 console.log('gafar')
         if (!response.ok) {
-            console.log('akan')
-            return setLoginError(response.data.error)
+            if (response.data) setError(response.data.error)
+            
+            
+                else {
+                    setError('An unexpected error occured.')
+                }
+                return;
+    
+            
         }
 
-        setLoginError(false)
+        setError(false)
         login(response.data)
         
     }
@@ -55,7 +65,7 @@ console.log('gafar')
                     onSubmit={handleLogin}
                     validationSchema={validationSchema}
                 >
-                    <ErrorMessage error={loginError} visible={true} />
+                    <ErrorMessage error={error} visible={!!error} />
                     <FormField
                         autoCapitalize="none"
                         autoCorrect={false}

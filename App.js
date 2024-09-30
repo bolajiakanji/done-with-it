@@ -24,14 +24,7 @@ const App = () => {
     const [appIsReady, setAppIsReady] = useState(false);
 
 
-    const prepareApp = async () => {
-        const user = await authStorage.getUser()
-        if (user) {
-        setUser(user)
-        setAppIsReady(true);
-
-    }
-    }
+    
 
     useEffect(() => {
         
@@ -42,6 +35,15 @@ const App = () => {
               
             
     }, [])
+    const prepareApp = async () => {
+        const owner = await authStorage.getUser()
+        console.log(owner+'stupid')
+        if (owner) {
+        setUser(owner)
+        setAppIsReady(true);
+
+    }
+    }
     // const onLayoutRootView = useCallback(async () => {
     //     if (appIsReady) {
         
@@ -53,7 +55,7 @@ const App = () => {
     //     return null;
     
     
-    console.log(user)
+    console.log(user+ 'fhjjjsok thw user')
 
     return (
         <View style={{flex:1

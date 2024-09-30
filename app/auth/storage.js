@@ -13,8 +13,8 @@ const storeToken = async (token) => {
 
 const getToken = async () => {
     try {
-        const tok = await SecureStore.getItemAsync(key)
-        console.log(tok)
+        await SecureStore.getItemAsync(key)
+        
         return;
         
     } catch (error) {

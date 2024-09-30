@@ -40,12 +40,12 @@ const TabNavigator = () => {
                 component={ListingEditScreen}
                 options={({ navigation }) => ({
                     tabBarButton: () => (
-                        <TabActionButton
+                        <TabActionButton 
                             onPress={() =>
                                 navigation.navigate(Routes.LISTING_EDIT)
                             }
                         />
-                    ),
+                    ), headerShown: false
                 })}
             />
             <Tab.Screen
@@ -56,9 +56,10 @@ const TabNavigator = () => {
                         <MaterialCommunityIcons
                             name="account"
                             size={size}
-                            color={color}
+                            color=''
                         />
                     ),
+                    headerShown: false
                 }}
             />
         </Tab.Navigator>

@@ -19,7 +19,7 @@ const TabActionButton = ({ onPress }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        backgroundColor: colors.primary,
+         backgroundColor: colors.primary,
         borderColor: colors.white,
         borderWidth: 6,
         borderRadius: 40,

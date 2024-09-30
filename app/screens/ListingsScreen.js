@@ -1,49 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
-import ActivityIndicator from '../components/ActivityIndicator'; 
-import AppText from '../components/Text';
-import Button from '../components/Button';
+import ActivityIndicator from "../components/ActivityIndicator";
+import AppText from "../components/Text";
+import Button from "../components/Button";
 import Card from "../components/Card";
 import colors from "../config/colors";
-import listingsApi from '../api/listings';
+import listingsApi from "../api/listings";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
-import useApi from "../hooks/useApi";
+import {useApi} from "../hooks";
 
 function ListingsScreen({ navigation }) {
   const getListingsApi = useApi(listingsApi.getListings);
 
   useEffect(() => {
-    getListingsApi.request()
-  }, [])
+    getListingsApi.request();
+  }, []);
 
-  
   return (
-    <Screen style={styles.screen}>
-      {getListingsApi.error && 
-        <> 
-          <AppText>Couldn't retrieve the listings!</AppText>
-          <Button title="Retry" onPress={loadListings} />
-        </>
-      }
-      <ActivityIndicator visible={getListingsApi.loading} /> 
-      
-       <FlatList
-        data={getListingsApi.data}
-        keyExtractor={(listing) => listing.id.toString()}t
-        renderItem={({ item }) => (
-          <Card
-            title={item.title}
-            subTitle={"$" + item.price}
-             imageUrl={item.images[0].url}
-            onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-             thumnailUrl={item.images[0].thumnailUrl}
-          />
+    <>
+      <ActivityIndicator visible={getListingsApi.loading} />
+      <Screen style={styles.screen}>
+        {getListingsApi.error && (
+          <>
+            <AppText>Couldn't retrieve the listings!</AppText>
+            <Button title="Retry" onPress={loadListings} />
+          </>
         )}
-        /> 
-        
-    </Screen>
+
+        <FlatList
+          data={getListingsApi.data}
+          keyExtractor={(listing) => listing.id.toString()}
+          t
+          renderItem={({ item }) => (
+            <Card
+              title={item.title}
+              subTitle={"$" + item.price}
+              imageUrl={item.images[0].url}
+              onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+              thumnailUrl={item.images[0].thumnailUrl}
+            />
+          )}
+        />
+      </Screen>
+    </>
   );
 }
 

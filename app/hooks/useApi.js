@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export default useApi = (apiFunc) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const request = async () => {
-        setLoading(true);
-        const response = await apiFunc();
-        setLoading(false);
-    console.log(response)
-        if (!response.ok) return  setError(true);
-        console.log('not here')
-        setError(false);
-        setData(response.data);
-    };
-    return { request, data, error, loading }
-}
+    const request = async (...args) => {
+      console.log('getting here')
+    setLoading(true);
+    const response = await apiFunc(...args);
+      setLoading(false);
+      
+    setError(!response.ok);
+    setData(response.data);
+    return response;
+  };
+  return { request, data, error, loading };
+};

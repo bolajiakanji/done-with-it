@@ -7,10 +7,12 @@ import { jwtDecode } from "jwt-decode"
 export default useAuth = () => {
     const { user, setUser } = useContext(AuthContext)
 
-    const login = (auth_token) => {
+    const login = async (auth_token) => {
+        console.log('jwt')
         const user = jwtDecode(auth_token)
+        console.log('userjwt'+ user)
         setUser(user)
-        authStorage.storeToken(auth_token)
+        await authStorage.storeToken(auth_token)
     }
 
     const logOut = () => {

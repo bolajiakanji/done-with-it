@@ -10,9 +10,10 @@ import {
     SubmitButton,
 } from "../components/forms"
 import authApi from "../api/auth"
-import userApi from "../api/user"
+
 import useAuth from "../auth/useAuth"
-//import { useApi, useAuth } from "../hooks"
+import {useApi}  from "../hooks"
+//import authApi  from "../hooks/"
 import ActivityIndicator from "../components/ActivityIndicator"
 
 const validationSchema = Yup.object().shape({
@@ -23,13 +24,15 @@ const validationSchema = Yup.object().shape({
 
 const Register = () => {
     const registerApi = useApi(authApi.register)
+    const loginApi = useApi(authApi.login)
     const [error, setError] = useState(null)
     const auth = useAuth()
 
     const handleSubmit = async ({ email, name, password }) => {
-        const response = await userApi.register({ name, email, password })
+        const response = await registerApi.request({ name, email, password })
 
         if (!response.ok) {
+            
             if (response.data) setError(response.data.error)
             
             
@@ -39,18 +42,19 @@ const Register = () => {
             return;
         }
 
-        const { data: authToken } = await authApi.login({
+        const { data: authToken } = await loginApi.request({
             email,
             password}
         )
+        console.log('stupid')
         auth.login(authToken)
-        
+
 
     }
 
     return (
         <>
-            <ActivityIndicator visible={registerApi.loading} />
+            <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
             <Screen style={styles.container}>
                 <Image
                     source={require("../assets/logo-red.png")}
