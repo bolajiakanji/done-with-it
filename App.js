@@ -16,7 +16,7 @@ import authStorage from "./app/auth/storage"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 //import { navigationRef } from "./app/navigation/rootNavigation"
 
-//SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 
 const App = () => {
@@ -36,31 +36,34 @@ const App = () => {
             
     }, [])
     const prepareApp = async () => {
-        const owner = await authStorage.getUser()
+        const owner =  authStorage.getUser()
         console.log(owner+'stupid')
         if (owner) {
+            console.log('is owner')
         setUser(owner)
         setAppIsReady(true);
 
     }
     }
-    // const onLayoutRootView = useCallback(async () => {
-    //     if (appIsReady) {
+    const onLayoutRootView = useCallback(async () => {
+       if (appIsReady) {
         
-    //       await SplashScreen.hideAsync();
-    //     }
-    //   }, [appIsReady]);
+      await SplashScreen.hideAsync();
+        }
+       }, [appIsReady]);
     
-    //   if (!appIsReady) {
-    //     return null;
+    if (!appIsReady) {
+        return;
+    }
     
     
-    console.log(user+ 'fhjjjsok thw user')
 
-    return (
-        <View style={{flex:1
+          return (
+              <>
+                  <View style={{
+                      flex: 1
         }}
-            //onLayout={onLayoutRootView}
+            onLayout={onLayoutRootView}
         >
                         <GestureHandlerRootView>
 
@@ -68,14 +71,17 @@ const App = () => {
                 
             {/* <StatusBar style={"auto"} /> */}
                 <NavigationContainer
-                   // ref={navigationRef}
+                   //ref={navigationRef}
                     theme={theme}>
                 {user ? <TabNavigator /> : <AuthNavigator />}
             </NavigationContainer>
             <OfflineNotice />
             </AuthContext.Provider>
             </GestureHandlerRootView>
-            </View>
+              </View>
+                  
+              </>
+
     )
 }
 

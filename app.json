@@ -4,21 +4,22 @@
     "slug": "my_app_",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/adaptiveIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./app/assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": ""
+      "image": "./assets/images/frame.png",
+      
+      "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptiveIcon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gee"
     },
     "web": {
       "favicon": "./assets/favicon.png"

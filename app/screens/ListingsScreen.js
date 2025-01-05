@@ -9,14 +9,27 @@ import colors from "../config/colors";
 import listingsApi from "../api/listings";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
-import {useApi} from "../hooks";
+import { useApi } from "../hooks";
 
 function ListingsScreen({ navigation }) {
   const getListingsApi = useApi(listingsApi.getListings);
 
   useEffect(() => {
-    getListingsApi.request();
+    loadListings();
   }, []);
+
+  const loadListings = async () => {
+    const response = await getListingsApi.request({});
+    if (!response.ok) {
+      console.log("alin");
+      console.log(response);
+
+      if (response.data) getListingsApi.setError(response.data.error);
+      else {
+        getListingsApi.setError("An unexpected error occured.");
+      }
+    }
+  };
 
   return (
     <>
@@ -24,7 +37,7 @@ function ListingsScreen({ navigation }) {
       <Screen style={styles.screen}>
         {getListingsApi.error && (
           <>
-            <AppText>Couldn't retrieve the listings!</AppText>
+            <AppText style={{ color: "red" }}>{getListingsApi.error}</AppText>
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
@@ -50,7 +63,7 @@ function ListingsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: colors.light,
   },
 });

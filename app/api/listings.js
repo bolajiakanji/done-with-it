@@ -4,9 +4,9 @@ import client from "./client";
 
 const endpoint = "/listings";
 
-const getListings = () => {
+const getListings =  () => {
   console.log('calling')
-  return client.get(endpoint)
+  return   client.get(endpoint)
   console.log('end calling')
 }
   ;
