@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import * as Yup from "yup";
 import { useState } from "react";
 
@@ -13,14 +13,14 @@ import CategoryPickerItem from "../components/CategoryPickerItem";
 import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import UploadScreen from "./UploadScreen";
-import listingsApi from  '../api/listings'
+import listingsApi from "../api/listings";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
   price: Yup.number().required().min(1).max(10000).label("Price"),
   description: Yup.string().label("Description"),
   category: Yup.object().required().nullable().label("Category"),
-   images: Yup.array().min(1, "Please select at least one image."),
+  images: Yup.array().min(1, "Please select at least one image."),
 });
 
 const categories = [
@@ -81,55 +81,43 @@ const categories = [
 ];
 
 function ListingEditScreen() {
-  const location = null
+  const location = null;
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const handleSubmit = async (listing, { resetForm }) => {
-    
     setProgress(0);
     setUploadVisible(true);
-    
-      
-      const response = await listingsApi.addListing(
-        
 
-        { ...listing },
-        (progress) => setProgress(progress)
+    const response = await listingsApi.addListing({ ...listing }, (progress) =>
+      setProgress(progress)
     );
-    
-     
-      if (!response.ok) {
-    
-      console.log(new Error(error))
-      
-        setUploadVisible(false);
-        return alert("Could not save the listing");
-      }
-      
-    
-    
 
-    
+    if (!response.ok) {
+      console.log(new Error(error));
+
+      setUploadVisible(false);
+      return alert("Could not save the listing");
+    }
+
     resetForm();
   };
 
-  
   return (
-    <Screen style={styles.container} statusBarColor='dark'>
-
-            <Form
+    <Screen style={styles.container} statusBarColor="dark">
+      <Form
         initialValues={{
           title: "",
           price: "",
           description: "",
           category: null,
-           images: [],
+          images: [],
         }}
-        onSubmit={handleSubmit }
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-         <FormImagePicker name="images" /> 
+        <Text style={styles.item}>Add Item</Text>
+        <FormImagePicker name="images" />
         <FormField maxLength={255} name="title" placeholder="Title" />
         <FormField
           keyboardType="numeric"
@@ -150,7 +138,7 @@ function ListingEditScreen() {
           maxLength={255}
           multiline
           name="description"
-          numberOfLines={3}
+          numberOfLines={2}
           placeholder="Description"
         />
         <SubmitButton title="Post" />
@@ -160,7 +148,6 @@ function ListingEditScreen() {
         progress={progress}
         visible={uploadVisible}
       />
-
     </Screen>
   );
 }
@@ -168,8 +155,14 @@ function ListingEditScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    backgroundColor: 'dodgerblue',
-    flex: 1
+    backgroundColor: "#99ccff",
+    flex: 1,
+  },
+  item: {
+    textAlign: "center",
+    fontWeight: "bold",
+    marginTopTop: "80",
+    fontSize: 18,
   },
 });
 export default ListingEditScreen;
