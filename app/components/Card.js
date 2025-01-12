@@ -7,11 +7,11 @@ import Text from "./Text";
 import colors from "../config/colors";
 
 
-function Card({ title, subTitle, imageUrl, onPress, thumnailUrl }) {
+function Card({ title, subTitle, imageUrl, onPress, thumnailUrl, cachePolicy }) {
   return (
     <TouchableWithoutFeedback onPress={onPress} >
       <View style={styles.card}>
-        <Image style={styles.image} source={{ uri: imageUrl }} placeholder={{ url: thumnailUrl}} />
+        <Image style={styles.image} source={imageUrl} placeholder={thumnailUrl} cachePolicy='memory-disk' />
         <View style={styles.detailsContainer}>
           <Text style={styles.title} numberOfLines={1}>
             {title}

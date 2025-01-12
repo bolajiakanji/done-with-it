@@ -46,15 +46,18 @@ function ListingsScreen({ navigation }) {
           data={getListingsApi.data}
           keyExtractor={(listing) => listing.id.toString()}
           t
-          renderItem={({ item }) => (
-            <Card
-              title={item.title}
-              subTitle={"$" + item.price}
-              imageUrl={item.images[0].url}
-              onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
-              thumnailUrl={item.images[0].thumnailUrl}
-            />
-          )}
+          renderItem={({ item }) => {
+            
+            return (
+              <Card
+                title={item.title}
+                subTitle={"$" + item.price}
+                imageUrl={item.images[0].url}
+                onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+                thumnailUrl={item.images[0].thumnailUrl}
+              />
+            )
+          }}
         />
       </Screen>
     </>

@@ -8,11 +8,11 @@ export default useAuth = () => {
     const { user, setUser } = useContext(AuthContext)
 
     const login = async (auth_token) => {
-        console.log('jwt')
+        
         await authStorage.storeToken(auth_token)
         const user = jwtDecode(auth_token)
 
-        console.log('userjwt'+ user)
+        
         setUser(user)
     }
 

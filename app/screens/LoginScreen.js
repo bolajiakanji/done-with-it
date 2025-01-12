@@ -29,7 +29,7 @@ const LoginScreen = () => {
 
   const handleLogin = async ({ email, password }) => {
     const response = await loginApi.request({ email, password });
-    console.log("gafar");
+    
     if (!response.ok) {
       if (response.data) setError(response.data.error);
       else {
