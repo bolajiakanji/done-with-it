@@ -21,9 +21,6 @@ function ListingsScreen({ navigation }) {
   const loadListings = async () => {
     const response = await getListingsApi.request({});
     if (!response.ok) {
-      console.log("alin");
-      console.log(response);
-
       if (response.data) getListingsApi.setError(response.data.error);
       else {
         getListingsApi.setError("An unexpected error occured.");
@@ -47,16 +44,17 @@ function ListingsScreen({ navigation }) {
           keyExtractor={(listing) => listing.id.toString()}
           t
           renderItem={({ item }) => {
-            
             return (
               <Card
                 title={item.title}
                 subTitle={"$" + item.price}
                 imageUrl={item.images[0].url}
-                onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+                onPress={() =>
+                  navigation.navigate(routes.LISTING_DETAILS, item)
+                }
                 thumnailUrl={item.images[0].thumnailUrl}
               />
-            )
+            );
           }}
         />
       </Screen>

@@ -1,30 +1,27 @@
-import { create } from "apisauce"
+import { create } from "apisauce";
 
-import cache from '../utility/cache'
-import authStorage from'../auth/storage'
+import cache from "../utility/cache";
+import authStorage from "../auth/storage";
 
 const apiClient = create({
-    baseURL: 'http://192.168.162.87:9000/api',  
-})
+  baseURL: "http://192.168.215.87:9000/api",
+});
 
 apiClient.addAsyncRequestTransform(async (request) => {
-    console.log('async')
-    const authToken = await authStorage.getUser()
-    if (!authToken) console.log('na here');
-    request.headers['x-auth-token']
-    console.log('ok here')
-})
+  const authToken = await authStorage.getUser();
+  if (!authToken) request.headers["x-auth-token"];
+});
 
-const get = apiClient.get
+const get = apiClient.get;
 apiClient.get = async (url, data, axiosConfig) => {
-   const result =  await get(url, data, axiosConfig)
-    
-    if (result.ok) {
-        cache.store(url, result.data)
-        return result
-    }
-    const response = await cache.get(url)
-    return response ? { ok: true, data }: response
-}
+  const result = await get(url, data, axiosConfig);
+
+  if (result.ok) {
+    cache.store(url, result.data);
+    return result;
+  }
+  const response = await cache.get(url);
+  return response ? { ok: true, data } : response;
+};
 
 export default apiClient;
