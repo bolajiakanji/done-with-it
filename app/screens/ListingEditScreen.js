@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#99ccff",
     flex: 1,
+    
   },
   item: {
     textAlign: "center",

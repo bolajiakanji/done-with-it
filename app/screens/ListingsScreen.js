@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, RefreshControl } from "react-native";
 
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
@@ -10,13 +10,23 @@ import listingsApi from "../api/listings";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import { useApi } from "../hooks";
+import { useFocusEffect } from "@react-navigation/native";
 
 function ListingsScreen({ navigation }) {
+  const [refreshing, setRefreshing] = useState(false)
   const getListingsApi = useApi(listingsApi.getListings);
 
   useEffect(() => {
     loadListings();
+    
   }, []);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     loadListings()
+      
+  //   }, [])
+    
+  // )
 
   const loadListings = async () => {
     const response = await getListingsApi.request({});
@@ -27,6 +37,13 @@ function ListingsScreen({ navigation }) {
       }
     }
   };
+
+  const onRefresh = () => {
+    setRefreshing(true)
+    loadListings()
+    setRefreshing(false)
+
+  }
 
   return (
     <>
@@ -56,6 +73,7 @@ function ListingsScreen({ navigation }) {
               />
             );
           }}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </Screen>
     </>

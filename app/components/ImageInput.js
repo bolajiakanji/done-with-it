@@ -12,22 +12,17 @@ import * as ImagePicker from "expo-image-picker";
 import colors from "../config/colors";
 import Camera from "./Camera";
 
-function ImageInput({ imageUri, onChangeImage }) {
-  const [camera, setCamera] = useState(false)
-  
-
-  
+function ImageInput({ imageUri, onChangeImage, setCamera }) {
 
   const handlePress = () => {
     if (!imageUri) {
-      Alert.alert("", "Choose image via", [
+      Alert.alert("", "Choose image", [
+        { text: "cancel" },
         { text: "Camera", onPress: () => setCamera(true) },
         { text: "Gallery", onPress: () => selectImage() },
       ]);
-
-      
-
-    } else Alert.alert("Delete", "Are you sure you want to delete this image?", [
+    } else
+      Alert.alert("Delete", "Are you sure you want to delete this image?", [
         { text: "Yes", onPress: () => onChangeImage(null) },
         { text: "No" },
       ]);
@@ -36,7 +31,7 @@ function ImageInput({ imageUri, onChangeImage }) {
   const selectImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ["images"],
         quality: 0.5,
       });
       if (!result.canceled) onChangeImage(result.assets[0].uri);
@@ -46,22 +41,24 @@ function ImageInput({ imageUri, onChangeImage }) {
   };
 
   return (
-    <View style={{flex: 1, height: 300, width: '100%'}}>
-      {camera && <Camera camera={camera} onChangeImage={onChangeImage} setCamera={setCamera} />}
+    <View>
       
-    <TouchableWithoutFeedback onPress={handlePress}>
-      <View style={styles.container}>
-        {!imageUri && (
-          <MaterialCommunityIcons
-            color={colors.medium}
-            name="camera"
-            size={40}
-          />
-        )}
-        {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-      </View>
+
+      <TouchableWithoutFeedback onPress={handlePress}>
+        <View style={styles.container}>
+          {!imageUri && (
+            <MaterialCommunityIcons
+              color={colors.medium}
+              name="camera"
+              size={40}
+            />
+          )}
+          {imageUri && (
+            <Image source={{ uri: imageUri }} style={styles.image} />
+          )}
+        </View>
       </TouchableWithoutFeedback>
-      </View>
+    </View>
   );
 }
 
