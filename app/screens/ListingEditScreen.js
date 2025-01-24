@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { Image, StyleSheet, Text } from "react-native";
 import * as Yup from "yup";
 import { useState } from "react";
 
@@ -81,6 +81,7 @@ const categories = [
     value: 9,
   },
 ];
+const me ='http://192.168.39.87:9000/assets/mail.jpg'
 
 function ListingEditScreen() {
   const location = null;
@@ -107,6 +108,7 @@ function ListingEditScreen() {
 
   return (
     <Screen style={styles.container} statusBarColor="dark">
+
       <Form
         initialValues={{
           title: "",
@@ -119,6 +121,7 @@ function ListingEditScreen() {
         validationSchema={validationSchema}
       >
         <Text style={styles.item}>Add Item</Text>
+        <Image src={me} style={{height: 100, width: 100}} />
         <FormImagePicker name="images" />
         <FormField maxLength={255} name="title" placeholder="Title" />
         <FormField

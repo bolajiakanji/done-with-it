@@ -30,7 +30,7 @@ export const addListing =  (listing, onUploadProgress) => {
 
   
   
-  console.log(data)
+  
 
  
   return  client.post(endpoint, data , {

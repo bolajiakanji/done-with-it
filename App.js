@@ -13,6 +13,7 @@ import OfflineNotice from "./app/components/OfflineNotice";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ListItem } from "./app/components/lists";
 //import { navigationRef } from "./app/navigation/rootNavigation"
 
 SplashScreen.preventAutoHideAsync();
@@ -46,7 +47,7 @@ const App = () => {
   return (
     <>
       <View
-        style={{ flex: 1}}
+        style={{ flex: 1, position: 'static'}}
         onLayout={onLayoutRootView}
       >
         <GestureHandlerRootView>

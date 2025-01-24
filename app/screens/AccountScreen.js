@@ -1,5 +1,11 @@
-import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableHighlight,
+  Image,
+} from "react-native";
 
 import { ListItem, ListItemSeparator } from "../components/lists";
 import colors from "../config/colors";
@@ -8,6 +14,7 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import AuthContext from "../auth/context";
 import useAuth from "../auth/useAuth";
+import ListItemm from "../components/lists/listingitemmde";
 
 const menuItems = [
   {
@@ -28,44 +35,85 @@ const menuItems = [
 ];
 
 function AccountScreen({ navigation }) {
-  const { user, logOut } = useAuth()
+  const [showImageModal, setImageModal] = useState(true);
+  const [pi, setpi] = useState('');
 
+  const { user, logOut } = useAuth();
 
+  const styling = showImageModal
+    ? {
+        position: "absolute",
+        top: "40%",
+        width: "100%",
+        height: 50,
+        zIndex: 90,
+        backgroundColor: "green",
+      }
+    : {
+        position: "initial",
+        top: "initial",
+        width: "initial",
+        height: "initial",
+        backgroundColor: "green",
+    };
+  console.log(pi)
 
   return (
-    <Screen style={styles.screen}>
-      <View style={styles.container}>
+    <>
+      <Image src={pi} style={{height: 100, width: 100}}  />
+      <Screen style={styles.screen}>
+        <TouchableHighlight
+          style={styles.container}
+          onPress={() => {
+            setImageModal(true);
+            console.log("ok");
+          }}
+        >
+          <ListItem
+            title={user.name}
+            subTitle={user.email}
+            image={pi}
+            onPress={() => {
+              setImageModal(true);
+              console.log("ok");
+            }}
+          />
+        </TouchableHighlight>
+        <View style={styles.container}>
+          <FlatList
+            data={menuItems}
+            keyExtractor={(menuItem) => menuItem.title}
+            ItemSeparatorComponent={ListItemSeparator}
+            renderItem={({ item }) => (
+              <ListItem
+                title={item.title}
+                IconComponent={
+                  <Icon
+                    name={item.icon.name}
+                    backgroundColor={item.icon.backgroundColor}
+                  />
+                }
+                onPress={() => navigation.navigate(item.targetScreen)}
+              />
+            )}
+          />
+        </View>
         <ListItem
-          title={user.name}
-          subTitle={user.email}
-          image={require("../assets/mosh.jpg")}
+          title="Log Out"
+          IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+          onPress={() => logOut()}
         />
-      </View>
-      <View style={styles.container}>
-         <FlatList
-          data={menuItems}
-          keyExtractor={(menuItem) => menuItem.title}
-          ItemSeparatorComponent={ListItemSeparator}
-          renderItem={({ item }) => (
-            <ListItem
-              title={item.title}
-              IconComponent={
-                <Icon
-                  name={item.icon.name}
-                  backgroundColor={item.icon.backgroundColor}
-                />
-              }
-              onPress={() => navigation.navigate(item.targetScreen)}
-            />
-          )}
-        /> 
-      </View>
-      <ListItem
-        title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-onPress={() => logOut()}
-      />
-    </Screen>
+      </Screen>
+      {showImageModal && (
+        <>
+          <ListItemm
+            
+            setImageModal={setImageModal} setpi={setpi}
+          />
+          
+        </>
+      )}
+    </>
   );
 }
 
@@ -74,8 +122,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
   },
   container: {
-    marginVertical: 20,
+    marginVertical: 5,
+    
+    
   },
+  
 });
 
 export default AccountScreen;

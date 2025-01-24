@@ -23,6 +23,7 @@ function ListingsScreen({ navigation }) {
   // useFocusEffect(
   //   React.useCallback(() => {
   //     loadListings()
+  //     console.log(getListingsApi.data)
       
   //   }, [])
     
@@ -61,6 +62,7 @@ function ListingsScreen({ navigation }) {
           keyExtractor={(listing) => listing.id.toString()}
           t
           renderItem={({ item }) => {
+            console.log(item.images[0].url)
             return (
               <Card
                 title={item.title}
