@@ -4,21 +4,17 @@ import client from "./client";
 
 const endpoint = "/listings";
 
-const getListings =  () => {
-  console.log('calling')
-  return   client.get(endpoint)
-  console.log('end calling')
-}
-  ;
-
-export const addListing =  (listing, onUploadProgress) => {
+const getListings = () => {
+  return client.get(endpoint);
+};
+export const addListing = (listing, onUploadProgress) => {
   const data = new FormData();
   data.append("title", listing.title);
   data.append("price", listing.price);
   data.append("categoryId", listing.category.value);
   data.append("description", listing.description);
 
-  listing.images.forEach(async(image, index) =>
+  listing.images.forEach(async (image, index) =>
     data.append("images", {
       uri: image,
       name: "image" + index,
@@ -26,28 +22,13 @@ export const addListing =  (listing, onUploadProgress) => {
     })
   );
 
-  
+  return client.post(endpoint, data, {
+    headers: { "content-type": "multipart/form-data" },
 
-  
-  
-  
-
- 
-  return  client.post(endpoint, data , {
-  
-
-    
-   headers:{'content-type': 'multipart/form-data'},
-    
-    
-    onUploadProgress: (progress) =>{
-      onUploadProgress(progress.loaded / progress.total),
-        console.log(progress)
-    }
-    
- }
-
-);
+    onUploadProgress: (progress) => {
+      onUploadProgress(progress.loaded / progress.total), console.log(progress);
+    },
+  });
 };
 
 export default {
@@ -55,14 +36,14 @@ export default {
   getListings,
 };
 
- //   {
-    //   name: "image" + index,
-    //   type: "image/jpeg",
-    //   url: image,
+//   {
+//   name: "image" + index,
+//   type: "image/jpeg",
+//   url: image,
 // }
-    
+
 //const result = listing.images.map((image, index) =>image
- // if (listing.location)
+// if (listing.location)
 //   data.append("location", JSON.stringify(listing.location));
- //const { title, price, description, category: { value } } = listing
- //let you = { title, price, description, categoryId: value}
+//const { title, price, description, category: { value } } = listing
+//let you = { title, price, description, categoryId: value}

@@ -62,10 +62,10 @@ function ListingsScreen({ navigation }) {
           keyExtractor={(listing) => listing.id.toString()}
           t
           renderItem={({ item }) => {
-            console.log(item.images[0].url)
+            
             return (
               <Card
-                title={item.title}
+                title={item.userId}
                 subTitle={"$" + item.price}
                 imageUrl={item.images[0].url}
                 onPress={() =>
