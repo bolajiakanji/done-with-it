@@ -12,6 +12,7 @@ import * as ImagePicker from "expo-image-picker";
 import colors from "../config/colors";
 import Camera from "./Camera";
 
+
 function ImageInput({ imageUri, onChangeImage, setCamera }) {
 
   const handlePress = () => {
