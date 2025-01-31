@@ -25,14 +25,14 @@ const App = () => {
   useEffect(() => {
     prepareApp();
   }, []);
-  const prepareApp = async () => {
-    const owner = authStorage.getUser();
-    console.log(owner + "stupid");
+  const prepareApp =async () => {
+    const owner = await authStorage.getUser();
+    
     if (owner) {
-      console.log("is owner");
+      console.log(owner)
       setUser(owner);
-      setAppIsReady(true);
     }
+    setAppIsReady(true);
   };
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {

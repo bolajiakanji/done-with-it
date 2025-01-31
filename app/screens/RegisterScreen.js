@@ -29,6 +29,7 @@ const Register = () => {
   const auth = useAuth();
 
   const handleSubmit = async ({ email, name, password }) => {
+    console.log(email + name + password)
     const response = await registerApi.request({ name, email, password });
 
     if (!response.ok) {

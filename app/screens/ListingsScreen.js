@@ -37,6 +37,7 @@ function ListingsScreen({ navigation }) {
         getListingsApi.setError("An unexpected error occured.");
       }
     }
+    
   };
 
   const onRefresh = () => {
@@ -59,7 +60,10 @@ function ListingsScreen({ navigation }) {
 
         <FlatList
           data={getListingsApi.data}
-          keyExtractor={(listing) => listing.id.toString()}
+          keyExtractor={(listing) => {
+            
+            return listing._id
+          }}
           t
           renderItem={({ item }) => {
             

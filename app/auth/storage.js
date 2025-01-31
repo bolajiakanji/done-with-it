@@ -22,6 +22,7 @@ const getToken = async () => {
 const getUser = async () => {
   try {
     const token = await getToken();
+    console.log(token)
     return token ? jwtDecode(token) : null;
   } catch (error) {
     console.log("Error occured while getting user");
