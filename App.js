@@ -29,7 +29,7 @@ const App = () => {
     const owner = await authStorage.getUser();
     
     if (owner) {
-      console.log(owner)
+      
       setUser(owner);
     }
     setAppIsReady(true);

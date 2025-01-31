@@ -8,8 +8,12 @@ const apiClient = create({
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
-  const authToken = await authStorage.getUser();
-  if (!authToken) request.headers["x-auth-token"];
+  const authToken = await authStorage.getToken();
+  console.log('auth here')
+  console.log(authToken)
+  if (authToken) {
+    request.headers["x-auth-token"] = authToken
+  };
 });
 
 const get = apiClient.get;
