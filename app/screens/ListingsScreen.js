@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, RefreshControl } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { FlatList, StyleSheet, RefreshControl, Text } from "react-native";
 
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
@@ -13,63 +13,105 @@ import { useApi } from "../hooks";
 import { useFocusEffect } from "@react-navigation/native";
 
 function ListingsScreen({ navigation }) {
-  const [refreshing, setRefreshing] = useState(false)
-  const getListingsApi = useApi(listingsApi.getListings);
+  const [refreshing, setRefreshing] = useState(false);
+  // const [nex, setnex] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [displayItems, setDisplayItems] = useState([]);
+  const { request, setError, data, error, loading, setData, setLoading } =
+    useApi(listingsApi.getListings);
+
+  let nextRef = useRef(0);
 
   useEffect(() => {
     loadListings();
-    
   }, []);
   // useFocusEffect(
   //   React.useCallback(() => {
   //     loadListings()
   //     console.log(getListingsApi.data)
-      
+
   //   }, [])
-    
+
   // )
 
   const loadListings = async () => {
-    const response = await getListingsApi.request({});
+    setLoading(false);
+    const response = await request({ next: 1 });
     if (!response.ok) {
-      if (response.data) getListingsApi.setError(response.data.error);
+      if (response.data) return setError(response.data.error);
       else {
-        getListingsApi.setError("An unexpected error occured.");
+        return setError("An unexpected error occured.");
       }
     }
+console.log('main')
+nextRef.current = response.data.nextPage;
+    setData(response.data);
+    setDisplayItems(response.data.resources);
+    console.log(response.data)
+
+  };
+  const loadListings_2 = async () => {
+    console.log('here')
+    setIsLoading(true);
+    console.log(nextRef.current + 'me')
+    const response = await request({ next: nextRef.current });
     
+    if (!response.ok) {
+      if (response.data) return setError(response.data.error);
+      else {
+        return setError("An unexpected error occured.");
+      }
+    }
+    nextRef.current = response.data.nextPage;
+    
+    
+    
+    setData(response.data);
+    console.log('get hweww');
+    setDisplayItems((dat) => [...dat, ...response.data.resources]);
+
+  };
+  const onEndReached = () => {
+    console.log('hre2')
+    if (!isLoading && nextRef.current && nextRef.current > 0 ) {
+      loadListings_2();
+    }
+  };
+  const listEmptyComponent = () => {
+    if (!isLoading && displayItems?.length > 0) {
+      return <Text>Nothing to show</Text>;
+    }
+  };
+  const listFooterComponent = () => {
+    if (isLoading && displayItems?.length > 0) {
+      return <Text>Loading...</Text>;
+    }
   };
 
   const onRefresh = () => {
-    setRefreshing(true)
-    loadListings()
-    setRefreshing(false)
-
-  }
+    setRefreshing(true);
+    loadListings();
+    setRefreshing(false);
+  };
 
   return (
     <>
-      <ActivityIndicator visible={getListingsApi.loading} />
+      <ActivityIndicator visible={loading} />
       <Screen style={styles.screen}>
-        {getListingsApi.error && (
+        {error && (
           <>
-            <AppText style={{ color: "red" }}>{getListingsApi.error}</AppText>
+            <AppText style={{ color: "red" }}>{error}</AppText>
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
 
         <FlatList
-          data={getListingsApi.data}
-          keyExtractor={(listing) => {
-            
-            return listing._id
-          }}
-          t
+          data={displayItems}
+          keyExtractor={(listing, index) => index}
           renderItem={({ item }) => {
-            
             return (
               <Card
-                title={item.userId}
+                title={item.title}
                 subTitle={"$" + item.price}
                 imageUrl={item.images[0].url}
                 onPress={() =>
@@ -79,7 +121,14 @@ function ListingsScreen({ navigation }) {
               />
             );
           }}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.5}
+          ListEmptyComponent={listEmptyComponent}
+          ListFooterComponent={listFooterComponent}
+          initialNumToRender={5}
         />
       </Screen>
     </>
@@ -88,6 +137,7 @@ function ListingsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1,
     paddingHorizontal: 20,
     backgroundColor: colors.light,
   },

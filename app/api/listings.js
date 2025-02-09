@@ -4,8 +4,8 @@ import client from "./client";
 
 const endpoint = "/listings";
 
-const getListings = () => {
-  return client.get(endpoint);
+const getListings = (bol) => {
+  return client.get(endpoint, bol);
 };
 export const addListing = (listing, onUploadProgress) => {
   const data = new FormData();
