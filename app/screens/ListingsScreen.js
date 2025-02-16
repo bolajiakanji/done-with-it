@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, Text, View, ScrollView, TouchableHighlight, TouchableWithoutFeedback } from "react-native";
-
+import { FlatList, StyleSheet, RefreshControl, Text } from "react-native";
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
 import Button from "../components/Button";
@@ -10,66 +9,48 @@ import listingsApi from "../api/listings";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import { useApi } from "../hooks";
-import { useFocusEffect } from "@react-navigation/native";
-import { Picker } from '@react-native-picker/picker';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import ListingFilterings from "./ListingFilterings";
 
 function ListingsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [listingsQueryObject, setListingsQueryObject] = useState({});
   const [displayItems, setDisplayItems] = useState([]);
-  const [displayDatePicker, setDisplayDatePicker] = useState(false);
   const { request, setError, data, error, loading, setData, setLoading } =
     useApi(listingsApi.getListings);
-  
-  const setDate = (event, date) => {
-    console.log('type')
-    const {
-      type,
-      nativeEvent: {timestamp, utcOffset},
-    } = event;
-    setListingsQueryObject((listingsQuery)=> ({...listingsQuery, date }))
-    setDisplayDatePicker(false)
-    
-  };
-  
+
   useEffect(() => {
     loadListings();
-    
-
   }, []);
-  
+
   const loadListings = async () => {
     setLoading(true);
     const response = await request({ page: 1 });
-    setLoading(false)
+    setLoading(false);
     if (!response.ok) {
       if (response.data) return setError(response.data.error);
       else {
         return setError("An unexpected error occured.");
       }
     }
-    console.log('main')
+    console.log("main");
     setListingsQueryObject((queryObject) => {
-      console.log('nextboy')
-      console.log({ ...queryObject, page: response.data.nextPage })
-      console.log('nextboys')
-      return { ...queryObject, page: response.data.nextPage }
+      console.log("nextboy");
+      console.log({ ...queryObject, page: response.data.nextPage });
+      console.log("nextboys");
+      return { ...queryObject, page: response.data.nextPage };
     });
     setData(response.data);
     setDisplayItems(response.data.resources);
-    console.log(response.data)
-
+    console.log(response.data);
   };
   const loadListings_2 = async () => {
-    console.log('here')
+    console.log("here");
     setIsLoading(true);
-    
+
     const response = await request({ page: listingsQueryObject.page });
-    setIsLoading(false)
-     
+    setIsLoading(false);
+
     if (!response.ok) {
       if (response.data) return setError(response.data.error);
       else {
@@ -77,22 +58,21 @@ function ListingsScreen({ navigation }) {
       }
     }
 
-    
-    setListingsQueryObject((queryObject) => ({...queryObject, page: response.data.nextPage}) );
+    setListingsQueryObject((queryObject) => ({
+      ...queryObject,
+      page: response.data.nextPage,
+    }));
 
-    
-    console.log({ ...listingsQueryObject, page: response.data.nextPage })
+    console.log({ ...listingsQueryObject, page: response.data.nextPage });
 
-    
     setData();
-    console.log('get hweww');
+    console.log("get hweww");
     setDisplayItems((dat) => [...dat, ...response.data.resources]);
-
   };
   const onEndReached = () => {
-    console.log('hre21')
+    console.log("hre21");
 
-    if (!isLoading && listingsQueryObject.page ) {
+    if (!isLoading && listingsQueryObject.page) {
       loadListings_2();
     }
   };
@@ -103,10 +83,16 @@ function ListingsScreen({ navigation }) {
   };
   const listFooterComponent = () => {
     if (isLoading && displayItems?.length > 0) {
-      return <Text style={{textAlign: 'center', marginBottom: 5}}>Loading...</Text>;
+      return (
+        <Text style={{ textAlign: "center", marginBottom: 5 }}>Loading...</Text>
+      );
     }
     if (!isLoading && !listingsQueryObject.page) {
-      return <Text style={{textAlign: 'center', marginBottom: 10}}>Nothing to show</Text>;
+      return (
+        <Text style={{ textAlign: "center", marginBottom: 10 }}>
+          Nothing to show
+        </Text>
+      );
     }
   };
 
@@ -126,35 +112,10 @@ function ListingsScreen({ navigation }) {
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
-        <ScrollView
-          horizontal
-          contentContainerStyle={{paddingBottom: 20, position: 'relative',  }}
-          //style={{ display: 'flex', flexGrow: 1, marginBottom: 5, flexDirection: 'row', backgroundColor: 'green', overflowX: 'scroll', width: '200' }}
-        >
-          <View style={{borderRadius: 20, borderWidth: 1, marginEnd:10}}> 
-          <Picker
-            
-          mode="dropdown"
-          style={{width: 200,  paddingBottom:20, }}
-  selectedValue={selectedLanguage}
-  onValueChange={(category, ) =>
-    setListingsQueryObject((listingsQuery) => ({...listingsQuery, category})
-  )}>
-  <Picker.Item label="Java" value="java" />
-  <Picker.Item label="JavaScript" value="js" />
-  <Picker.Item label="JavaSc" value="mnkj" />
-            </Picker>
-            </View>
-            
-          
-          <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
-          <View  style={{ borderRadius: 15, borderWidth: 2, width: 200, height: 100 }}>
-            <Text>Pick date from:</Text>
-            </View>
-              </TouchableWithoutFeedback>
-          
-          {displayDatePicker && <RNDateTimePicker mode="date" value={new Date()} fullscreen={true} onChange={setDate} />}
-          </ScrollView>
+        <ListingFilterings
+          listingsQueryObject={listingsQueryObject}
+          setListingsQueryObject={setListingsQueryObject}
+        />
 
         <FlatList
           data={displayItems}
