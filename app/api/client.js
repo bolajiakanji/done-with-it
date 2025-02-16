@@ -2,9 +2,10 @@ import { create } from "apisauce";
 
 import cache from "../utility/cache";
 import authStorage from "../auth/storage";
+import ListingsScreen from "../screens/ListingsScreen";
 
 const apiClient = create({
-  baseURL: "http://192.168.171.87:9000/api",
+  baseURL: "http://192.168.9.87:9000/api",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
@@ -13,7 +14,7 @@ apiClient.addAsyncRequestTransform(async (request) => {
   console.log(authToken)
   if (authToken) {
     request.headers["x-auth-token"] = authToken
-  };
+  };ListingsScreen
 });
 
 const get = apiClient.get;
