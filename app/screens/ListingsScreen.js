@@ -33,19 +33,17 @@ function ListingsScreen({ navigation }) {
         return setError("An unexpected error occured.");
       }
     }
-    console.log("main");
+    
     setListingsQueryObject((queryObject) => {
-      console.log("nextboy");
-      console.log({ ...queryObject, page: response.data.nextPage });
-      console.log("nextboys");
+      
       return { ...queryObject, page: response.data.nextPage };
     });
     setData(response.data);
     setDisplayItems(response.data.resources);
-    console.log(response.data);
+    
   };
   const loadListings_2 = async () => {
-    console.log("here");
+    console.log("heresh");
     setIsLoading(true);
 
     const response = await request({ page: listingsQueryObject.page });
@@ -62,12 +60,7 @@ function ListingsScreen({ navigation }) {
       ...queryObject,
       page: response.data.nextPage,
     }));
-
-    console.log({ ...listingsQueryObject, page: response.data.nextPage });
-
-    setData();
-    console.log("get hweww");
-    setDisplayItems((dat) => [...dat, ...response.data.resources]);
+setDisplayItems((dat) => [...dat, ...response.data.resources]);
   };
   const onEndReached = () => {
     console.log("hre21");
@@ -115,6 +108,10 @@ function ListingsScreen({ navigation }) {
         <ListingFilterings
           listingsQueryObject={listingsQueryObject}
           setListingsQueryObject={setListingsQueryObject}
+          displayItems={displayItems}
+          setDisplayItems={setDisplayItems}
+          request={request}
+          setData={setData}
         />
 
         <FlatList
