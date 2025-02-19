@@ -19,10 +19,14 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
         const filt = {}
         filt[filter] = true
         setIsLoadingObject(filt);
-        console.log(filt)
-        const response = await request({ ...listingsQueryObject, ...object, page: 1, });
-        setIsLoadingObject(null)
-        
+        let response
+        if (filter === 'all') {
+            console.log(filt)
+             response = await request({page:1})
+        } else {
+             response = await request({ ...listingsQueryObject, ...object, page: 1, });
+            setIsLoadingObject(null)
+        }
         
         if (!response.ok) {
             if (response.data) return setError(response.data.error);

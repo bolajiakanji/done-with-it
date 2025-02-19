@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, Text } from "react-native";
+import { FlatList, StyleSheet, RefreshControl, Text,View, Image } from "react-native";
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
 import Button from "../components/Button";
@@ -10,6 +10,12 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import { useApi } from "../hooks";
 import ListingFilterings from "./ListingFilterings";
+import SkeletonLoading from 'expo-skeleton-loading'
+import Skeleton from "./Skeleton";
+
+
+
+
 
 function ListingsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
@@ -26,7 +32,7 @@ function ListingsScreen({ navigation }) {
   const loadListings = async () => {
     setLoading(true);
     const response = await request({ page: 1 });
-    setLoading(false);
+    
     if (!response.ok) {
       if (response.data) return setError(response.data.error);
       else {
@@ -94,10 +100,11 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
     loadListings();
     setRefreshing(false);
   };
+  if (loading) return <Skeleton />
 
   return (
     <>
-      <ActivityIndicator visible={loading} />
+      
       <Screen style={styles.screen}>
         {error && (
           <>
@@ -105,6 +112,8 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
+          
+
         <ListingFilterings
           listingsQueryObject={listingsQueryObject}
           setListingsQueryObject={setListingsQueryObject}
@@ -113,6 +122,8 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
           request={request}
           setData={setData}
         />
+        
+        
 
         <FlatList
           data={displayItems}
@@ -133,6 +144,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          
           onEndReached={onEndReached}
           //onEndReachedThreshold={0.5}
           ListEmptyComponent={listEmptyComponent}
