@@ -17,12 +17,14 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Feed"
+        name="Fee"
         component={FeedNavigator}
+        
         options={{
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons name="home" size={size} color={color} />
           ),
+          headerShown: false
         }}
       />
       <Tab.Screen

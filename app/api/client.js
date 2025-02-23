@@ -4,8 +4,9 @@ import cache from "../utility/cache";
 import authStorage from "../auth/storage";
 import ListingsScreen from "../screens/ListingsScreen";
 
+const baseUrl = 'http://192.168.136.87:9000/api'
 const apiClient = create({
-  baseURL: "http://192.168.174.87:9000/api",
+  baseURL: baseUrl,
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
@@ -20,13 +21,21 @@ apiClient.addAsyncRequestTransform(async (request) => {
 const get = apiClient.get;
 apiClient.get = async (url, data, axiosConfig) => {
   const result = await get(url, data, axiosConfig);
-
+  console.log(result)
+console.log(url)
   if (result.ok) {
-    cache.store(url, result.data);
+    console.log('cachey')
+    cache.store(baseUrl + url, result.data);
     return result;
   }
-  const response = await cache.get(url);
-  return response ? { ok: true, data } : response;
+  console.log(result)
+  console.log('seoarate')
+  console.log(baseUrl + url)
+  const response = await cache.get(baseUrl + url);
+  console.log('big')
+  console.log('big')
+  console.log(response)
+  return response ? { ok: true, data: response } : response;
 };
 
 export default apiClient;

@@ -18,6 +18,9 @@ function Card({ title, subTitle, imageUrl, onPress, thumnailUrl, cachePolicy }) 
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>
+          <Text style={styles.description} numberOfLines={1}>
+            {title}
+          </Text>
           <Text style={styles.subTitle} numberOfLines={2}>
             {subTitle}
           </Text>
@@ -33,13 +36,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginBottom: 20,
     overflow: "hidden",
+    width: '50%',
+    height: 235,
+  marginHorizontal: 3
   },
   detailsContainer: {
     padding: 20,
   },
   image: {
     width: "100%",
-    height: 200,
+    height: 150,
   },
   subTitle: {
     color: colors.secondary,

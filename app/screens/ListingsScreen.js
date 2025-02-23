@@ -32,15 +32,17 @@ function ListingsScreen({ navigation }) {
   const loadListings = async () => {
     setLoading(true);
     const response = await request({ page: 1 });
-    
-    if (!response.ok) {
-      if (response.data) return setError(response.data.error);
-      else {
-        return setError("An unexpected error occured.");
-      }
-    }
-    
-    setListingsQueryObject((queryObject) => {
+    setLoading(false);
+    console.log('notoka2')
+    console.log(response)
+    if (!response) {
+      console.log('notokay')
+      
+      return setError("An unexpected error occured.")
+    };
+      if (response.data.error) return setError(response.data.error);
+      
+setListingsQueryObject((queryObject) => {
       
       return { ...queryObject, page: response.data.nextPage };
     });
@@ -55,12 +57,12 @@ function ListingsScreen({ navigation }) {
     const response = await request({ page: listingsQueryObject.page });
     setIsLoading(false);
 
-    if (!response.ok) {
-      if (response.data) return setError(response.data.error);
-      else {
-        return setError("An unexpected error occured.");
-      }
-    }
+    if (!response) {
+      console.log('notokay')
+      return setError("An unexpected error occured.")
+    };
+      if (response.data.error) return setError(response.data.error);
+    
 
     setListingsQueryObject((queryObject) => ({
       ...queryObject,
@@ -100,6 +102,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
     loadListings();
     setRefreshing(false);
   };
+  console.log(error)
   if (loading) return <Skeleton />
 
   return (
@@ -150,6 +153,8 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
           ListEmptyComponent={listEmptyComponent}
           ListFooterComponent={listFooterComponent}
           //initialNumToRender={5}
+          
+          numColumns='2'
         />
       </Screen>
     </>
