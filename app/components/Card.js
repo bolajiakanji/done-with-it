@@ -7,19 +7,19 @@ import Text from "./Text";
 import colors from "../config/colors";
 
 
-function Card({ title, subTitle, imageUrl, onPress, thumnailUrl, cachePolicy }) {
+function Card({ title, subTitle, imageUrl, onPress, thumnailUrl, cachePolicy , description}) {
   return (
-    <TouchableWithoutFeedback onPress={onPress} >
+    <TouchableWithoutFeedback onPress={onPress}  >
       <View style={styles.card}>
         <Image style={styles.image} source={imageUrl} placeholder={thumnailUrl}
-          // cachePolicy='memory-disk'
+          cachePolicy='memory-disk'
         />
         <View style={styles.detailsContainer}>
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>
-          <Text style={styles.description} numberOfLines={1}>
-            {title}
+          <Text style={styles.title} numberOfLines={1}>
+            {description}
           </Text>
           <Text style={styles.subTitle} numberOfLines={2}>
             {subTitle}

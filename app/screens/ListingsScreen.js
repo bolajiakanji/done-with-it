@@ -107,6 +107,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
 
   return (
     <>
+     
       
       <Screen style={styles.screen}>
         {error && (
@@ -115,7 +116,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
-          
+          <Text>sdsfdg</Text>
 
         <ListingFilterings
           listingsQueryObject={listingsQueryObject}
@@ -135,6 +136,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
             return (
               <Card
                 title={item.title}
+                description={item.description}
                 subTitle={"$" + item.price}
                 imageUrl={item.images[0].url}
                 onPress={() =>
@@ -154,6 +156,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
           ListFooterComponent={listFooterComponent}
           //initialNumToRender={5}
           
+          
           numColumns='2'
         />
       </Screen>
@@ -164,7 +167,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     backgroundColor: colors.light,
   },
 });

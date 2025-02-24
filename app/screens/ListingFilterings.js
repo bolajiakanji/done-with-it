@@ -61,22 +61,35 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
       };
       
     return (
+        <>
+            
+            <View>
     <ScrollView
       horizontal
-      contentContainerStyle={{  alignItems: 'center',marginVertical:10 }}
-      >
+            contentContainerStyle={{ columnGap: 10, marginVertical:15 }}
+            
+        >
+            
           <TouchableHighlight
               onPress={()=> handleAllButton('all', {})}
-              style={{ borderRadius: '50%', borderWidth: 1,height: 40,width: 40,   marginEnd: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              style={{ borderRadius: 15,  backgroundColor: 'blue',height: 40,width: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               
-                  <Text>All</Text>
+                  <Text style={{color: 'white'}}>All</Text>
               
           </TouchableHighlight>
-      <View style={{ borderRadius: "40%", borderWidth: 1,height:40,padding:0, margin:0 }}>
+
+      <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
+        <View
+          style={{ borderRadius: 15,backgroundColor: 'blue',  width: 160, height: 40,  justifyContent: 'center', padding: 10 }}
+        >
+          <Text style={{color: 'white'}}>Pick date from:</Text>
+        </View>
+      </TouchableWithoutFeedback>
+      <View style={{ borderRadius: 15, height:40,padding:0, margin:0, backgroundColor: 'blue' }}>
         <Picker
           mode="dropdown"
-                    style={{ width: 200, margin: -10, padding: 0,  }}
-                    itemStyle={{color: 'red'}}
+                    style={{ width: 160, margin: -9,color: 'white'  }}
+                    
           selectedValue={listingsQueryObject.category}
                   onValueChange={(category) => {
                        handleAllButton('category', {category: category})
@@ -87,19 +100,11 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
                   }
           }
         >
-          <Picker.Item label="Java" value="4" itemStyle={{color: 'red'}} />
+          <Picker.Item label="Java" value="4"  />
           <Picker.Item label="JavaScript" value="9" />
           <Picker.Item label="JavaSc" value="3" />
         </Picker>
       </View>
-
-      <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
-        <View
-          style={{ borderRadius: 15, borderWidth: 1, width: 200, height: 40, display: 'flex', justifyContent: 'center', marginStart: 10, padding: 10 }}
-        >
-          <Text>Pick date from:</Text>
-        </View>
-      </TouchableWithoutFeedback>
 
       {displayDatePicker && (
         <RNDateTimePicker
@@ -109,7 +114,10 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           onChange={setDate}
         />
       )}
-    </ScrollView>
+                </ScrollView>
+                </View>
+        </>
+
   );
 };
 
