@@ -72,7 +72,7 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
             
           <TouchableHighlight
               onPress={()=> handleAllButton('all', {})}
-              style={{ borderRadius: 15,  backgroundColor: 'blue',height: 40,width: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              style={{ borderRadius: 15,  backgroundColor: 'dodgerblue',height: 40,width: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               
                   <Text style={{color: 'white'}}>All</Text>
               

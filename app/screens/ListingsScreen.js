@@ -110,13 +110,17 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
      
       
       <Screen style={styles.screen}>
+        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 5}}> 
+        <Image source={require('../../assets/images/adaptiveIcon.png')} style={{width: 40, height:40, borderRadius:8}} />
+          <Text style={{color: 'dodgerblue', fontWeight: "heavy", fontSize: 20}}>BORJI</Text>
+        </View>
         {error && (
           <>
             <AppText style={{ color: "red" }}>{error}</AppText>
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
-          <Text>sdsfdg</Text>
+          
 
         <ListingFilterings
           listingsQueryObject={listingsQueryObject}
