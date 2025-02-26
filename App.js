@@ -31,6 +31,7 @@ const App = () => {
     if (owner) {
       
       setUser(owner);
+      console.log(owner)
     }
     setAppIsReady(true);
   };

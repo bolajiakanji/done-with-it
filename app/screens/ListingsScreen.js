@@ -12,6 +12,10 @@ import { useApi } from "../hooks";
 import ListingFilterings from "./ListingFilterings";
 import SkeletonLoading from 'expo-skeleton-loading'
 import Skeleton from "./Skeleton";
+import authStorage from "../auth/storage";
+import useAuth from "../auth/useAuth";
+
+
 
 
 
@@ -24,6 +28,8 @@ function ListingsScreen({ navigation }) {
   const [displayItems, setDisplayItems] = useState([]);
   const { request, setError, data, error, loading, setData, setLoading } =
     useApi(listingsApi.getListings);
+    const { user, logOut } = useAuth();
+
 
   useEffect(() => {
     loadListings();
@@ -104,6 +110,11 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
   };
   console.log(error)
   if (loading) return <Skeleton />
+  const me = async() => {
+    const owner = await authStorage.getUser();
+    console.log(owner)
+return owner.image
+  }
 
   return (
     <>
@@ -112,6 +123,7 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
       <Screen style={styles.screen}>
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 5}}> 
         <Image source={require('../../assets/images/adaptiveIcon.png')} style={{width: 40, height:40, borderRadius:8}} />
+        <Image src={user.image} style={{width: 40, height:40, borderRadius:8}} />
           <Text style={{color: 'dodgerblue', fontWeight: "heavy", fontSize: 20}}>BORJI</Text>
         </View>
         {error && (

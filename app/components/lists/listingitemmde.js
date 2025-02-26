@@ -8,6 +8,9 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import client from "../../api/client";
+import authStorage from "../../auth/storage";
+
+
 
 
 import Text from "../Text";
@@ -39,14 +42,18 @@ function ListItemm({ setImageModal, setpi }) {
       type: "image/jpeg",
     })
     console.log('hreme')
-   const output =  await client.post('/profileImage/1', data, {
+    const owner = await authStorage.getUser();
+
+   const output =  await client.post('/my/profileImage/', data, {
   
 
     
       headers: { 'content-type': 'multipart/form-data' }
    })
-    console.log(output.data.uri)
-    setpi(output.data.uri)
+    console.log(output.data)
+    console.log('output.data')
+    //setpi(output.data.image)
+    await authStorage.storeToken(output.data)
      
   }
 
