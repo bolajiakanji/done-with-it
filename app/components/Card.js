@@ -7,7 +7,9 @@ import Text from "./Text";
 import colors from "../config/colors";
 
 
-function Card({ title, subTitle, imageUrl, onPress, thumnailUrl, cachePolicy , description}) {
+function Card({ title, subTitle, imageUrl, onPress, thumnailUrl, cachePolicy, description }) {
+  const num = subTitle
+  
   return (
     <TouchableWithoutFeedback onPress={onPress}  >
       <View style={styles.card}>
@@ -22,7 +24,7 @@ function Card({ title, subTitle, imageUrl, onPress, thumnailUrl, cachePolicy , d
             {description}
           </Text>
           <Text style={styles.subTitle} numberOfLines={2}>
-            {subTitle}
+            {'$'+subTitle.toLocaleString()}
           </Text>
         </View>
       </View>
@@ -37,7 +39,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     overflow: "hidden",
     width: '50%',
-    height: 235,
+    height: 250,
   marginHorizontal: 3
   },
   detailsContainer: {

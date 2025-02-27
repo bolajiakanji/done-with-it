@@ -9,6 +9,8 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import client from "../../api/client";
 import authStorage from "../../auth/storage";
+import useAuth from "../../auth/useAuth";
+
 
 
 
@@ -22,7 +24,7 @@ function ListItemm({ setImageModal, setpi }) {
   const [camera, setCamera] = useState(false);
   const [imageuri, setImageUri] = useState("");
   const [imageToUse, setImageToUse] = useState(imageuri ? imageuri : "");
-
+  const { login} = useAuth()
   const selectImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -51,9 +53,12 @@ function ListItemm({ setImageModal, setpi }) {
       headers: { 'content-type': 'multipart/form-data' }
    })
     console.log(output.data)
-    console.log('output.data')
-    //setpi(output.data.image)
+    setpi(output.data.image)
+    console.log('output.datacv')
+    console.log('datacv')
     await authStorage.storeToken(output.data)
+login(output.data)
+
      
   }
 

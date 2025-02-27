@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, Text,View, Image } from "react-native";
+import { FlatList, StyleSheet, RefreshControl, Text, View, } from "react-native";
+import { Image } from 'expo-image'
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
 import Button from "../components/Button";
@@ -28,7 +29,7 @@ function ListingsScreen({ navigation }) {
   const [displayItems, setDisplayItems] = useState([]);
   const { request, setError, data, error, loading, setData, setLoading } =
     useApi(listingsApi.getListings);
-    const { user, logOut } = useAuth();
+    const { user } = useAuth();
 
 
   useEffect(() => {
@@ -116,15 +117,22 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
 return owner.image
   }
 
+console.log(user.image)
+console.log('beating')
   return (
     <>
      
       
       <Screen style={styles.screen}>
+        <View style={{display: 'flex', flexDirection: 'row', justifyContent:"space-between",}}> 
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 5}}> 
         <Image source={require('../../assets/images/adaptiveIcon.png')} style={{width: 40, height:40, borderRadius:8}} />
-        <Image src={user.image} style={{width: 40, height:40, borderRadius:8}} />
           <Text style={{color: 'dodgerblue', fontWeight: "heavy", fontSize: 20}}>BORJI</Text>
+        </View>
+        <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  marginRight:10}}> 
+        <Image source={user.image}  style={{width: 32, height:32, borderRadius:25}}  />
+          <Text  style={{fontSize:10 }}>{user.email.slice(0,8)+' ...'}</Text>
+        </View>
         </View>
         {error && (
           <>
@@ -153,7 +161,7 @@ return owner.image
               <Card
                 title={item.title}
                 description={item.description}
-                subTitle={"$" + item.price}
+                subTitle={parseInt(item.price)}
                 imageUrl={item.images[0].url}
                 onPress={() =>
                   navigation.navigate(routes.LISTING_DETAILS, item)
