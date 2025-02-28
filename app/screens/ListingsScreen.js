@@ -124,14 +124,14 @@ console.log('beating')
      
       
       <Screen style={styles.screen}>
-        <View style={{display: 'flex', flexDirection: 'row', justifyContent:"space-between",}}> 
+        <View style={{display: 'flex', flexDirection: 'row', justifyContent:"space-between",alignItems:'center'}}> 
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 5}}> 
         <Image source={require('../../assets/images/adaptiveIcon.png')} style={{width: 40, height:40, borderRadius:8}} />
           <Text style={{color: 'dodgerblue', fontWeight: "heavy", fontSize: 20}}>BORJI</Text>
         </View>
         <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  marginRight:10}}> 
-        <Image source={user.image}  style={{width: 32, height:32, borderRadius:25}}  />
-          <Text  style={{fontSize:10 }}>{user.email.slice(0,8)+' ...'}</Text>
+        <Image source={user.image}  style={{width: 33, height:33, borderRadius:25}}  />
+          <Text  style={{fontSize:11 }}>{user.email.slice(0,8)+' ...'}</Text>
         </View>
         </View>
         {error && (
@@ -159,6 +159,7 @@ console.log('beating')
           renderItem={({ item }) => {
             return (
               <Card
+                timejs={item.createdAt}
                 title={item.title}
                 description={item.description}
                 subTitle={parseInt(item.price)}

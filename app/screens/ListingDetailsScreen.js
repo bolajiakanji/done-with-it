@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Image } from "expo-image";
+import Screen from "../components/Screen";
+
 
 import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
@@ -69,7 +71,7 @@ function ListingDetailsScreen({ route }) {
   };
 
   return (
-    <View>
+    <Screen style={{position: 'relative'}} sta>
       <View style={{ flex: 1 }}>
         <Carousel
           ref={ref}
@@ -130,12 +132,12 @@ function ListingDetailsScreen({ route }) {
         <Text style={styles.price}>${listing.price}</Text>
 
         <ListItem
-          image="http://192.168.39.87:9000/assets/mail.jpg"
-          title={data.name}
-          subTitle={`${data.listings} listings`}
+          image={listing.userId.image}
+          title={listing.userId.name}
+          subTitle={`${listing.userId.userListings} listings`}
         />
       </View>
-    </View>
+    </Screen>
   );
 }
 

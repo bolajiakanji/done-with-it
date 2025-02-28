@@ -72,7 +72,7 @@ function AccountScreen({ navigation }) {
           <ListItem
             title={user.name}
             subTitle={user.email}
-            image={pi}
+            image={user.image}
             onPress={() => {
               setImageModal(true);
               console.log("ok");

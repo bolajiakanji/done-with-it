@@ -121,7 +121,6 @@ function ListingEditScreen() {
         validationSchema={validationSchema}
       >
         <Text style={styles.item}>Add Item</Text>
-        <Image src={me} style={{height: 100, width: 100}} />
         <FormImagePicker name="images" />
         <FormField maxLength={255} name="title" placeholder="Title" />
         <FormField
