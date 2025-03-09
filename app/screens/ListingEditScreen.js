@@ -81,7 +81,6 @@ const categories = [
     value: 9,
   },
 ];
-const me ='http://192.168.39.87:9000/assets/mail.jpg'
 
 function ListingEditScreen() {
   const location = null;

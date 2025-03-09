@@ -50,7 +50,7 @@ const Register = () => {
 
   return (
     <>
-      <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
+      {/* <ActivityIndicator visible={registerApi.loading || loginApi.loading} /> */}
       <Screen style={styles.container}>
         <Image source={require("../assets/logo-red.png")} style={styles.logo} />
         <Form

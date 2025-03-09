@@ -13,7 +13,7 @@ TimeAgo.addLocale(en)
 
 
 
-function Card({ title, subTitle, imageUrl, timejs, onPress, thumnailUrl, cachePolicy, description }) {
+function Card({ item, onPress }) {
   
   TimeAgo.setDefaultLocale(en.locale)
   TimeAgo.addLocale(en)
@@ -21,8 +21,8 @@ function Card({ title, subTitle, imageUrl, timejs, onPress, thumnailUrl, cachePo
 
 const timeAgo = new TimeAgo('en-US')
 
-  const num = subTitle
-  const d = new Date(timejs)
+  
+  const d = new Date(item.createdAt)
   const date = parseInt(d.getTime())
   console.log('date')
   console.log(date, 'mini-minute')
@@ -40,22 +40,30 @@ const timeAgo = new TimeAgo('en-US')
   return (
     <TouchableWithoutFeedback onPress={onPress}  >
       <View style={styles.card}>
-        <Image style={styles.image} source={imageUrl} placeholder={thumnailUrl}
+        <Image style={styles.image} source={item.images[0].url} placeholder={item.images[0].thumnailUrl}
           cachePolicy='memory-disk'
         />
         <View style={styles.detailsContainer}>
           <Text style={styles.title} numberOfLines={1}>
-            {title}
+            {item.title}
           </Text>
-          <Text style={styles.title} numberOfLines={1}>
-            {description}
+          <Text style={{}} numberOfLines={1}>
+            {item.description}
           </Text>
         
             
-          <Text style={styles.subTitle} numberOfLines={2}>
-          <Text style={{fontWeight: 'bold',fontSize:12, color: colors.secondary}}>#</Text>{subTitle.toLocaleString()}
-            </Text>
-          <Text>{time} ago</Text> 
+          <Text style={styles.subTitle} numberOfLines={1}>
+          <Text style={{fontWeight: 'bold',fontSize:12, color: colors.secondary}}>#</Text>{parseInt(item.price).toLocaleString()}
+          </Text> 
+          <View style={{display:'flex', flexDirection: 'row', justifyContent:'space-between',width:'65%'}}>
+            <Text style={{ color: '#bbb', fontSize: 12 }}>{time} ago</Text> 
+          <Text style={{color: '#bbb', fontSize: 12}} >
+            {item.likes ? item.likes.length +' likes' : ''}
+          </Text>
+            </View>
+          <Text style={{textAlign: 'center',color: 'gray', fontSize: 12}} >
+            {item.comment == undefined ? '0 comment':item.comment + ' comments'}
+          </Text>
         </View>
       </View>
      </TouchableWithoutFeedback>
@@ -68,16 +76,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginBottom: 20,
     overflow: "hidden",
-    width: '50%',
-    height: 250,
-  marginHorizontal: 3
+    width: '48.5%',
+    height: 270,
+    
+  
   },
   detailsContainer: {
     padding: 10,
   },
   image: {
     width: "100%",
-    height: 150,
+    height: 160,
   },
   subTitle: {
     color: colors.secondary,
@@ -87,6 +96,9 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 2,
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: 'gray'
   },
 });
 

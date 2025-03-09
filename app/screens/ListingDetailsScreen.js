@@ -5,6 +5,8 @@ import {
   Dimensions,
   TouchableHighlight,
   TouchableOpacity,
+  Button,
+  Linking
 } from "react-native";
 import { Image } from "expo-image";
 import Screen from "../components/Screen";
@@ -29,25 +31,29 @@ const marginTop = width / 2;
 function ListingDetailsScreen({ route }) {
   const [seller, setSeller] = useState();
   const [index, setIndex] = useState(0);
-  const getSeller = () => {
-    
-    return client.get(endPoint);
-  };
-  const { data, request, error, setError } = useApi(getSeller);
-  const ref = useRef(null);
-
   const listing = route.params;
-  const endPoint = "/user/" + listing.userId;
+  const endPoint = "/comments/" + listing._id;
+  //const endpoint = "/comments";
+
+const getComment = (bol) => {
+  return client.get(endPoint, bol);
+};
+
+  const { data, request, error, setError, setData } = useApi(getComment);
+  const ref = useRef(null);
+console.log('hereuse')
 
   useEffect(() => {
     
     loadListing();
-    
+    console.log('use')
   }, []);
 
   const loadListing = async () => {
     const response = await request({});
-    
+
+    console.log(response.data)
+    console.log('response.data')
     if (!response.ok) {
       if (response.data) setError(response.data.error);
       else {
@@ -60,7 +66,9 @@ function ListingDetailsScreen({ route }) {
   const uriArray = [];
 
   for (const image of listing.images) {
+    console.log('boji')
     uriArray.push(image.url);
+    console.log('boji2')
   }
 
   const previous = () => {
@@ -137,6 +145,26 @@ function ListingDetailsScreen({ route }) {
           subTitle={`${listing.userId.userListings} listings`}
         />
       </View>
+      <TouchableOpacity
+        onPress={async() => {
+          const res = await client.put('/likes/1', {
+            
+            listingId:listing._id
+
+          }
+          )
+          console.log(res.data)
+          console.log('res')
+          
+        }}
+        style={{}}
+      >
+        <MaterialCommunityIcons color="black" name="chevron-left" size={40} />
+        <Text>you say</Text>
+      </TouchableOpacity>
+      <Button title='open url' onPress={()=> Linking.openURL('whatsapp://send?phone=+2347080967435&text=you are stupid')}/>
+      <Button title='open url' onPress={()=> Linking.openURL('tel:+2348106218585')}/>
+      <Button title='open url'style={{width: '40%'}} onPress={()=> Linking.openURL('whatsapp://send?phone=+2347080967435&text=you are stupid')}/>
     </Screen>
   );
 }

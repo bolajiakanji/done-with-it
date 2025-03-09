@@ -90,3 +90,49 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+
+// const [seller, setSeller] = useState();
+//   const [index, setIndex] = useState(0);
+//   const listing = route.params;
+//   const endPoint = "/comments/" + listing._id;
+//   //const endpoint = "/comments";
+
+// const getComment = (bol) => {
+//   return client.get(endPoint, bol);
+// };
+
+//   const { data, request, error, setError, setData } = useApi(getComment);
+//   const ref = useRef(null);
+
+// useEffect(() => {
+    
+//   loadListing();
+  
+// }, []);
+
+// const loadListing = async () => {
+//   const response = await request({});
+
+//   console.log(response.data)
+//   console.log('response.data')
+//   if (!response.ok) {
+//     if (response.data) setError(response.data.error);
+//     else {
+//       setError("An unexpected error occured.");
+//     }
+//   }
+  
+// };
+
+// const uriArray = [];
+
+// for (const image of listing.images) {
+//   uriArray.push(image.url);
+// }
+
+// const previous = () => {
+//   ref?.current?.prev();
+// };
+// const next = () => {
+//   ref?.current?.next();
+// };

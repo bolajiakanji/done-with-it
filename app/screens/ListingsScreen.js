@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, Text, View, } from "react-native";
-import { Image } from 'expo-image'
+import { FlatList, StyleSheet, RefreshControl, Text, View } from "react-native";
+import { Image } from "expo-image";
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
 import Button from "../components/Button";
@@ -11,15 +11,11 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import { useApi } from "../hooks";
 import ListingFilterings from "./ListingFilterings";
-import SkeletonLoading from 'expo-skeleton-loading'
+import SkeletonLoading from "expo-skeleton-loading";
 import Skeleton from "./Skeleton";
 import authStorage from "../auth/storage";
 import useAuth from "../auth/useAuth";
-
-
-
-
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 
 function ListingsScreen({ navigation }) {
@@ -29,8 +25,7 @@ function ListingsScreen({ navigation }) {
   const [displayItems, setDisplayItems] = useState([]);
   const { request, setError, data, error, loading, setData, setLoading } =
     useApi(listingsApi.getListings);
-    const { user } = useAuth();
-
+  const { user } = useAuth();
 
   useEffect(() => {
     loadListings();
@@ -40,22 +35,20 @@ function ListingsScreen({ navigation }) {
     setLoading(true);
     const response = await request({ page: 1 });
     setLoading(false);
-    console.log('notoka2')
-    console.log(response)
+    console.log("notoka2");
+    console.log(response);
     if (!response) {
-      console.log('notokay')
-      
-      return setError("An unexpected error occured.")
-    };
-      if (response.data.error) return setError(response.data.error);
-      
-setListingsQueryObject((queryObject) => {
-      
+      console.log("notokay");
+
+      return setError("An unexpected error occured.");
+    }
+    if (response.data.error) return setError(response.data.error);
+
+    setListingsQueryObject((queryObject) => {
       return { ...queryObject, page: response.data.nextPage };
     });
     setData(response.data);
     setDisplayItems(response.data.resources);
-    
   };
   const loadListings_2 = async () => {
     console.log("heresh");
@@ -65,17 +58,16 @@ setListingsQueryObject((queryObject) => {
     setIsLoading(false);
 
     if (!response) {
-      console.log('notokay')
-      return setError("An unexpected error occured.")
-    };
-      if (response.data.error) return setError(response.data.error);
-    
+      console.log("notokay");
+      return setError("An unexpected error occured.");
+    }
+    if (response.data.error) return setError(response.data.error);
 
     setListingsQueryObject((queryObject) => ({
       ...queryObject,
       page: response.data.nextPage,
     }));
-setDisplayItems((dat) => [...dat, ...response.data.resources]);
+    setDisplayItems((dat) => [...dat, ...response.data.resources]);
   };
   const onEndReached = () => {
     console.log("hre21");
@@ -109,30 +101,69 @@ setDisplayItems((dat) => [...dat, ...response.data.resources]);
     loadListings();
     setRefreshing(false);
   };
-  console.log(error)
-  if (loading) return <Skeleton />
-  const me = async() => {
+  console.log(error);
+  if (loading) return <Skeleton />;
+  const me = async () => {
     const owner = await authStorage.getUser();
-    console.log(owner)
-return owner.image
-  }
+    console.log(owner);
+    return owner.image;
+  };
 
-console.log(user.image)
-console.log('beating')
+  console.log(user.image);
+  console.log("beating");
   return (
     <>
-     
-      
       <Screen style={styles.screen}>
-        <View style={{display: 'flex', flexDirection: 'row', justifyContent:"space-between",alignItems:'center'}}> 
-        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 5}}> 
-        <Image source={require('../../assets/images/adaptiveIcon.png')} style={{width: 40, height:40, borderRadius:8}} />
-          <Text style={{color: 'dodgerblue', fontWeight: "heavy", fontSize: 20}}>BORJI</Text>
-        </View>
-        <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  marginRight:10}}> 
-        <Image source={user.image}  style={{width: 33, height:33, borderRadius:25}}  />
-          <Text  style={{fontSize:11 }}>{user.email.slice(0,8)+' ...'}</Text>
-        </View>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              columnGap: 5,
+            }}
+          >
+            <Image
+              source={require("../../assets/images/adaptiveIcon.png")}
+              style={{ width: 40, height: 39, borderRadius: 8 }}
+            />
+            <Text
+              style={{ color: "dodgerblue", fontWeight: "bold", fontSize: 25 }}
+            >
+              BORJI
+            </Text>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginRight: 10,
+            }}
+          >
+            <View style={{ width: 29, height: 29, borderRadius: 25, backgroundColor: '#ccc',overflow:'hidden' }}>
+            {user.image ? (
+              <Image
+                source={user.image}
+                style={{ height:'100%', }}
+              />
+              ) : (
+                
+              <MaterialCommunityIcons name="account" size={28} color="gray"  />
+              
+            )}
+            </View>
+            <Text style={{ fontSize: 11 }}>
+              {user.email.slice(0, 8) + " ..."}
+            </Text>
+          </View>
         </View>
         {error && (
           <>
@@ -140,7 +171,6 @@ console.log('beating')
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
-          
 
         <ListingFilterings
           listingsQueryObject={listingsQueryObject}
@@ -150,8 +180,6 @@ console.log('beating')
           request={request}
           setData={setData}
         />
-        
-        
 
         <FlatList
           data={displayItems}
@@ -159,30 +187,24 @@ console.log('beating')
           renderItem={({ item }) => {
             return (
               <Card
-                timejs={item.createdAt}
-                title={item.title}
-                description={item.description}
-                subTitle={parseInt(item.price)}
-                imageUrl={item.images[0].url}
+                item={item}
                 onPress={() =>
                   navigation.navigate(routes.LISTING_DETAILS, item)
                 }
-                thumnailUrl={item.images[0].thumnailUrl}
               />
             );
           }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          
           onEndReached={onEndReached}
           //onEndReachedThreshold={0.5}
           ListEmptyComponent={listEmptyComponent}
           ListFooterComponent={listFooterComponent}
           //initialNumToRender={5}
-          
-          
-          numColumns='2'
+
+          numColumns="2"
+          columnWrapperStyle={{columnGap:6}}
         />
       </Screen>
     </>
