@@ -26,6 +26,7 @@ configureReanimatedLogger({
 });
 
 const width = Dimensions.get("window").width;
+const arrowMargin = width / 5;
 const marginTop = width / 2;
 
 function ListingDetailsScreen({ route }) {
@@ -79,19 +80,19 @@ console.log('hereuse')
   };
 
   return (
-    <Screen style={{position: 'relative'}} sta>
-      <View style={{ flex: 1 }}>
+    <Screen  >
+      <View style={{ flex: 1, position: 'relative' }}>
         <Carousel
           ref={ref}
           loop
           width={width}
           height={width / 2}
-          autoPlay={true}
+          autoPlay={uriArray.length > 1 ? true : false}
           data={uriArray}
-          scrollAnimationDuration={1500}
-          pagingEnabled={true}
+          scrollAnimationDuration={2000}
+          
           onSnapToItem={(index) => setIndex(index)}
-          animationConfig={{ mode: "vertical" }}
+          
           renderItem={(data) => {
             return (
               <View
@@ -106,7 +107,6 @@ console.log('hereuse')
             );
           }}
         />
-      </View>
       <View
         style={{
           position: "absolute",
@@ -117,27 +117,36 @@ console.log('hereuse')
           padding: 2,
         }}
       >
-        <Text style={{ color: "white" }}>
+        <Text style={{ color: "white", fontSize: 11 }}>
           {`${index + 1}/${uriArray.length} `}
         </Text>
-      </View>
+        </View>
+        {uriArray.length > 1 && (
+        <>
       <TouchableOpacity
         onPress={() => previous()}
-        style={{ position: "absolute", top: width / 6, left: 0 }}
+        style={{ position: "absolute", top: arrowMargin, left: 0 }}
       >
-        <MaterialCommunityIcons color="black" name="arrow-left" size={40} />
+        <MaterialCommunityIcons color="black" name="chevron-left" size={20} style={{margin:5,borderRadius:15, backgroundColor: 'white'}}/>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => next()}
-        style={{ position: "absolute", top: width / 6, right: 0 }}
+        style={{ position: "absolute", top: arrowMargin, right: 0 }}
       >
-        <MaterialCommunityIcons color="black" name="arrow-right" size={40} />
-      </TouchableOpacity>
+        <MaterialCommunityIcons color="black" name="chevron-right" size={20} style={{margin:5,borderRadius:15, backgroundColor: 'white'}} />
+          </TouchableOpacity>
+          </>
+        )
+        }
+      </View>
 
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{listing.title}</Text>
-        <Text style={{}}>{listing.description}</Text>
-        <Text style={styles.price}>${listing.price}</Text>
+        <Text  style={styles.title} numberOfLines={2}>{listing.title}</Text>
+        <Text style={{}} numberOfLines={3}>{listing.description} </Text>
+        {/* <Text style={styles.price}>${listing.price}</Text> */}
+        <Text style={styles.price}>
+        <Text style={{fontWeight: 'bold',fontSize:18, color: colors.secondary}}>#</Text>{parseInt(listing.price).toLocaleString()}
+        </Text>
 
         <ListItem
           image={listing.userId.image}
@@ -151,7 +160,7 @@ console.log('hereuse')
             
             listingId:listing._id
 
-          }
+          } 
           )
           console.log(res.data)
           console.log('res')
@@ -171,18 +180,20 @@ console.log('hereuse')
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    marginTop: marginTop,
-    padding: 10,
+    marginTop,
+    marginStart: 30,
+    paddingTop: 3,
   },
 
   price: {
     color: colors.secondary,
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 27,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "500",
+    fontSize: 25,
+    fontWeight: "bold",
+    color: 'gray'
   },
 });
 

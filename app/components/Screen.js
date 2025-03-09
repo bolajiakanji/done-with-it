@@ -5,7 +5,7 @@ const Screen = ({ children, statusBarColor, style, ...otherProp }) => {
   return (
     <SafeAreaView style={style}>
       {children}
-      <StatusBar style={statusBarColor} {...otherProp} />
+      <StatusBar style={statusBarColor}translucent={true} backgroundColor="blue" {...otherProp} />
     </SafeAreaView>
   );
 };

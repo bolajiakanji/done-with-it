@@ -148,7 +148,7 @@ function ListingsScreen({ navigation }) {
               marginRight: 10,
             }}
           >
-            <View style={{ width: 29, height: 29, borderRadius: 25, backgroundColor: '#ccc',overflow:'hidden' }}>
+            <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: '#ccc',overflow:'hidden' }}>
             {user.image ? (
               <Image
                 source={user.image}
