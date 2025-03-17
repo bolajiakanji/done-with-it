@@ -16,6 +16,9 @@ import Skeleton from "./Skeleton";
 import authStorage from "../auth/storage";
 import useAuth from "../auth/useAuth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AdvancedImage } from "cloudinary-react-native";
+import { Cloudinary } from "@cloudinary/url-gen";
+
 
 
 function ListingsScreen({ navigation }) {
@@ -26,6 +29,13 @@ function ListingsScreen({ navigation }) {
   const { request, setError, data, error, loading, setData, setLoading } =
     useApi(listingsApi.getListings);
   const { user } = useAuth();
+  const cld = new Cloudinary({
+    cloud: {
+        cloudName: 'dlutiw9i4'
+    }
+  });
+  // const myImage = cld.image('items/ca4ed4c3ed3f5c1689437f57f5a12408_full');
+
 
   useEffect(() => {
     loadListings();
@@ -49,6 +59,8 @@ function ListingsScreen({ navigation }) {
     });
     setData(response.data);
     setDisplayItems(response.data.resources);
+    console.log(response.data.resources);
+    console.log('response.data.resources');
   };
   const loadListings_2 = async () => {
     console.log("heresh");
@@ -130,16 +142,19 @@ function ListingsScreen({ navigation }) {
               columnGap: 5,
             }}
           >
-            <Image
+            {/* <Image
               source={require("../../assets/images/adaptiveIcon.png")}
               style={{ width: 40, height: 39, borderRadius: 8 }}
-            />
+            /> */}
+
             <Text
               style={{ color: "dodgerblue", fontWeight: "bold", fontSize: 25 }}
             >
+              {/* 'http://192.168.127.87:9000/assets/http://res.cloudinary.com/dlutiw9i4/image/upload/v1741593827/items/c5db80428d74a5602b8fcb542033dde4_full.jpg */}
               BORJI
             </Text>
           </View>
+                    {/* <AdvancedImage cldImg={myImage} style={{ width: 100, height: 100, alignSelf: 'center'}} /> */}
           <View
             style={{
               display: "flex",
@@ -185,9 +200,16 @@ function ListingsScreen({ navigation }) {
           data={displayItems}
           keyExtractor={(listing, index) => index}
           renderItem={({ item }) => {
+            console.log('myinage')
+            console.log(item.images[0])
+            const myImage = cld.image(item.images[0]);
+            console.log(myImage)
+            console.log('myin33age')
+
             return (
               <Card
                 item={item}
+                myImage={myImage}
                 onPress={() =>
                   navigation.navigate(routes.LISTING_DETAILS, item)
                 }

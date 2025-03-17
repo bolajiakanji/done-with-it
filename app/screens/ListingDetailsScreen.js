@@ -20,6 +20,7 @@ import client from "../api/client";
 import { configureReanimatedLogger } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useApi } from "../hooks";
+import timeAgo from "../utility/timeAgo";
 
 configureReanimatedLogger({
   strict: false,
@@ -30,7 +31,7 @@ const arrowMargin = width / 5;
 const marginTop = width / 2;
 
 function ListingDetailsScreen({ route }) {
-  const [seller, setSeller] = useState();
+  const [comments, setComments] = useState([5,7,9]);
   const [index, setIndex] = useState(0);
   const listing = route.params;
   const endPoint = "/comments/" + listing._id;
@@ -64,13 +65,13 @@ console.log('hereuse')
     
   };
 
-  const uriArray = [];
+ const uriArray = listing.images;
 
-  for (const image of listing.images) {
-    console.log('boji')
-    uriArray.push(image.url);
-    console.log('boji2')
-  }
+  // for (const image of listing.images) {
+  //   console.log('boji')
+  //   uriArray.push(image.url);
+  //   console.log('boji2')
+  // }
 
   const previous = () => {
     ref?.current?.prev();
@@ -87,8 +88,8 @@ console.log('hereuse')
           loop
           width={width}
           height={width / 2}
-          autoPlay={uriArray.length > 1 ? true : false}
-          data={uriArray}
+          autoPlay={listing.images.length > 1 ? true : false}
+          data={listing.images}
           scrollAnimationDuration={2000}
           
           onSnapToItem={(index) => setIndex(index)}
@@ -102,7 +103,7 @@ console.log('hereuse')
                   justifyContent: "center",
                 }}
               >
-                <Image source={data.item} style={{ flex: 1 }} />
+                <Image source={data} style={{ flex: 1 }} />
               </View>
             );
           }}
@@ -147,12 +148,28 @@ console.log('hereuse')
         <Text style={styles.price}>
         <Text style={{fontWeight: 'bold',fontSize:18, color: colors.secondary}}>#</Text>{parseInt(listing.price).toLocaleString()}
         </Text>
+          <ListItem
+            image={listing.userId.image}
+            title={listing.userId.name}
+            subTitle={`${listing.userId.userListings} items available for sell`}
+          />
+        <View style={{display: 'flex', flexDirection: 'row',justifyContent:'space-around',width: 100, marginVertical:7}}>
+          <Text style={{ color: "#bbb", fontSize: 12 }}>{timeAgo(listing.createdAt) + ' ago'}</Text>
+          <Text style={{ color: "#bbb", fontSize: 12 }}>
+            {listing.likes ? listing.likes.length + " likes" : ""}
+          </Text >
+          <Text style={{ color: "#bbb", fontSize: 12 }}>{listing.comment == undefined
+              ? "0 comment"
+              : listing.comment + " comments"}</Text>
+        </View>
 
-        <ListItem
-          image={listing.userId.image}
-          title={listing.userId.name}
-          subTitle={`${listing.userId.userListings} listings`}
-        />
+      </View>
+      <View>
+        <View style={{height:250, width: '100%', backgroundColor: 'green'}}>
+        {comments.map(comment => (
+            <Text key={comment}>{comment}</Text>
+          ))}
+          </View>
       </View>
       <TouchableOpacity
         onPress={async() => {
@@ -182,6 +199,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     marginTop,
     marginStart: 30,
+    marginEnd:10,
     paddingTop: 3,
   },
 
@@ -189,11 +207,14 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontWeight: "bold",
     fontSize: 27,
+    marginVertical: 2
   },
   title: {
     fontSize: 25,
     fontWeight: "bold",
-    color: 'gray'
+    color: 'gray',
+    marginBottom: 3
+
   },
 });
 
