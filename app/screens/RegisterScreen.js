@@ -31,7 +31,7 @@ const Register = () => {
   const handleSubmit = async ({ email, name, password }) => {
     console.log(email + name + password)
     const response = await registerApi.request({ name, email, password });
-
+console.log('reshere')
     if (!response.ok) {
       if (response.data) setError(response.data.error);
       else {

@@ -20,7 +20,11 @@ import client from "../api/client";
 import { configureReanimatedLogger } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useApi } from "../hooks";
+import { AdvancedImage } from "cloudinary-react-native";
+
 import timeAgo from "../utility/timeAgo";
+import { Cloudinary } from "@cloudinary/url-gen";
+
 
 configureReanimatedLogger({
   strict: false,
@@ -35,6 +39,11 @@ function ListingDetailsScreen({ route }) {
   const [index, setIndex] = useState(0);
   const listing = route.params;
   const endPoint = "/comments/" + listing._id;
+  const cld = new Cloudinary({
+    cloud: {
+        cloudName: 'dlutiw9i4'
+    }
+  });
   //const endpoint = "/comments";
 
 const getComment = (bol) => {
@@ -79,6 +88,7 @@ console.log('hereuse')
   const next = () => {
     ref?.current?.next();
   };
+  const testarr = [2,3,4]
 
   return (
     <Screen  >
@@ -95,6 +105,10 @@ console.log('hereuse')
           onSnapToItem={(index) => setIndex(index)}
           
           renderItem={(data) => {
+            console.log(data.item)
+            const myImage = cld.image(data.item);
+            console.log(myImage)
+
             return (
               <View
                 style={{
@@ -103,7 +117,10 @@ console.log('hereuse')
                   justifyContent: "center",
                 }}
               >
-                <Image source={data} style={{ flex: 1 }} />
+                
+                        <AdvancedImage cldImg={myImage} style={styles.image} />
+                
+                {/* <Image source={data} style={{ flex: 1 }} /> */}
               </View>
             );
           }}
@@ -215,6 +232,10 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginBottom: 3
 
+  },
+  image: {
+    width: "100%",
+    height: '100%',
   },
 });
 
