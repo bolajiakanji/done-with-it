@@ -9,8 +9,8 @@ function NewListingButton({ onPress }) {
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <MaterialCommunityIcons
-          name="plus-circle"
-          color={colors.white}
+          name="access-point-network"
+          color='blue'
           size={40}
         />
       </View>

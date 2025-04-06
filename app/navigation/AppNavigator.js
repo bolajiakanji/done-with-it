@@ -15,14 +15,21 @@ import LoginScreen from "../screens/LoginScreen";
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    screenOptions={{
+      tabBarHideOnKeyboard: true,
+      tabBarBackground: 'blue'
+    }}
+  
+  >
     <Tab.Screen
       name="Feed"
       component={LoginScreen}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="home" color={color} size={size} />
+          <MaterialCommunityIcons name="home" color='green' size={size} />
         ),
+        tabBarHideOnKeyboard: true
       }}
     />
     <Tab.Screen

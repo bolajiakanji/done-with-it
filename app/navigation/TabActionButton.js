@@ -11,7 +11,7 @@ const TabActionButton = ({ onPress }) => {
             style={styles.container}
             underlayColor={colors.medium}
         >
-            <MaterialCommunityIcons name="plus-circle" style={styles.icon} />
+            <MaterialCommunityIcons name="plus" style={styles.icon} />
         </TouchableHighlight>
     )
 }
@@ -19,18 +19,18 @@ const TabActionButton = ({ onPress }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-         backgroundColor: colors.primary,
-        borderColor: colors.white,
-        borderWidth: 6,
-        borderRadius: 40,
-        bottom: 30,
-        height: 80,
+         
+        
+        
+        
+        
+        
         justifyContent: "center",
-        width: 80,
+        
     },
     icon: {
-        fontSize: 45,
-        color: colors.white,
+        fontSize: 40,
+        color: colors.primary,
     },
 })
 

@@ -15,7 +15,12 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        
+        
+    }}>
       <Tab.Screen
         name="Fee"
         component={FeedNavigator}

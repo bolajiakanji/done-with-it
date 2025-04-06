@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Button,
   Linking,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ScrollView
 } from "react-native";
 import { Image } from "expo-image";
 import Screen from "../components/Screen";
@@ -38,7 +39,7 @@ const marginTop = width / 2;
 
 function ListingDetailsScreen({ route }) {
   const [comments, setComments] = useState([5,7,9]);
-  const [postingComments, setPostingComments] = useState('sdff');
+  const [postingComments, setPostingComments] = useState('');
   const [index, setIndex] = useState(0);
   const listing = route.params;
   const endPoint = "/comments/" + listing._id;
@@ -187,32 +188,40 @@ console.log('hereuse')
       </View>
       <KeyboardAvoidingView behavior="position">
 
-      <View>
-        <View style={{height:250, width: '100%', backgroundColor: 'green',overflowY: 'scroll'}}>
-        {comments.map(comment => (
-            <Text key={comment._id}>{comment.comment}</Text>
+        <View style={{ height: 320,backgroundColor: '#bbb',position: 'relative' }}>
+          <View style={{height: 220,backgroundColor:'#ddd', paddingTop: 10}}>
+        <ScrollView style={{ width: '100%', }}>
+            {comments.map(comment => (
+          <View key={comment._id}>
+                <Text >{comment.comment}</Text>
+                </View>
         ))}
-          <View style={{display: 'flex', flexDirection: 'row',justifyContent: 'center', gap: 10, alignItems: 'center'}}>
-          <AppTextInput width="75%" value={postingComments} onChangeText={(e) => {
+            </ScrollView>
+            </View>
+          <View style={{display: 'flex',marginTop:10, flexDirection: 'row',justifyContent: 'center', gap: 10, alignItems: 'center'}}>
+              <AppTextInput width="75%" maxHeight={48}  value={postingComments} allowFontScaling={false} autoCorrect={true}
+                style={{padding:0, width: '100%', }}
+                caretHidden={true}
+                multiline={true}
+                onChangeText={(e) => {
             console.log('mdff');
             console.log(e);
             console.log(postingComments)
             setPostingComments(e)
-            }} />
-            <MaterialCommunityIcons
-              onPress={async () => {
-                console.log('clicked')
-                const res = await client.post(endPoint, {
-                  comment: postingComments
-                })
-                console.log(res.data)
-                setPostingComments('')
-                setComments(res.data)
-              }}
-              name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />
+              }} />{postingComments && (
+                <MaterialCommunityIcons
+                  onPress={async () => {
+                    console.log('clicked')
+                    const res = await client.post(endPoint, {
+                      comment: postingComments
+                    })
+                    console.log(res.data)
+                    setPostingComments('')
+                    setComments(res.data)
+                  }}
+                  name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />)}
             </View>
-          </View>
-        </View>
+            </View>
         </KeyboardAvoidingView>
       <TouchableOpacity
         onPress={async() => {
@@ -245,6 +254,7 @@ const styles = StyleSheet.create({
     marginStart: 30,
     marginEnd:10,
     paddingTop: 3,
+    
   },
 
   price: {
