@@ -6,7 +6,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Button,
-  Linking
+  Linking,
+  KeyboardAvoidingView
 } from "react-native";
 import { Image } from "expo-image";
 import Screen from "../components/Screen";
@@ -24,6 +25,7 @@ import { AdvancedImage } from "cloudinary-react-native";
 
 import timeAgo from "../utility/timeAgo";
 import { Cloudinary } from "@cloudinary/url-gen";
+import AppTextInput from "../components/TextInput";
 
 
 configureReanimatedLogger({
@@ -36,6 +38,7 @@ const marginTop = width / 2;
 
 function ListingDetailsScreen({ route }) {
   const [comments, setComments] = useState([5,7,9]);
+  const [postingComments, setPostingComments] = useState('sdff');
   const [index, setIndex] = useState(0);
   const listing = route.params;
   const endPoint = "/comments/" + listing._id;
@@ -88,7 +91,8 @@ console.log('hereuse')
   const next = () => {
     ref?.current?.next();
   };
-  const testarr = [2,3,4]
+  const testarr = [2, 3, 4]
+  
 
   return (
     <Screen  >
@@ -105,9 +109,9 @@ console.log('hereuse')
           onSnapToItem={(index) => setIndex(index)}
           
           renderItem={(data) => {
-            console.log(data.item)
+            
             const myImage = cld.image(data.item);
-            console.log(myImage)
+            
 
             return (
               <View
@@ -155,21 +159,21 @@ console.log('hereuse')
           </TouchableOpacity>
           </>
         )
-        }
+      }
       </View>
 
       <View style={styles.detailsContainer}>
+      <ListItem
+        image={listing.userId.image}
+        title={listing.userId.name}
+        subTitle={`${listing.userId.userListings} items available for sell`}
+      />
         <Text  style={styles.title} numberOfLines={2}>{listing.title}</Text>
         <Text style={{}} numberOfLines={3}>{listing.description} </Text>
         {/* <Text style={styles.price}>${listing.price}</Text> */}
         <Text style={styles.price}>
         <Text style={{fontWeight: 'bold',fontSize:18, color: colors.secondary}}>#</Text>{parseInt(listing.price).toLocaleString()}
         </Text>
-          <ListItem
-            image={listing.userId.image}
-            title={listing.userId.name}
-            subTitle={`${listing.userId.userListings} items available for sell`}
-          />
         <View style={{display: 'flex', flexDirection: 'row',justifyContent:'space-around',width: 100, marginVertical:7}}>
           <Text style={{ color: "#bbb", fontSize: 12 }}>{timeAgo(listing.createdAt) + ' ago'}</Text>
           <Text style={{ color: "#bbb", fontSize: 12 }}>
@@ -181,13 +185,35 @@ console.log('hereuse')
         </View>
 
       </View>
+      <KeyboardAvoidingView behavior="position">
+
       <View>
-        <View style={{height:250, width: '100%', backgroundColor: 'green'}}>
+        <View style={{height:250, width: '100%', backgroundColor: 'green',overflowY: 'scroll'}}>
         {comments.map(comment => (
-            <Text key={comment}>{comment}</Text>
-          ))}
+            <Text key={comment._id}>{comment.comment}</Text>
+        ))}
+          <View style={{display: 'flex', flexDirection: 'row',justifyContent: 'center', gap: 10, alignItems: 'center'}}>
+          <AppTextInput width="75%" value={postingComments} onChangeText={(e) => {
+            console.log('mdff');
+            console.log(e);
+            console.log(postingComments)
+            setPostingComments(e)
+            }} />
+            <MaterialCommunityIcons
+              onPress={async () => {
+                console.log('clicked')
+                const res = await client.post(endPoint, {
+                  comment: postingComments
+                })
+                console.log(res.data)
+                setPostingComments('')
+                setComments(res.data)
+              }}
+              name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />
+            </View>
           </View>
-      </View>
+        </View>
+        </KeyboardAvoidingView>
       <TouchableOpacity
         onPress={async() => {
           const res = await client.put('/likes/1', {
@@ -208,6 +234,7 @@ console.log('hereuse')
       <Button title='open url' onPress={()=> Linking.openURL('whatsapp://send?phone=+2347080967435&text=you are stupid')}/>
       <Button title='open url' onPress={()=> Linking.openURL('tel:+2348106218585')}/>
       <Button title='open url'style={{width: '40%'}} onPress={()=> Linking.openURL('whatsapp://send?phone=+2347080967435&text=you are stupid')}/>
+      
     </Screen>
   );
 }
