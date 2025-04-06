@@ -8,7 +8,8 @@ import {
   Button,
   Linking,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { Image } from "expo-image";
 import Screen from "../components/Screen";
@@ -27,6 +28,7 @@ import { AdvancedImage } from "cloudinary-react-native";
 import timeAgo from "../utility/timeAgo";
 import { Cloudinary } from "@cloudinary/url-gen";
 import AppTextInput from "../components/TextInput";
+import PostComment from "../components/PostComment";
 
 
 configureReanimatedLogger({
@@ -42,6 +44,8 @@ function ListingDetailsScreen({ route }) {
   const [postingComments, setPostingComments] = useState('');
   const [index, setIndex] = useState(0);
   const listing = route.params;
+  const [loadingComment, setLoadingComment] = useState(false)
+
   const endPoint = "/comments/" + listing._id;
   const cld = new Cloudinary({
     cloud: {
@@ -189,37 +193,50 @@ console.log('hereuse')
       <KeyboardAvoidingView behavior="position">
 
         <View style={{ height: 320,backgroundColor: '#bbb',position: 'relative' }}>
-          <View style={{height: 220,backgroundColor:'#ddd', paddingTop: 10}}>
+          <View style={{height: width/1.5,backgroundColor:'#ddd', paddingTop: 10}}>
         <ScrollView style={{ width: '100%', }}>
-            {comments.map(comment => (
-          <View key={comment._id}>
+            {comments.map((comment, m)=> (
+          <View key={m}>
                 <Text >{comment.comment}</Text>
                 </View>
         ))}
             </ScrollView>
             </View>
           <View style={{display: 'flex',marginTop:10, flexDirection: 'row',justifyContent: 'center', gap: 10, alignItems: 'center'}}>
-              <AppTextInput width="75%" maxHeight={48}  value={postingComments} allowFontScaling={false} autoCorrect={true}
+              <AppTextInput width="75%" maxHeight={38}  value={postingComments} allowFontScaling={false} autoCorrect={true}
                 style={{padding:0, width: '100%', }}
-                caretHidden={true}
-                multiline={true}
+                clearTextOnFocus={true}
+              multiline={true}
+              placeholder='Type comment'
                 onChangeText={(e) => {
             console.log('mdff');
             console.log(e);
             console.log(postingComments)
             setPostingComments(e)
-              }} />{postingComments && (
-                <MaterialCommunityIcons
-                  onPress={async () => {
-                    console.log('clicked')
-                    const res = await client.post(endPoint, {
-                      comment: postingComments
-                    })
-                    console.log(res.data)
-                    setPostingComments('')
-                    setComments(res.data)
-                  }}
-                  name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />)}
+              }} />
+            { loadingComment && <ActivityIndicator />}
+            {postingComments && !loadingComment && (
+              <PostComment
+                endPoint={endPoint}
+                setComments={setComments}
+                postingComments={postingComments}
+                setPostingComments={setPostingComments}
+                loading={loadingComment}
+                setLoading={setLoadingComment}
+
+              />
+                // <MaterialCommunityIcons
+                //   onPress={async () => {
+                //     console.log('clicked')
+                //     const res = await client.post(endPoint, {
+                //       comment: postingComments
+                //     })
+                //     console.log(res.data)
+                //   setPostingComments('')
+                //   if (res.data) setComments(res.data)
+                //   }}
+                // name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />
+            )}
             </View>
             </View>
         </KeyboardAvoidingView>
