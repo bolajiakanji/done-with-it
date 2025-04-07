@@ -167,21 +167,27 @@ console.log('hereuse')
         <Text style={styles.price}>
         <Text style={{fontWeight: 'bold',fontSize:18, color: colors.secondary}}>#</Text>{parseInt(listing.price).toLocaleString()}
         </Text>
-        <View style={{display: 'flex', flexDirection: 'row',justifyContent:'space-around',width: 100, marginVertical:7}}>
-          <Text style={{ color: "#bbb", fontSize: 12 }}>{timeAgo(listing.createdAt) + ' ago'}</Text>
+        <View style={{display: 'flex', flexDirection: 'row',justifyContent:'space-between',width: "100%", marginVertical:7, paddingRight:20}}>
+          <View>
+          <Text style={{ color: "#bbb", fontSize: 12 }}>{comments.length == undefined || listing.comment < 2
+              ? "0 comment"
+              : comments.length + " comments"}</Text>
+          </View>
+          <View>
           <Text style={{ color: "#bbb", fontSize: 12 }}>
             {listing.likes ? listing.likes.length + " likes" : ""}
-          </Text >
-          <Text style={{ color: "#bbb", fontSize: 12 }}>{listing.comment == undefined
-              ? "0 comment"
-              : listing.comment + " comments"}</Text>
-        </View>
+            </Text >
+          </View>
+          <View>
+            <Text style={{ color: "#bbb", fontSize: 12 }}>{timeAgo(listing.createdAt) + ' ago'}</Text>
+            </View>
+</View>
 
       </View>
       <KeyboardAvoidingView behavior="position">
 
-        <View style={{ height: 320,backgroundColor: '#bbb',position: 'relative' }}>
-          <View style={{height: width/1.5,backgroundColor:'#ddd', paddingTop: 10}}>
+        <View style={{ height: 320,backgroundColor: '#bbb',position: 'relative', }}>
+          <View style={{height: width/1.5,backgroundColor:'#ddd', paddingTop: 10, paddingHorizontal:12}}>
         <ScrollView style={{ width: '100%', }}>
             {comments.map(comment=> (
           <View key={comment._id} style={{display: 'flex',marginTop:10, flexDirection: 'row', gap: 10,flex: 'wrap' }}>
