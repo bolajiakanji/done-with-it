@@ -20,6 +20,7 @@ function PostComment({ endPoint, postingComments, setPostingComments, setComment
                     })
           setLoading(false)
                     console.log(res.data)
+                    console.log('res.data')
                   if (res.data) setComments(res.data.reverse())
                   }}
                   name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />

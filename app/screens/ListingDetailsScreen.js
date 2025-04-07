@@ -13,8 +13,6 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import Screen from "../components/Screen";
-
-
 import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
@@ -24,7 +22,6 @@ import { configureReanimatedLogger } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useApi } from "../hooks";
 import { AdvancedImage } from "cloudinary-react-native";
-
 import timeAgo from "../utility/timeAgo";
 import { Cloudinary } from "@cloudinary/url-gen";
 import AppTextInput from "../components/TextInput";
@@ -40,7 +37,7 @@ const arrowMargin = width / 5;
 const marginTop = width / 2;
 
 function ListingDetailsScreen({ route }) {
-  const [comments, setComments] = useState([5,7,9]);
+  const [comments, setComments] = useState([]);
   const [postingComments, setPostingComments] = useState('');
   const [index, setIndex] = useState(0);
   const listing = route.params;
@@ -63,32 +60,23 @@ const getComment = (bol) => {
 console.log('hereuse')
 
   useEffect(() => {
+   loadListing() 
     
-    loadListing();
-    console.log('use')
+
   }, []);
 
   const loadListing = async () => {
-    const response = await request({});
-
-    console.log(response.data)
-    console.log('response.data')
-    if (!response.ok) {
-      if (response.data) setError(response.data.error);
-      else {
-        setError("An unexpected error occured.");
-      }
-    }
+    const res = await client.get(endPoint)
+              
+                        console.log(res.data)
+                        console.log('res.data')
+                      if (res.data) setComments(res.data.reverse())
     
   };
 
  const uriArray = listing.images;
 
-  // for (const image of listing.images) {
-  //   console.log('boji')
-  //   uriArray.push(image.url);
-  //   console.log('boji2')
-  // }
+  
 
   const previous = () => {
     ref?.current?.prev();
@@ -195,9 +183,20 @@ console.log('hereuse')
         <View style={{ height: 320,backgroundColor: '#bbb',position: 'relative' }}>
           <View style={{height: width/1.5,backgroundColor:'#ddd', paddingTop: 10}}>
         <ScrollView style={{ width: '100%', }}>
-            {comments.map((comment, m)=> (
-          <View key={m}>
-                <Text >{comment.comment}</Text>
+            {comments.map(comment=> (
+          <View key={comment._id} style={{display: 'flex',marginTop:10, flexDirection: 'row', gap: 10,flex: 'wrap' }}>
+                <View>
+
+                  { comment.userId?.image && <MaterialCommunityIcons name="account" size={28} color="gray"  />}
+                </View>
+                <View style={{ display: 'flex',  flexDirection: 'row', rowGap: 5, flexWrap: 'wrap' }}>
+                  <View >
+                  <Text style={{color: 'gray',fontSize: 14, }} >{comment.userId.name}</Text>
+                    
+                    </View>
+                  <Text style={{ fontSize: 16,  }}>{comment.comment}</Text>
+                    <Text style={{fontSize:11, color: 'gray'}}>{timeAgo(comment.createdAt) + ' ago'}</Text>
+                </View>
                 </View>
         ))}
             </ScrollView>
@@ -225,17 +224,6 @@ console.log('hereuse')
                 setLoading={setLoadingComment}
 
               />
-                // <MaterialCommunityIcons
-                //   onPress={async () => {
-                //     console.log('clicked')
-                //     const res = await client.post(endPoint, {
-                //       comment: postingComments
-                //     })
-                //     console.log(res.data)
-                //   setPostingComments('')
-                //   if (res.data) setComments(res.data)
-                //   }}
-                // name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />
             )}
             </View>
             </View>
@@ -295,154 +283,3 @@ const styles = StyleSheet.create({
 
 export default ListingDetailsScreen;
 
-// import React, { useEffect, useRef, useState } from "react";
-// import {
-//   View,
-//   StyleSheet,
-//   Dimensions,
-//   TouchableHighlight,
-//   TouchableOpacity,
-// } from "react-native";
-// import { Image } from "expo-image";
-
-// import colors from "../config/colors";
-// import ListItem from "../components/lists/ListItem";
-// import Text from "../components/Text";
-// import Carousel from "react-native-reanimated-carousel";
-// import client from "../api/client";
-// import { configureReanimatedLogger } from "react-native-reanimated";
-// import { MaterialCommunityIcons } from "@expo/vector-icons";
-// import { useApi } from "../hooks";
-
-// // configureReanimatedLogger({
-// //   strict: false,
-// // });
-
-// const width = Dimensions.get("window").width;
-// const marginTop = width / 2;
-
-// function ListingDetailsScreen({ route }) {
-//   const [seller, setSeller] = useState();
-//   const [index, setIndex] = useState(0);
-//   const {request, setError, data} = useApi(getSeller)
-//   const ref = useRef(null);
-
-//   const listing = route.params;
-//   const endPoint = "/user/" + listing.userId;
-
-//   useEffect(() => {
-//     loadListing()
-//   }, []);
-
-//   const getSeller = async () => {
-//     console.log("ok here");
-//     client.get(endPoint);
-
-//   };
-//   const loadListing = async () => {
-//     const response = await request({});
-//     if (!response.ok) {
-//       if (response.data) setError(response.data.error);
-//       else {
-//         setError("An unexpected error occured.");
-//       }
-//     }
-//   }
-
-//   const uriArray = [];
-
-//   for (const image of listing.images) {
-//     uriArray.push(image.url);
-//   }
-
-//   const previous = () => {
-//     ref?.current?.prev();
-//   };
-//   const next = () => {
-//     ref?.current?.next();
-//   };
-
-//   return (
-//     <View>
-//       <View style={{ flex: 1 }}>
-//         <Carousel
-//           ref={ref}
-//           loop
-//           width={width}
-//           height={width / 2}
-//           autoPlay={true}
-//           data={listing.images}
-//           scrollAnimationDuration={1500}
-//           pagingEnabled={true}
-//           onSnapToItem={(index) => setIndex(index)}
-//           animationConfig={{mode: 'vertical'}}
-//           renderItem={(data) => {
-//             return (
-//               <View
-//                 style={{
-//                   flex: 1,
-
-//                   justifyContent: "center",
-//                 }}
-//               >
-//                 <Image source={data.item} style={{ flex: 1 }} />
-//               </View>
-//             );
-//           }}
-//         />
-//       </View>
-//       <View style={{position: 'absolute', right: 10, top: 5, backgroundColor: 'black', borderRadius: '50%', padding: 2}}>
-//                 <Text style={{ color: 'white'}} >
-// {`${index + 1}/${uriArray.length} `}
-//         </Text>
-//         </View>
-//       <TouchableOpacity
-//         onPress={() => previous()}
-//         style={{ position: "absolute", top: width / 6, left: 0 }}
-//       >
-//         <MaterialCommunityIcons color="black" name="arrow-left" size={40} />
-//       </TouchableOpacity>
-//       <TouchableOpacity
-//         onPress={() => next()}
-//         style={{ position: "absolute", top: width / 6, right: 0 }}
-//       >
-//         <MaterialCommunityIcons color="black" name="arrow-right" size={40} />
-//       </TouchableOpacity>
-
-//       <View style={styles.detailsContainer}>
-//         <Text style={styles.title}>{listing.title}</Text>
-//         <Text style={{}}>{listing.description}</Text>
-//         <Text style={styles.price}>${listing.price}</Text>
-
-//         <View style={styles.userContainer}>
-//           {seller && (
-//             <ListItem
-//               image="http://192.168.39.87:9000/assets/mail.jpg"
-//               title={seller.name}
-//               subTitle={`${seller.listings} listings`}
-//             />
-//           )}
-//         </View>
-//       </View>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   detailsContainer: {
-//     marginTop: marginTop,
-//     padding: 10,
-//   },
-
-//   price: {
-//     color: colors.secondary,
-//     fontWeight: "bold",
-//     fontSize: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: "500",
-//   },
-// });
-
-// export default ListingDetailsScreen;
