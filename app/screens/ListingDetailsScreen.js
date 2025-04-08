@@ -26,6 +26,7 @@ import timeAgo from "../utility/timeAgo";
 import { Cloudinary } from "@cloudinary/url-gen";
 import AppTextInput from "../components/TextInput";
 import PostComment from "../components/PostComment";
+import getPluralisedWord from "../utility/pluralisedWord";
 
 
 configureReanimatedLogger({
@@ -38,6 +39,7 @@ const marginTop = width / 2;
 
 function ListingDetailsScreen({ route }) {
   const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [postingComments, setPostingComments] = useState('');
   const [index, setIndex] = useState(0);
   const listing = route.params;
@@ -73,7 +75,8 @@ console.log('hereuse')
                       if (res.data) setComments(res.data.reverse())
     
   };
-
+const numberOfComments = comments.length === 0 ? listing.comments : comments.length
+const numberOfLikes = likes.length === 0 ? listing.likes.length : likes.length
  const uriArray = listing.images;
 
   
@@ -156,30 +159,33 @@ console.log('hereuse')
       </View>
 
       <View style={styles.detailsContainer}>
-      <ListItem
-        image={listing.userId.image}
-        title={listing.userId.name}
-        subTitle={`${listing.userId.userListings} items available for sell`}
-      />
         <Text  style={styles.title} numberOfLines={2}>{listing.title}</Text>
         <Text style={{}} numberOfLines={3}>{listing.description} </Text>
         {/* <Text style={styles.price}>${listing.price}</Text> */}
         <Text style={styles.price}>
         <Text style={{fontWeight: 'bold',fontSize:18, color: colors.secondary}}>#</Text>{parseInt(listing.price).toLocaleString()}
         </Text>
+      <ListItem
+        image={listing.userId.image}
+        title={listing.userId.name}
+        subTitle={`${listing.userId.userListings} items available for sell`}
+      />
         <View style={{display: 'flex', flexDirection: 'row',justifyContent:'space-between',width: "100%", marginVertical:7, paddingRight:20}}>
           <View>
-          <Text style={{ color: "#bbb", fontSize: 12 }}>{comments.length == undefined || listing.comment < 2
-              ? "0 comment"
-              : comments.length + " comments"}</Text>
+            <Text style={{ color: "gray", fontSize: 12 }}>
+              {getPluralisedWord(numberOfComments, 'comment')}
+            </Text>
           </View>
           <View>
-          <Text style={{ color: "#bbb", fontSize: 12 }}>
-            {listing.likes ? listing.likes.length + " likes" : ""}
+          
+          <Text style={{ color: "gray", fontSize: 12 }}>
+          {numberOfLikes + ' '}
+            <MaterialCommunityIcons name='thumb-up' />
             </Text >
-          </View>
+            
+            </View>
           <View>
-            <Text style={{ color: "#bbb", fontSize: 12 }}>{timeAgo(listing.createdAt) + ' ago'}</Text>
+            <Text style={{ color: "gray", fontSize: 12 }}>{timeAgo(listing.createdAt) + ' ago'}</Text>
             </View>
 </View>
 
@@ -187,17 +193,17 @@ console.log('hereuse')
       <KeyboardAvoidingView behavior="position">
 
         <View style={{ height: 320,backgroundColor: '#bbb',position: 'relative', }}>
-          <View style={{height: width/1.5,backgroundColor:'#ddd', paddingTop: 10, paddingHorizontal:12}}>
-        <ScrollView style={{ width: '100%', }}>
+          <View style={{height: width/1.6,backgroundColor:'#ddd',  paddingHorizontal:10 }}>
+        <ScrollView style={{ width: '100%', paddingRight:20 }}>
             {comments.map(comment=> (
-          <View key={comment._id} style={{display: 'flex',marginTop:10, flexDirection: 'row', gap: 10,flex: 'wrap' }}>
+          <View key={comment._id} style={{display: 'flex',marginTop:10, flexDirection: 'row', gap: 10,flex: 'wrap', paddingRight:30 }}>
                 <View>
 
-                  { comment.userId?.image && <MaterialCommunityIcons name="account" size={28} color="gray"  />}
+                  { comment.userId?.image && <MaterialCommunityIcons name="account" size={28} color="gray" style={{borderRadius:15, padding: 2, backgroundColor: '#bbb'}}  />}
                 </View>
                 <View style={{ display: 'flex',  flexDirection: 'row', rowGap: 5, flexWrap: 'wrap' }}>
                   <View >
-                  <Text style={{color: 'gray',fontSize: 14, }} >{comment.userId.name}</Text>
+                  <Text style={{color: 'gray',fontSize: 14, }} >{"@ " + comment.userId.name}</Text>
                     
                     </View>
                   <Text style={{ fontSize: 16,  }}>{comment.comment}</Text>
@@ -272,7 +278,8 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontWeight: "bold",
     fontSize: 27,
-    marginVertical: 2
+    marginBottom: 0,
+    textAlign: 'center'
   },
   title: {
     fontSize: 25,

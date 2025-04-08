@@ -6,6 +6,7 @@ import colors from "../config/colors";
 import timeAgo from "../utility/timeAgo";
 import { AdvancedImage } from "cloudinary-react-native";
 import SkeletonLoading from "expo-skeleton-loading";
+import getPluralisedWord from "../utility/pluralisedWord";
 
 
 
@@ -57,13 +58,12 @@ function Card({ item, onPress,myImage }) {
               {displayTime} ago
             </Text>
             <Text style={{ color: "#bbb", fontSize: 12 }}>
-              {item.likes ? item.likes.length + " likes" : ""}
+            {getPluralisedWord(item.likes.length, 'like')}
+
             </Text>
           </View>
           <Text style={{ textAlign: "center", color: "gray", fontSize: 12 }}>
-            {item.comment == undefined
-              ? "0 comment"
-              : item.comment + " comments"}
+            {getPluralisedWord(item.comments, 'comment')}
           </Text>
         </View>
       </View>
