@@ -7,15 +7,22 @@ import timeAgo from "../utility/timeAgo";
 import { AdvancedImage } from "cloudinary-react-native";
 import SkeletonLoading from "expo-skeleton-loading";
 import getPluralisedWord from "../utility/pluralisedWord";
+import getLikesColor from "../utility/likesColor";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 
 
 
 function Card({ item, onPress,myImage }) {
   const displayTime = timeAgo(item.createdAt);
-  const [go, setGo]=useState(false)
+  const [go, setGo] = useState(false)
+  const likesColor = getLikesColor(item.userId._id, item.likes)
+  const numberOfLikes = item.likes.length
+      
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
+      
       <View style={styles.card}>
         {go && (
           <SkeletonLoading background={"#adadad"} highlight={"#ffffff"}>
@@ -25,6 +32,7 @@ function Card({ item, onPress,myImage }) {
          /> 
 </SkeletonLoading>  )}
         <AdvancedImage cldImg={myImage} style={styles.image} />
+        
 
         <View style={styles.detailsContainer}>
           <Text style={styles.title} numberOfLines={1}>
@@ -54,12 +62,12 @@ function Card({ item, onPress,myImage }) {
               width: "65%",
             }}
           >
-            <Text style={{ color: "#bbb", fontSize: 12 }}>
-              {displayTime} ago
+            <Text style={{ color: likesColor, fontSize: 12 }}>
+              {numberOfLikes + " "}
+              <MaterialCommunityIcons name="thumb-up" />
             </Text>
             <Text style={{ color: "#bbb", fontSize: 12 }}>
-            {getPluralisedWord(item.likes.length, 'like')}
-
+              {displayTime} ago
             </Text>
           </View>
           <Text style={{ textAlign: "center", color: "gray", fontSize: 12 }}>
