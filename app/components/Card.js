@@ -9,14 +9,17 @@ import SkeletonLoading from "expo-skeleton-loading";
 import getPluralisedWord from "../utility/pluralisedWord";
 import getLikesColor from "../utility/likesColor";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import useAuth from "../auth/useAuth";
 
 
 
 
 function Card({ item, onPress,myImage }) {
   const displayTime = timeAgo(item.createdAt);
+ const {user} =useAuth()
   const [go, setGo] = useState(false)
-  const likesColor = getLikesColor(item.userId._id, item.likes)
+
+  const likesColor = getLikesColor(user._id, item.likes)
   const numberOfLikes = item.likes.length
       
 

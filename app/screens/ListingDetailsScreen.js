@@ -28,6 +28,7 @@ import AppTextInput from "../components/TextInput";
 import PostComment from "../components/PostComment";
 import getPluralisedWord from "../utility/pluralisedWord";
 import getLikesColor from "../utility/likesColor";
+import useAuth from "../auth/useAuth";
 
 configureReanimatedLogger({
   strict: false,
@@ -38,12 +39,14 @@ const arrowMargin = width / 5;
 const marginTop = width / 2;
 
 function ListingDetailsScreen({ route }) {
+  const listing = route.params;
   const [comments, setComments] = useState([]);
-  const [likes, setLikes] = useState([]);
+  const [likes, setLikes] = useState(listing.likes);
   const [postingComments, setPostingComments] = useState("");
   const [index, setIndex] = useState(0);
-  const listing = route.params;
   const [loadingComment, setLoadingComment] = useState(false);
+    const { user } = useAuth();
+  
 
   const endPoint = "/comments/" + listing._id;
   const cld = new Cloudinary({
@@ -76,13 +79,16 @@ function ListingDetailsScreen({ route }) {
     comments.length === 0 ? listing.comments : comments.length;
   
   const numberOfLikes =
-    likes.length === 0 ? listing.likes.length : likes.length;
+    likes.length;
   
   const likesColor =
-    likes.length === 0
-      ? getLikesColor(listing.userId._id, listing.likes)
-      : getLikesColor(listing.userId._id, likes);
+    getLikesColor(user._id, likes);
   const uriArray = listing.images;
+
+  const like_value = () => {
+    if (likes.includes(user._id)) return '-1'
+    return '1'
+  }
 
   const previous = () => {
     ref?.current?.prev();
@@ -212,12 +218,21 @@ function ListingDetailsScreen({ route }) {
               {getPluralisedWord(numberOfComments, "comment")}
             </Text>
           </View>
-          <View>
+          <TouchableOpacity
+            onPress={async () => {
+              console.log(like_value())
+            const res = await client.put(`/likes/${like_value()}`, {
+              listingId: listing._id,
+            });
+            console.log(res.data);
+              console.log("res");
+              setLikes(res.data)
+          }}>
             <Text style={{ color: likesColor, fontSize: 12 }}>
               {numberOfLikes + " "}
-              <MaterialCommunityIcons name="thumb-up" />
+              <MaterialCommunityIcons name="thumb-up"  />
             </Text>
-          </View>
+          </TouchableOpacity>
           <View>
             <Text style={{ color: "gray", fontSize: 12 }}>
               {timeAgo(listing.createdAt) + " ago"}
@@ -326,19 +341,7 @@ function ListingDetailsScreen({ route }) {
           </View>
         </View>
       </KeyboardAvoidingView>
-      <TouchableOpacity
-        onPress={async () => {
-          const res = await client.put("/likes/1", {
-            listingId: listing._id,
-          });
-          console.log(res.data);
-          console.log("res");
-        }}
-        style={{}}
-      >
-        <MaterialCommunityIcons color="black" name="chevron-left" size={40} />
-        <Text>you say</Text>
-      </TouchableOpacity>
+      
       <Button
         title="open url"
         onPress={() =>
