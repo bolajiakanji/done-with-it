@@ -36,6 +36,11 @@ function ListingsScreen({ navigation }) {
   });
   // const myImage = cld.image('items/ca4ed4c3ed3f5c1689437f57f5a12408_full');
 
+  const profileImage = cld.image(user.image)
+  console.log(profileImage)
+  console.log('profileImage')
+  console.log('profileImage')
+
 
   useEffect(() => {
     loadListings();
@@ -163,11 +168,11 @@ function ListingsScreen({ navigation }) {
               marginRight: 10,
             }}
           >
-            <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: '#ccc',overflow:'hidden' }}>
+            <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: 'yellow',overflow:'hidden' }}>
             {user.image ? (
-              <Image
-                source={user.image}
-                style={{ height:'100%', }}
+              <AdvancedImage
+                cldImg={profileImage}
+                style={{ height:'100%',width: '100%' }}
               />
               ) : (
                 

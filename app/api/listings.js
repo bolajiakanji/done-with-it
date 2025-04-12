@@ -19,7 +19,7 @@ export const addListing = (listing, onUploadProgress) => {
       uri: image,
       name: "image" + index,
       type: "image/jpeg",
-    })
+    }, `image${index}`)
   );
 
   return client.post(endpoint, data, {
