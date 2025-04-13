@@ -41,7 +41,7 @@ function Card({ item, onPress,myImage }) {
           <Text style={styles.title} numberOfLines={1}>
             {item.title}
           </Text>
-          <Text style={{}} numberOfLines={1}>
+          <Text style={{fontSize: 13}} numberOfLines={1}>
             {item.description}
           </Text>
 
@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
   subTitle: {
     color: colors.secondary,
     fontWeight: "bold",
-    fontSize: 17,
+    fontSize: 20,
     textAlign: "center",
   },
   title: {
     marginBottom: 2,
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
     color: "gray",
   },

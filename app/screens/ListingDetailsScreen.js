@@ -29,14 +29,18 @@ import PostComment from "../components/PostComment";
 import getPluralisedWord from "../utility/pluralisedWord";
 import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
+import UserShortInfo from "../components/UserShortInfo";
+//import { AdvancedImage } from "cloudinary-react-native";
+//import { Cloudinary } from "@cloudinary/url-gen";
+
 
 configureReanimatedLogger({
   strict: false,
 });
-
+  
 const width = Dimensions.get("window").width;
-const arrowMargin = width / 5;
-const marginTop = width / 2;
+const arrowMargin = width / 4.5;
+const marginTop = width / 1.8;
 
 function ListingDetailsScreen({ route }) {
   const listing = route.params;
@@ -45,6 +49,8 @@ function ListingDetailsScreen({ route }) {
   const [postingComments, setPostingComments] = useState("");
   const [index, setIndex] = useState(0);
   const [loadingComment, setLoadingComment] = useState(false);
+  const [loadingLikes, setLoadingLikes] = useState(false);
+  const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = useState(false);
     const { user } = useAuth();
   
 
@@ -54,7 +60,8 @@ function ListingDetailsScreen({ route }) {
       cloudName: "dlutiw9i4",
     },
   });
-  //const endpoint = "/comments";
+  
+
 
   const getComment = (bol) => {
     return client.get(endPoint, bol);
@@ -69,7 +76,9 @@ function ListingDetailsScreen({ route }) {
   }, []);
 
   const loadListing = async () => {
+    setLoadingCommentOnPageVisit(true)
     const res = await client.get(endPoint);
+    setLoadingCommentOnPageVisit(false)
 
     console.log(res.data);
     console.log("res.data");
@@ -105,7 +114,7 @@ function ListingDetailsScreen({ route }) {
           ref={ref}
           loop
           width={width}
-          height={width / 2}
+          height={width / 1.8}
           autoPlay={listing.images.length > 1 ? true : false}
           data={listing.images}
           scrollAnimationDuration={2000}
@@ -179,10 +188,10 @@ function ListingDetailsScreen({ route }) {
       </View>
 
       <View style={styles.detailsContainer}>
-        <Text style={styles.title} numberOfLines={2}>
+        <Text style={styles.title} numberOfLines={1}>
           {listing.title}
         </Text>
-        <Text style={{}} numberOfLines={3}>
+        <Text style={{}} numberOfLines={1}>
           {listing.description}{" "}
         </Text>
         {/* <Text style={styles.price}>${listing.price}</Text> */}
@@ -198,9 +207,10 @@ function ListingDetailsScreen({ route }) {
           </Text>
           {parseInt(listing.price).toLocaleString()}
         </Text>
-        <ListItem
+        <UserShortInfo
           image={listing.userId.image}
           title={listing.userId.name}
+          poster={listing.userId.image}
           subTitle={`${listing.userId.userListings} items available for sell`}
         />
         <View
@@ -218,21 +228,25 @@ function ListingDetailsScreen({ route }) {
               {getPluralisedWord(numberOfComments, "comment")}
             </Text>
           </View>
-          <TouchableOpacity
-            onPress={async () => {
-              console.log(like_value())
-            const res = await client.put(`/likes/${like_value()}`, {
-              listingId: listing._id,
-            });
-            console.log(res.data);
-              console.log("res");
-              setLikes(res.data)
-          }}>
-            <Text style={{ color: likesColor, fontSize: 12 }}>
-              {numberOfLikes + " "}
-              <MaterialCommunityIcons name="thumb-up"  />
-            </Text>
-          </TouchableOpacity>
+          {loadingLikes && <ActivityIndicator />}
+          { loadingLikes &&
+            <TouchableOpacity
+              onPress={async () => {
+                console.log(like_value())
+                const res = await client.put(`/likes/${like_value()}`, {
+                  listingId: listing._id,
+                });
+                setLoadingLikes(false)
+                console.log(res.data);
+                console.log("res");
+                setLikes(res.data)
+              }}>
+              <Text style={{ color: likesColor, fontSize: 12 }}>
+                {numberOfLikes + " "}
+                <MaterialCommunityIcons name="thumb-up" />
+              </Text>
+            </TouchableOpacity>
+          }
           <View>
             <Text style={{ color: "gray", fontSize: 12 }}>
               {timeAgo(listing.createdAt) + " ago"}
@@ -244,7 +258,9 @@ function ListingDetailsScreen({ route }) {
         <View
           style={{ height: 320, backgroundColor: "#bbb", position: "relative" }}
         >
-          <View
+          {!loadingCommentOnPageVisit && <ActivityIndicator style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}} />}
+          {!loadingCommentOnPageVisit &&
+            <View
             style={{
               height: width / 1.6,
               backgroundColor: "#ddd",
@@ -252,54 +268,62 @@ function ListingDetailsScreen({ route }) {
             }}
           >
             <ScrollView style={{ width: "100%", paddingRight: 20 }}>
-              {comments.map((comment) => (
-                <View
-                  key={comment._id}
-                  style={{
-                    display: "flex",
-                    marginTop: 10,
-                    flexDirection: "row",
-                    gap: 10,
-                    flex: "wrap",
-                    paddingRight: 30,
-                  }}
-                >
-                  <View>
-                    {comment.userId?.image && (
-                      <MaterialCommunityIcons
-                        name="account"
-                        size={28}
-                        color="gray"
-                        style={{
-                          borderRadius: 15,
-                          padding: 2,
-                          backgroundColor: "#bbb",
-                        }}
-                      />
-                    )}
-                  </View>
+              {comments.map((comment) => {
+                const profileImage = cld.image(comment.userId.image)
+                console.log(comment.userId.image)
+                console.log('profileImage23')
+                return (
                   <View
+                    key={comment._id}
                     style={{
                       display: "flex",
+                      marginTop: 10,
                       flexDirection: "row",
-                      rowGap: 5,
-                      flexWrap: "wrap",
+                      gap: 10,
+                      flex: "wrap",
+                      paddingRight: 30,
                     }}
                   >
                     <View>
-                      <Text style={{ color: "gray", fontSize: 14 }}>
-                        {"@ " + comment.userId.name}
+                      {!comment.userId.image && (
+                        <MaterialCommunityIcons
+                          name="account"
+                          size={28}
+                          color="gray"
+                          style={{
+                            borderRadius: 15,
+                            padding: 2,
+                            backgroundColor: "#bbb",
+                          }}
+                        />
+                      )}
+                      {comment.userId.image && (
+                        <AdvancedImage cldImg={profileImage} style={{ width: 35, height: 35, borderRadius: 20 }} />
+                      )}
+                    </View>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        rowGap: 5,
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <View>
+                        <Text style={{ color: "gray", fontSize: 14 }}>
+                          {"@ " + comment.userId.name}
+                        </Text>
+                      </View>
+                      <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
+                      <Text style={{ fontSize: 11, color: "gray" }}>
+                        {timeAgo(comment.createdAt) + " ago"}
                       </Text>
                     </View>
-                    <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
-                    <Text style={{ fontSize: 11, color: "gray" }}>
-                      {timeAgo(comment.createdAt) + " ago"}
-                    </Text>
                   </View>
-                </View>
-              ))}
+                )
+              })}
             </ScrollView>
-          </View>
+          </View>}
           <View
             style={{
               display: "flex",
@@ -309,7 +333,7 @@ function ListingDetailsScreen({ route }) {
               gap: 10,
               alignItems: "center",
             }}
-          >
+            >
             <AppTextInput
               width="75%"
               maxHeight={38}
@@ -326,16 +350,16 @@ function ListingDetailsScreen({ route }) {
                 console.log(postingComments);
                 setPostingComments(e);
               }}
-            />
+              />
             {loadingComment && <ActivityIndicator />}
             {postingComments && !loadingComment && (
               <PostComment
-                endPoint={endPoint}
-                setComments={setComments}
-                postingComments={postingComments}
-                setPostingComments={setPostingComments}
-                loading={loadingComment}
-                setLoading={setLoadingComment}
+              endPoint={endPoint}
+              setComments={setComments}
+              postingComments={postingComments}
+              setPostingComments={setPostingComments}
+              loading={loadingComment}
+              setLoading={setLoadingComment}
               />
             )}
           </View>

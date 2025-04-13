@@ -136,7 +136,8 @@ function ListingsScreen({ navigation }) {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
+            //alignItems: "center",
+            marginTop:5
           }}
         >
           <View
@@ -147,10 +148,10 @@ function ListingsScreen({ navigation }) {
               columnGap: 5,
             }}
           >
-            {/* <Image
+             <Image
               source={require("../../assets/images/adaptiveIcon.png")}
               style={{ width: 40, height: 39, borderRadius: 8 }}
-            /> */}
+            /> 
 
             <Text
               style={{ color: "dodgerblue", fontWeight: "bold", fontSize: 25 }}
@@ -168,7 +169,7 @@ function ListingsScreen({ navigation }) {
               marginRight: 10,
             }}
           >
-            <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: 'yellow',overflow:'hidden' }}>
+            <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: '#ccc',overflow:'hidden' }}>
             {user.image ? (
               <AdvancedImage
                 cldImg={profileImage}
@@ -228,7 +229,7 @@ function ListingsScreen({ navigation }) {
           //onEndReachedThreshold={0.5}
           ListEmptyComponent={listEmptyComponent}
           ListFooterComponent={listFooterComponent}
-          //initialNumToRender={5}
+          initialNumToRender={10}
 
           numColumns="2"
           columnWrapperStyle={{columnGap:6}}
