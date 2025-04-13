@@ -56,7 +56,7 @@ export default function Camera({  onShot, setCamera }) {
               >
                       
                   <TouchableOpacity style={styles.arrowCollapse} onPress={()=> setCamera(false)}>
-              <MaterialCommunityIcons name="arrow-collapse" size={30} color='white' />
+              <MaterialCommunityIcons name="close" size={35} color='white'  />
                   </TouchableOpacity>
                   
         <View style={styles.buttonContainer}>
@@ -99,7 +99,15 @@ const styles = StyleSheet.create({
     bottom: 20,
     },
     arrowCollapse: {
-      margin: 10
+      margin: 12,
+      width: 40,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 20,
+      backgroundColor: '#aaa',
+      height: 40,
+      opacity: 0.4
   },
   button: {
     flex: 1,

@@ -30,6 +30,7 @@ import getPluralisedWord from "../utility/pluralisedWord";
 import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
 import UserShortInfo from "../components/UserShortInfo";
+import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 //import { AdvancedImage } from "cloudinary-react-native";
 //import { Cloudinary } from "@cloudinary/url-gen";
 
@@ -219,7 +220,7 @@ function ListingDetailsScreen({ route }) {
             flexDirection: "row",
             justifyContent: "space-between",
             width: "100%",
-            marginVertical: 7,
+            marginBottom:10,
             paddingRight: 20,
           }}
         >
@@ -256,113 +257,120 @@ function ListingDetailsScreen({ route }) {
       </View>
       <KeyboardAvoidingView behavior="position">
         <View
-          style={{ height: 320, backgroundColor: "#bbb", position: "relative" }}
+          style={{ height: 320, backgroundColor: "#bbb", position: "relative",marginTop: 15 }}
         >
-          {loadingCommentOnPageVisit && <ActivityIndicator style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}} />}
-          {!loadingCommentOnPageVisit &&
-            <View
-            style={{
-              height: width / 1.6,
-              backgroundColor: "#ddd",
-              paddingHorizontal: 10,
-            }}
-          >
-            <ScrollView style={{ width: "100%", paddingRight: 20 }}>
-              {comments.map((comment) => {
-                const profileImage = cld.image(comment.userId.image)
-                console.log(comment.userId.image)
-                console.log('profileImage23')
-                return (
-                  <View
-                    key={comment._id}
-                    style={{
-                      display: "flex",
-                      marginTop: 10,
-                      flexDirection: "row",
-                      gap: 10,
-                      flex: "wrap",
-                      paddingRight: 30,
-                    }}
-                  >
-                    <View>
-                      {!comment.userId.image && (
-                        <MaterialCommunityIcons
-                          name="account"
-                          size={28}
-                          color="gray"
-                          style={{
-                            borderRadius: 15,
-                            padding: 2,
-                            backgroundColor: "#bbb",
-                          }}
-                        />
-                      )}
-                      {comment.userId.image && (
-                        <AdvancedImage cldImg={profileImage} style={{ width: 35, height: 35, borderRadius: 20 }} />
-                      )}
-                    </View>
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        rowGap: 5,
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      <View>
-                        <Text style={{ color: "gray", fontSize: 14 }}>
-                          {"@ " + comment.userId.name}
-                        </Text>
-                      </View>
-                      <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
-                      <Text style={{ fontSize: 11, color: "gray" }}>
-                        {timeAgo(comment.createdAt) + " ago"}
-                      </Text>
-                    </View>
-                  </View>
-                )
-              })}
-            </ScrollView>
-          </View>}
-          <View
-            style={{
-              display: "flex",
-              marginTop: 10,
-              flexDirection: "row",
-              justifyContent: "center",
-              gap: 10,
-              alignItems: "center",
-            }}
-            >
-            <AppTextInput
-              width="75%"
-              maxHeight={38}
-              value={postingComments}
-              allowFontScaling={false}
-              autoCorrect={true}
-              style={{ padding: 0, width: "100%" }}
-              clearTextOnFocus={true}
-              multiline={true}
-              placeholder="Type comment"
-              onChangeText={(e) => {
-                console.log("mdff");
-                console.log(e);
-                console.log(postingComments);
-                setPostingComments(e);
-              }}
-              />
-            {loadingComment && <ActivityIndicator />}
-            {postingComments && !loadingComment && (
-              <PostComment
-              endPoint={endPoint}
-              setComments={setComments}
-              postingComments={postingComments}
-              setPostingComments={setPostingComments}
-              loading={loadingComment}
-              setLoading={setLoadingComment}
-              />
-            )}
+          {loadingCommentOnPageVisit &&
+            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+            <ActivityIndicator size={30} />
+          <Text style={{textAlign: 'center'}}>Loading Comments</Text>
           </View>
+          }
+            
+          {!loadingCommentOnPageVisit &&
+            <>
+              <View
+                style={{
+                  height: width / 1.6,
+                  backgroundColor: "#ddd",
+                  paddingHorizontal: 10,
+                }}
+              >
+                <ScrollView style={{ width: "100%", paddingRight: 20 }}>
+                  {comments.map((comment) => {
+                    const profileImage = cld.image(comment.userId.image)
+                    console.log(comment.userId.image)
+                    console.log('profileImage23')
+                    return (
+                      <View
+                        key={comment._id}
+                        style={{
+                          display: "flex",
+                          marginTop: 10,
+                          flexDirection: "row",
+                          gap: 10,
+                          flex: "wrap",
+                          paddingRight: 30,
+                        }}
+                      >
+                        <View>
+                          {!comment.userId.image && (
+                            <MaterialCommunityIcons
+                              name="account"
+                              size={28}
+                              color="gray"
+                              style={{
+                                borderRadius: 15,
+                                padding: 2,
+                                backgroundColor: "#bbb",
+                              }}
+                            />
+                          )}
+                          {comment.userId.image && (
+                            <AdvancedImage cldImg={profileImage} style={{ width: 35, height: 35, borderRadius: 20 }} />
+                          )}
+                        </View>
+                        <View
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            rowGap: 5,
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <View>
+                            <Text style={{ color: "gray", fontSize: 14 }}>
+                              {"@ " + comment.userId.name}
+                            </Text>
+                          </View>
+                          <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
+                          <Text style={{ fontSize: 11, color: "gray" }}>
+                            {timeAgo(comment.createdAt) + " ago"}
+                          </Text>
+                        </View>
+                      </View>
+                    )
+                  })}
+                </ScrollView>
+              </View>
+              <View
+                style={{
+                  display: "flex",
+                  marginTop: 10,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: 10,
+                  alignItems: "center",
+                }}
+              >
+                <AppTextInput
+                  width="75%"
+                  maxHeight={38}
+                  value={postingComments}
+                  allowFontScaling={false}
+                  autoCorrect={true}
+                  style={{ padding: 0, width: "100%" }}
+                  clearTextOnFocus={true}
+                  multiline={true}
+                  placeholder="Type comment"
+                  onChangeText={(e) => {
+                    console.log("mdff");
+                    console.log(e);
+                    console.log(postingComments);
+                    setPostingComments(e);
+                  }}
+                />
+                {loadingComment && <ActivityIndicator />}
+                {postingComments && !loadingComment && (
+                  <PostComment
+                    endPoint={endPoint}
+                    setComments={setComments}
+                    postingComments={postingComments}
+                    setPostingComments={setPostingComments}
+                    loading={loadingComment}
+                    setLoading={setLoadingComment}
+                  />
+                )}
+              </View></>}
         </View>
       </KeyboardAvoidingView>
       

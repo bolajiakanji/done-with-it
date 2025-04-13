@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useFormikContext } from "formik";
-import { View,Text } from "react-native";
+import { View,Text, Modal } from "react-native";
 
 
 import ErrorMessage from "./ErrorMessage";
@@ -27,14 +27,13 @@ function FormImagePicker({ name }) {
 
   return (
     <View>
-      {camera &&
-        <View style={{
-          position: 'absolute', top: 5, left: 0, width: '100%', height: '500', zIndex: 10,
-          backgroundColor: 'blue'
-        }}>
+      
+        <Modal 
+        visible={camera}
+        >
           <Camera onShot={handleAdd} setCamera={setCamera} />
         
-        </View>}
+        </Modal> 
       <ImageInputList
         imageUris={imageUris}
         onAddImage={handleAdd}

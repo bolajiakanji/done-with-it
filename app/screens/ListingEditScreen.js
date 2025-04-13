@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text } from "react-native";
 import * as Yup from "yup";
 import { useState } from "react";
 
+
 import {
   Form,
   FormField,
@@ -146,11 +147,11 @@ function ListingEditScreen() {
         />
         <SubmitButton title="Post" />
       </Form>
-      <UploadScreen
+      {/* <UploadScreen
         onDone={() => setTimeout(() => setUploadVisible(false), 2000)}
         progress={progress}
         visible={uploadVisible}
-      />
+      /> */}
     </Screen>
   );
 }
