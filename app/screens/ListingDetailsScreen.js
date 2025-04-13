@@ -228,8 +228,8 @@ function ListingDetailsScreen({ route }) {
               {getPluralisedWord(numberOfComments, "comment")}
             </Text>
           </View>
-          {loadingLikes && <ActivityIndicator />}
-          { loadingLikes &&
+          {loadingLikes && <ActivityIndicator  size={15} />}
+          { !loadingLikes &&
             <TouchableOpacity
               onPress={async () => {
                 console.log(like_value())
@@ -239,9 +239,9 @@ function ListingDetailsScreen({ route }) {
                 setLoadingLikes(false)
                 console.log(res.data);
                 console.log("res");
-                setLikes(res.data)
+                if (res.data) setLikes(res.data)
               }}>
-              <Text style={{ color: likesColor, fontSize: 12 }}>
+              <Text style={{ color: likesColor, fontSize: 12, padding: 3 }}>
                 {numberOfLikes + " "}
                 <MaterialCommunityIcons name="thumb-up" />
               </Text>
@@ -258,7 +258,7 @@ function ListingDetailsScreen({ route }) {
         <View
           style={{ height: 320, backgroundColor: "#bbb", position: "relative" }}
         >
-          {!loadingCommentOnPageVisit && <ActivityIndicator style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}} />}
+          {loadingCommentOnPageVisit && <ActivityIndicator style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}} />}
           {!loadingCommentOnPageVisit &&
             <View
             style={{
