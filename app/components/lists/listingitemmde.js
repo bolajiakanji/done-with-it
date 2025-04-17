@@ -5,6 +5,9 @@ import {
   Image,
   TouchableHighlight,
   Alert,
+  Modal,
+  Button,
+  TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import client from "../../api/client";
@@ -19,6 +22,7 @@ import Text from "../Text";
 import colors from "../../config/colors";
 import Camera from "../Camera";
 import * as ImagePicker from "expo-image-picker";
+import AccountImage from "../AccountImage";
 
 function ListItemm({ setImageModal, setpi }) {
   const [camera, setCamera] = useState(false);
@@ -36,29 +40,30 @@ function ListItemm({ setImageModal, setpi }) {
       alert("Error reading an image", error);
     }
   };
-  const sendapi =async () => {
-    const data = new FormData();
-    data.append("profileImage", {
-      uri: imageuri,
-      name: "profileImage",
-      type: "image/jpeg",
-    })
-    console.log('hreme')
-    const owner = await authStorage.getUser();
+  const sendapi = async () => {
+    if (imageuri) {
+      const data = new FormData();
+      data.append("profileImage", {
+        uri: imageuri,
+        name: "profileImage",
+        type: "image/jpeg",
+      })
+      console.log('hreme')
+      const owner = await authStorage.getUser();
 
-   const output =  await client.post('/my/profileImage/', data, {
+      const output = await client.post('/my/profileImage/', data, {
   
 
     
-      headers: { 'content-type': 'multipart/form-data' }
-   })
-    console.log(output.data)
-    setpi(output.data.image)
-    console.log('output.datacv')
-    console.log('datacv')
-    await authStorage.storeToken(output.data)
-login(output.data)
-
+        headers: { 'content-type': 'multipart/form-data' }
+      })
+      console.log(output.data)
+      setpi(output.data.image)
+      console.log('output.datacv')
+      console.log('datacv')
+      await authStorage.storeToken(output.data)
+      login(output.data)
+    }
      
   }
 
@@ -78,36 +83,44 @@ login(output.data)
 
   return (
     <View style={styles.modalContainer}>
+      <View style={{display: 'flex',flexDirection: 'row',justifyContent: 'space-between', width: '100%',marginTop: 20, paddingHorizontal: 20}}>
       <MaterialCommunityIcons
         color="white"
-        name="chevron-left"
+        name="close"
         size={25}
         onPress={() => {
           setImageUri("");
           setImageModal(false);
         }}
       />
-      <View>
+      
         <MaterialCommunityIcons
           color="white"
-          name="chevron-down"
+          name="plus"
           size={25}
           onPress={() => handlePress()}
-        />
-        <MaterialCommunityIcons
-          color="white"
-          name="chevron-up"
+          />
+          </View>
+
+      
+        <Modal visible={camera}>
+          <Camera setCamera={setCamera} onShot={handleShot} />
+          </Modal>
+      
+      {/* <Image style={styles.uploadImage} source={imageuri ? { uri: imageuri } : ''} /> */}
+      <View style={styles.uploadImage}>
+      {imageuri && <><Image style={styles.uploadImage} source={ { uri: imageuri } } />
+      <TouchableOpacity  style={{ position: 'absolute',width: '100%', top: '155%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Button
+              //disabled={true}
+          
+          title="Use this image preview"
           size={25}
           onPress={() => sendapi()}
-        />
-      </View>
-
-      {camera && (
-        <View style={styles.camContainer}>
-          <Camera setCamera={setCamera} onShot={handleShot} />
+          />
+        </TouchableOpacity></>}
+        {!imageuri && <AccountImage />}
         </View>
-      )}
-      <Image style={styles.uploadImage} source={imageuri ? { uri: imageuri } : ''} />
     </View>
   );
 }
@@ -115,12 +128,9 @@ login(output.data)
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    width: "100%",
-    height: 500,
+    
 
-    position: "absolute",
-    top: 10,
-    zIndex: 4,
+    
 
     //display: showImageModal ? 'block' : 'none',
     backgroundColor: "black",
@@ -134,12 +144,12 @@ const styles = StyleSheet.create({
     zIndex: 6,
     flex: 1,
     width: "100%",
-    height: 500,
+    height: 300,
   },
   uploadImage: {
     position: "absolute",
     zIndex: 5,
-    top: "20%",
+    top: "25%",
     width: "100%",
     height: 200,
   },

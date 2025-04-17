@@ -1,62 +1,72 @@
 import React from "react";
-import { View, StyleSheet, TouchableHighlight, } from "react-native";
-import { Image} from "expo-image";
+import { View, StyleSheet, TouchableHighlight } from "react-native";
+import { Image } from "expo-image";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable/";
 // import Image from "";
-
 
 import Text from "./Text";
 import colors from "../config/colors";
 import { AdvancedImage } from "cloudinary-react-native";
 import { Cloudinary } from "@cloudinary/url-gen";
 
-
 function UserShortInfo({
-  title,
-  subTitle,
+  name,
+  email,
+  itemsAvailable,
   image,
-  poster,
-  onPress,
+  
+  itemOnPress,
+  imageOnpress,
   renderRightActions,
+  imageStyle,
+  iconStyle,
+  iconSize,
 }) {
-
-    const cld = new Cloudinary({
-        cloud: {
-          cloudName: "dlutiw9i4",
-        },
-    });
-    const profileImage= cld.image(image)
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dlutiw9i4",
+    },
+  });
+  const profileImage = cld.image(image);
 
   return (
     <Swipeable renderRightActions={renderRightActions}>
-      <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
+      <TouchableHighlight underlayColor={colors.light} onPress={itemOnPress}>
         <View style={styles.container}>
-          {!poster && (
-                                  <MaterialCommunityIcons
-                                    name="account"
-                                    size={28}
-                                    color="gray"
-                                    style={{
-                                      borderRadius: 15,
-                                      padding: 2,
-                                      backgroundColor: "#bbb",
-                                    }}
-                                  />
-                                )}
-                                {poster && (
-                                  <AdvancedImage cldImg={profileImage} style={{width:35, height: 35, borderRadius: 20}} />
-                                )}
+          {!image ? (
+            <MaterialCommunityIcons
+              name="account"
+              size={iconSize || 28}
+              color="gray"
+              style={[
+                {
+                  borderRadius: 15,
+                  padding: 2,
+                  backgroundColor: "#bbb",
+                },
+                iconStyle,
+              ]}
+            />
+          ) : (
+            <AdvancedImage
+              cldImg={profileImage}
+              onPress={imageOnpress}
+              style={[{ width: 35, height: 35, borderRadius: 20 }, imageStyle]}
+            />
+          )}
           <View style={styles.detailsContainer}>
-            <Text style={styles.title} numberOfLines={1}>
-              {title}
+            <Text style={styles.name} numberOfLines={1}>
+              {name}
             </Text>
-            {subTitle && (
-              <Text style={styles.subTitle} numberOfLines={2}>
-                {subTitle}
-              </Text>
-            )}
+
+            <Text style={styles.email} numberOfLines={1}>
+              {email}
+            </Text>
+            <Text style={styles.itemsAvailable} numberOfLines={1}>
+              {itemsAvailable}
+            </Text>
           </View>
           <MaterialCommunityIcons
             color={colors.medium}
@@ -74,8 +84,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     paddingTop: 10,
-        backgroundColor: colors.white,
-    marginBottom:10
+    backgroundColor: colors.white,
+    marginBottom: 10,
   },
   detailsContainer: {
     flex: 1,
@@ -87,10 +97,10 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 35,
   },
-  subTitle: {
+  itemsAvailable: {
     color: colors.medium,
   },
-  title: {
+  name: {
     fontWeight: "500",
   },
 });

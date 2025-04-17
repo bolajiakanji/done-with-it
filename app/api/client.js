@@ -5,7 +5,7 @@ import authStorage from "../auth/storage";
 import ListingsScreen from "../screens/ListingsScreen";
 
 const apiClient = create({
-  baseURL: "http://192.168.16.87:9000/api",
+  baseURL: "http://192.168.157.87:9000/api",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {

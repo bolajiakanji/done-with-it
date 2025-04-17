@@ -22,8 +22,8 @@ import { configureReanimatedLogger } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useApi } from "../hooks";
 import { AdvancedImage } from "cloudinary-react-native";
-import timeAgo from "../utility/timeAgo";
 import { Cloudinary } from "@cloudinary/url-gen";
+import timeAgo from "../utility/timeAgo";
 import AppTextInput from "../components/TextInput";
 import PostComment from "../components/PostComment";
 import getPluralisedWord from "../utility/pluralisedWord";
@@ -209,7 +209,7 @@ function ListingDetailsScreen({ route }) {
           {parseInt(listing.price).toLocaleString()}
         </Text>
         <UserShortInfo
-          image={listing.userId.image}
+          //image={listing.userId.image}
           title={listing.userId.name}
           poster={listing.userId.image}
           subTitle={`${listing.userId.userListings} items available for sell`}
@@ -233,6 +233,7 @@ function ListingDetailsScreen({ route }) {
           { !loadingLikes &&
             <TouchableOpacity
               onPress={async () => {
+                setLoadingLikes(true)
                 console.log(like_value())
                 const res = await client.put(`/likes/${like_value()}`, {
                   listingId: listing._id,
@@ -319,7 +320,7 @@ function ListingDetailsScreen({ route }) {
                         >
                           <View>
                             <Text style={{ color: "gray", fontSize: 14 }}>
-                              {"@ " + comment.userId.name}
+                              {"@" + comment.userId.name}
                             </Text>
                           </View>
                           <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
@@ -415,7 +416,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title: {
-    fontSize: 25,
+    fontSize: 15,
     fontWeight: "bold",
     color: "gray",
     marginBottom: 3,

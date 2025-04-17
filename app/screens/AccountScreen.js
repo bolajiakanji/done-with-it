@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableHighlight,
   Image,
+  Modal,
 } from "react-native";
 
 import { ListItem, ListItemSeparator } from "../components/lists";
@@ -15,6 +16,7 @@ import Screen from "../components/Screen";
 import AuthContext from "../auth/context";
 import useAuth from "../auth/useAuth";
 import ListItemm from "../components/lists/listingitemmde";
+import UserShortInfo from "../components/UserShortInfo";
 
 const menuItems = [
   {
@@ -60,7 +62,7 @@ function AccountScreen({ navigation }) {
 
   return (
     <>
-      <Image src={pi} style={{height: 100, width: 100}}  />
+      {/* <Image src={pi} style={{height: 100, width: 100}}  /> */}
       <Screen style={styles.screen}>
         <TouchableHighlight
           style={styles.container}
@@ -76,9 +78,15 @@ function AccountScreen({ navigation }) {
             onPress={() => {
               setImageModal(true);
               console.log("ok");
-            }}
-          />
-        </TouchableHighlight>
+            }}/>
+                      </TouchableHighlight>
+            <UserShortInfo
+                      image={user.image}
+                      title={user.name}
+                      poster={user.image}
+                      subTitle={user.email}
+                    />
+          
         <View style={styles.container}>
           <FlatList
             data={menuItems}
@@ -103,16 +111,16 @@ function AccountScreen({ navigation }) {
           IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
           onPress={() => logOut()}
         />
-      </Screen>
-      {showImageModal && (
-        <>
+      
+        <Modal visible={showImageModal}> 
           <ListItemm
             
             setImageModal={setImageModal} setpi={setpi}
-          />
+            />
           
-        </>
-      )}
+        </Modal>
+            </Screen>
+      
     </>
   );
 }
