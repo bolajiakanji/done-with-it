@@ -209,10 +209,10 @@ function ListingDetailsScreen({ route }) {
           {parseInt(listing.price).toLocaleString()}
         </Text>
         <UserShortInfo
-          //image={listing.userId.image}
-          title={listing.userId.name}
-          poster={listing.userId.image}
-          subTitle={`${listing.userId.userListings} items available for sell`}
+          image={listing.userId.image}
+          name={listing.userId.name}
+          
+          itemsAvailable={`${listing.userId.userListings} items available for sell`}
         />
         <View
           style={{

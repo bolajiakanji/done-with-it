@@ -61,12 +61,12 @@ function UserShortInfo({
               {name}
             </Text>
 
-            <Text style={styles.email} numberOfLines={1}>
-              {email}
-            </Text>
-            <Text style={styles.itemsAvailable} numberOfLines={1}>
-              {itemsAvailable}
-            </Text>
+                      { email && <Text style={styles.email} numberOfLines={1}>
+                          {email}
+                      </Text>}
+                      { itemsAvailable && <Text style={styles.itemsAvailable} numberOfLines={1}>
+                          {itemsAvailable}
+                      </Text>}
           </View>
           <MaterialCommunityIcons
             color={colors.medium}

@@ -64,7 +64,7 @@ function AccountScreen({ navigation }) {
     <>
       {/* <Image src={pi} style={{height: 100, width: 100}}  /> */}
       <Screen style={styles.screen}>
-        <TouchableHighlight
+        {/* <TouchableHighlight
           style={styles.container}
           onPress={() => {
             setImageModal(true);
@@ -79,12 +79,13 @@ function AccountScreen({ navigation }) {
               setImageModal(true);
               console.log("ok");
             }}/>
-                      </TouchableHighlight>
+                      </TouchableHighlight> */}
             <UserShortInfo
                       image={user.image}
-                      title={user.name}
-                      poster={user.image}
-                      subTitle={user.email}
+          name={user.name}
+          imageStyle={styles.image}
+                      //poster={user.image}
+                      email={user.email}
                     />
           
         <View style={styles.container}>
@@ -134,6 +135,11 @@ const styles = StyleSheet.create({
     
     
   },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
+  }
   
 });
 
