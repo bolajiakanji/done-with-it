@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableHighlight } from "react-native";
+import { View, StyleSheet, TouchableHighlight, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -18,7 +18,7 @@ function UserShortInfo({
   image,
   
   itemOnPress,
-  imageOnpress,
+  imageOnPress,
   renderRightActions,
   imageStyle,
   iconStyle,
@@ -27,13 +27,13 @@ function UserShortInfo({
   const cld = new Cloudinary({
     cloud: {
       cloudName: "dlutiw9i4",
-    },
+    },  
   });
   const profileImage = cld.image(image);
 
   return (
     <Swipeable renderRightActions={renderRightActions}>
-      <TouchableHighlight underlayColor={colors.light} onPress={itemOnPress}>
+      <TouchableOpacity underlayColor={colors.light} onPress={itemOnPress}>
         <View style={styles.container}>
           {!image ? (
             <MaterialCommunityIcons
@@ -49,12 +49,14 @@ function UserShortInfo({
                 iconStyle,
               ]}
             />
-          ) : (
+                  ) : (
+                          <TouchableOpacity onPress={imageOnPress}>
             <AdvancedImage
               cldImg={profileImage}
-              onPress={imageOnpress}
+              
               style={[{ width: 35, height: 35, borderRadius: 20 }, imageStyle]}
-            />
+                />
+                              </TouchableOpacity>
           )}
           <View style={styles.detailsContainer}>
             <Text style={styles.name} numberOfLines={1}>
@@ -63,7 +65,8 @@ function UserShortInfo({
 
                       { email && <Text style={styles.email} numberOfLines={1}>
                           {email}
-                      </Text>}
+                      </Text>
+                      }
                       { itemsAvailable && <Text style={styles.itemsAvailable} numberOfLines={1}>
                           {itemsAvailable}
                       </Text>}
@@ -74,7 +77,7 @@ function UserShortInfo({
             size={25}
           />
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     </Swipeable>
   );
 }

@@ -211,8 +211,8 @@ function ListingDetailsScreen({ route }) {
         <UserShortInfo
           image={listing.userId.image}
           name={listing.userId.name}
-          
-          itemsAvailable={`${listing.userId.userListings} items available for sell`}
+          //email={listing.userId.email}
+         itemsAvailable={`${listing.userId.userListings} items available for sell`}
         />
         <View
           style={{

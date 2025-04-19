@@ -37,7 +37,7 @@ const menuItems = [
 ];
 
 function AccountScreen({ navigation }) {
-  const [showImageModal, setImageModal] = useState(true);
+  const [showImageModal, setImageModal] = useState(false);
   const [pi, setpi] = useState('');
 
   const { user, logOut } = useAuth();
@@ -84,7 +84,10 @@ function AccountScreen({ navigation }) {
                       image={user.image}
           name={user.name}
           imageStyle={styles.image}
-                      //poster={user.image}
+          itemOnPress={() => {
+            setImageModal(true);
+            console.log("ok")
+          }}
                       email={user.email}
                     />
           

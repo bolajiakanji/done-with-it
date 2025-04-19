@@ -23,6 +23,7 @@ import colors from "../../config/colors";
 import Camera from "../Camera";
 import * as ImagePicker from "expo-image-picker";
 import AccountImage from "../AccountImage";
+import AppButton from "../Button";
 
 function ListItemm({ setImageModal, setpi }) {
   const [camera, setCamera] = useState(false);
@@ -109,8 +110,14 @@ function ListItemm({ setImageModal, setpi }) {
       
       {/* <Image style={styles.uploadImage} source={imageuri ? { uri: imageuri } : ''} /> */}
       <View style={styles.uploadImage}>
-      {imageuri && <><Image style={styles.uploadImage} source={ { uri: imageuri } } />
-      <TouchableOpacity  style={{ position: 'absolute',width: '100%', top: '155%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        {imageuri && <><Image style={styles.uploadImage} source={{ uri: imageuri }} />
+          <View style={{ position: 'absolute',width: '100%', top: '155%', display: 'flex',alignItems: 'center', justifyContent: 'center', alignItems: 'center' }}>
+          
+          <AppButton
+            title='Use this image preview'
+            onPress={() => sendapi()}
+            style={{ position: 'absolute',width: '80%', top: '155%', display: 'flex',alignItems: 'center', justifyContent: 'center', alignItems: 'center' }} />
+          {/* <TouchableOpacity  style={{ position: 'absolute',width: '100%', top: '155%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Button
               //disabled={true}
           
@@ -118,8 +125,10 @@ function ListItemm({ setImageModal, setpi }) {
           size={25}
           onPress={() => sendapi()}
           />
-        </TouchableOpacity></>}
-        {!imageuri && <AccountImage />}
+        </TouchableOpacity></>} */}
+            </View>
+        </>}
+          {!imageuri && <AccountImage />}
         </View>
     </View>
   );
@@ -138,6 +147,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontWeight: "500",
+    
   },
   camContainer: {
     position: "absolute",
