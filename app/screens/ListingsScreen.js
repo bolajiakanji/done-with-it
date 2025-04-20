@@ -93,21 +93,21 @@ function ListingsScreen({ navigation }) {
       loadListings_2();
     }
   };
-  const listEmptyComponent = () => {
-    if (!isLoading && !listingsQueryObject.page) {
-      return <Text>Nothing to show</Text>;
-    }
-  };
+  // const listEmptyComponent = () => {
+  //   if (!isLoading && !listingsQueryObject.page) {
+  //     return <Text style={{ textAlign: 'center'}}>No Data</Text>;
+  //   }
+  // };
   const listFooterComponent = () => {
     if (isLoading && displayItems?.length > 0) {
       return (
         <Text style={{ textAlign: "center", marginBottom: 5 }}>Loading...</Text>
       );
     }
-    if (!isLoading && !listingsQueryObject.page) {
+    if (!isLoading && listingsQueryObject.page) {
       return (
         <Text style={{ textAlign: "center", marginBottom: 10 }}>
-          Nothing to show
+          No more data
         </Text>
       );
     }
@@ -119,7 +119,7 @@ function ListingsScreen({ navigation }) {
     setRefreshing(false);
   };
   console.log(error);
-  if (loading) return <Skeleton />;
+  //if (loading) return <Skeleton />;
   const me = async () => {
     const owner = await authStorage.getUser();
     console.log(owner);
@@ -188,19 +188,20 @@ function ListingsScreen({ navigation }) {
         </View>
         {error && (
           <>
-            <AppText style={{ color: "red" }}>{error}</AppText>
+            <AppText style={{ color: "red", marginTop: 10 }}>{error}</AppText>
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
+        {loading && <Skeleton />}
 
-        <ListingFilterings
+        {!error && !loading && <ListingFilterings
           listingsQueryObject={listingsQueryObject}
           setListingsQueryObject={setListingsQueryObject}
           displayItems={displayItems}
           setDisplayItems={setDisplayItems}
           request={request}
           setData={setData}
-        />
+        />}
 
         <FlatList
           data={displayItems}
@@ -226,8 +227,7 @@ function ListingsScreen({ navigation }) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           onEndReached={onEndReached}
-          //onEndReachedThreshold={0.5}
-          ListEmptyComponent={listEmptyComponent}
+          //ListEmptyComponent={listEmptyComponent}
           ListFooterComponent={listFooterComponent}
           initialNumToRender={10}
 
