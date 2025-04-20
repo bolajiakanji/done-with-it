@@ -101,10 +101,10 @@ function ListingsScreen({ navigation }) {
   const listFooterComponent = () => {
     if (isLoading && displayItems?.length > 0) {
       return (
-        <Text style={{ textAlign: "center", marginBottom: 5 }}>Loading...</Text>
+        <Text style={{ textAlign: "center", marginBottom: 10 }}>Loading...</Text>
       );
     }
-    if (!isLoading && listingsQueryObject.page) {
+    if (!isLoading && !listingsQueryObject.page) {
       return (
         <Text style={{ textAlign: "center", marginBottom: 10 }}>
           No more data
@@ -232,7 +232,7 @@ function ListingsScreen({ navigation }) {
           initialNumToRender={10}
 
           numColumns="2"
-          columnWrapperStyle={{columnGap:6}}
+          columnWrapperStyle={{columnGap:10}}
         />
       </Screen>
     </>

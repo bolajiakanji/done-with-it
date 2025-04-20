@@ -61,30 +61,11 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
       };
       
     return (
-        <>
+        
             
-            <View>
-    <ScrollView
-      horizontal
-            contentContainerStyle={{ columnGap: 10, marginVertical:15 }}
-            
-        >
-            
-          <TouchableHighlight
-              onPress={()=> handleAllButton('all', {})}
-              style={{ borderRadius: 15,  backgroundColor: 'dodgerblue',height: 40,width: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              
-                  <Text style={{color: 'white'}}>All</Text>
-              
-          </TouchableHighlight>
+      <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 10, marginVertical: 20,}}>
+    
 
-      <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
-        <View
-          style={{ borderRadius: 15,backgroundColor: 'blue',  width: 160, height: 40,  justifyContent: 'center', padding: 10 }}
-        >
-          <Text style={{color: 'white'}}>Pick date from:</Text>
-        </View>
-      </TouchableWithoutFeedback>
       <View style={{ borderRadius: 15, height:40,padding:0, margin:0, backgroundColor: 'blue' }}>
         <Picker
           mode="dropdown"
@@ -100,9 +81,10 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
                   }
           }
         >
-          <Picker.Item label="Java" value="4"  />
-          <Picker.Item label="JavaScript" value="9" />
-          <Picker.Item label="JavaSc" value="3" />
+          <Picker.Item label="All" value="-"  />
+          <Picker.Item label="male" value="9" />
+          <Picker.Item label="female" value="3" />
+          <Picker.Item label="others" value="3" />
         </Picker>
       </View>
 
@@ -114,9 +96,16 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           onChange={setDate}
         />
       )}
-                </ScrollView>
+      <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
+        <View
+          style={{ borderRadius: 15,backgroundColor: 'blue',  width: 160, height: 40,  justifyContent: 'center', padding: 10 }}
+        >
+          <Text style={{color: 'white'}}>Pick date from:</Text>
+        </View>
+      </TouchableWithoutFeedback>
+                
                 </View>
-        </>
+        
 
   );
 };

@@ -17,23 +17,15 @@ import useAuth from "../auth/useAuth";
 function Card({ item, onPress,myImage }) {
   const displayTime = timeAgo(item.createdAt);
  const {user} =useAuth()
-  const [go, setGo] = useState(false)
-
-  const likesColor = getLikesColor(user._id, item.likes)
+const likesColor = getLikesColor(user._id, item.likes)
   const numberOfLikes = item.likes.length
       
 
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableWithoutFeedback onPress={onPress} >
       
       <View style={styles.card}>
-        {go && (
-          <SkeletonLoading background={"#adadad"} highlight={"#ffffff"}>
-                 
-          <View
-           style={styles.image }
-         /> 
-</SkeletonLoading>  )}
+          
         <AdvancedImage cldImg={myImage} style={styles.image} />
         
 
@@ -86,13 +78,13 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 15,
     backgroundColor: colors.white,
-    marginBottom: 20,
+    marginBottom: 15,
     overflow: "hidden",
-    width: "48.5%",
+    width: "48%",
     height: 270,
   },
   detailsContainer: {
-    padding: 10,
+    padding: 5,
   },
   image: {
     width: "100%",
@@ -105,7 +97,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title: {
-    marginBottom: 2,
+    marginBottom: 0,
     fontSize: 15,
     fontWeight: "bold",
     color: "gray",
