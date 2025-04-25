@@ -18,7 +18,8 @@ const Skeleton = () => {
       <View style={{ flexDirection: "column", marginTop: 15 }}>
         <View style={{ flexDirection: "row", gap: 10, marginBottom: 20 }}>
           {filterSkeletonArray.map(item => (
-          <View
+            <View
+              key={item}
             style={{
               width: 120,
               height: 40,
@@ -30,8 +31,8 @@ const Skeleton = () => {
           
         </View>
         <View style={{display: 'flex',width: '100%',flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center'  }}>
-          { itemSkeletonArray.map( (item, index) => (
-          <View style={{width: '48%',marginBottom: 10  }} >
+          { itemSkeletonArray.map( (item, ) => (
+          <View style={{width: '48%',marginBottom: 10  }} key={item} >
             <View
               style={{
                 backgroundColor: "#adadad",

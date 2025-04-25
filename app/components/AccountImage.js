@@ -42,7 +42,7 @@ function AccountImage({screen }) {
       </View>
     );
   return (
-    <AdvancedImage cldImg={myImage} style={{ height: "100%", width: "100%" }} />
+    <AdvancedImage cldImg={myImage} style={{ height: 250, width: "100%" }} />
   );
 }
 

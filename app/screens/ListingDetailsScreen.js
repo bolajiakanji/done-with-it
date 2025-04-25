@@ -31,6 +31,8 @@ import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
 import UserShortInfo from "../components/UserShortInfo";
 import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
+import routes from "../navigation/routes";
+
 //import { AdvancedImage } from "cloudinary-react-native";
 //import { Cloudinary } from "@cloudinary/url-gen";
 
@@ -43,7 +45,7 @@ const width = Dimensions.get("window").width;
 const arrowMargin = width / 4.5;
 const marginTop = width / 1.8;
 
-function ListingDetailsScreen({ route }) {
+function ListingDetailsScreen({ route, navigation }) {
   const listing = route.params;
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState(listing.likes);
@@ -116,7 +118,7 @@ function ListingDetailsScreen({ route }) {
           loop
           width={width}
           height={width / 1.8}
-          autoPlay={listing.images.length > 1 ? true : false}
+          //autoPlay={listing.images.length > 1 ? true : false}
           data={listing.images}
           scrollAnimationDuration={2000}
           onSnapToItem={(index) => setIndex(index)}
@@ -212,7 +214,10 @@ function ListingDetailsScreen({ route }) {
           image={listing.userId.image}
           name={listing.userId.name}
           //email={listing.userId.email}
-         itemsAvailable={`${listing.userId.userListings} items available for sell`}
+          itemsAvailable={`${listing.userId.userListings} items available for sell`}
+          itemOnPress={() =>
+                            navigation.navigate(routes.ITEM_POSTER, {jh:'hdfjsj'})
+                          }
         />
         <View
           style={{
@@ -345,8 +350,9 @@ function ListingDetailsScreen({ route }) {
               >
                 <AppTextInput
                   width="75%"
-                  maxHeight={38}
-                  value={postingComments}
+                maxHeight={38}
+                defaultValue={postingComments}
+                 // value={postingComments}
                   allowFontScaling={false}
                   autoCorrect={true}
                   style={{ padding: 0, width: "100%" }}
@@ -354,10 +360,9 @@ function ListingDetailsScreen({ route }) {
                   multiline={true}
                   placeholder="Type comment"
                   onChangeText={(e) => {
-                    console.log("mdff");
-                    console.log(e);
-                    console.log(postingComments);
                     setPostingComments(e);
+                  
+
                   }}
                 />
                 {loadingComment && <ActivityIndicator />}

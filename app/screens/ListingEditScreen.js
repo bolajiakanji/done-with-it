@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
   category: Yup.object().required().nullable().label("Category"),
   images: Yup.array()
     .min(1, "Please select at least one image.")
-    .max(3, "Selected image should not be more than 3 images"),
+    .max(6, "Selected image should not be more than 6 images"),
 });
 
 const categories = [
