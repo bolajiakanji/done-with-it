@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   Pressable,
+  ScrollView,
   
   
 } from "react-native";
@@ -121,7 +122,7 @@ function AccountScreen({ navigation }) {
     
       <Screen style={styles.screen}>
         
-        
+        <ScrollView>
        
         <TouchableOpacity underlayColor={colors.light} onPress={()=>setImageModal(true)} >
                 <View style={{ width:'100%', height: 200}}>
@@ -195,23 +196,17 @@ function AccountScreen({ navigation }) {
             
           
         <View style={styles.container}>
-          <FlatList
-            data={menuItems}
-            keyExtractor={(menuItem) => menuItem.title}
-            ItemSeparatorComponent={ListItemSeparator}
-            renderItem={({ item }) => (
-              <ListItem
-                title={item.title}
-                IconComponent={
-                  <Icon
-                    name={item.icon.name}
-                    backgroundColor={item.icon.backgroundColor}
-                  />
-                }
-                onPress={() => navigation.navigate(item.targetScreen)}
-              />
-            )}
-          />
+          
+         <ListItem
+          title="My Listings"
+          IconComponent={<Icon name="format-list-bulleted" backgroundColor={colors.primary} />}
+          onPress={() => navigation.navigate(routes.POSTER_ITEMS) }
+        />
+         <ListItem
+          title="Log Out"
+          IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+          onPress={() => logOut()}
+        />
       </View>
       <Modal visible={openModal} animationType="slide" >
                 <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20}}>Add Contact Info</Text>
@@ -243,11 +238,7 @@ function AccountScreen({ navigation }) {
                 
             </Modal>
  
-        <ListItem
-          title="Log Out"
-          IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-          onPress={() => logOut()}
-        />
+       
       
         <Modal visible={showImageModal}> 
           <ListItemm
@@ -256,6 +247,7 @@ function AccountScreen({ navigation }) {
             />
           
         </Modal>
+        </ScrollView>
             </Screen>
       
     

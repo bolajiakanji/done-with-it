@@ -4,5 +4,6 @@ export default Object.freeze({
   LOGIN: "Login",
   MESSAGES: "Messages",
   REGISTER: "Register",
-  ITEM_POSTER: 'ItemPoster'
+  ITEM_POSTER: 'ItemPoster',
+  POSTER_ITEMS: 'PosterItems'
 });
