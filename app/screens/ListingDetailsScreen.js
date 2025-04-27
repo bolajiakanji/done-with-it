@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   ActivityIndicator,
+  TextInput,
 } from "react-native";
 import { Image } from "expo-image";
 import Screen from "../components/Screen";
@@ -42,13 +43,15 @@ configureReanimatedLogger({
 });
   
 const width = Dimensions.get("window").width;
-const arrowMargin = width / 4.5;
-const marginTop = width / 1.8;
+const height = Dimensions.get("window").height;
+const arrowTopMargin = height / 8;
+const detailsContainerTopMargin = height /3.5;
 
 function ListingDetailsScreen({ route, navigation }) {
   const listing = route.params;
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState(listing.likes);
+  const [content, setContent] = useState(0);
   const [postingComments, setPostingComments] = useState("");
   const [index, setIndex] = useState(0);
   const [loadingComment, setLoadingComment] = useState(false);
@@ -117,7 +120,7 @@ function ListingDetailsScreen({ route, navigation }) {
           ref={ref}
           loop
           width={width}
-          height={width / 1.8}
+          height={height / 3.6}
           //autoPlay={listing.images.length > 1 ? true : false}
           data={listing.images}
           scrollAnimationDuration={2000}
@@ -158,12 +161,12 @@ function ListingDetailsScreen({ route, navigation }) {
           <>
             <TouchableOpacity
               onPress={() => previous()}
-              style={{ position: "absolute", top: arrowMargin, left: 0 }}
+              style={{ position: "absolute", top: arrowTopMargin, left: 0 }}
             >
               <MaterialCommunityIcons
                 color="black"
                 name="chevron-left"
-                size={20}
+                size={25}
                 style={{
                   margin: 5,
                   borderRadius: 15,
@@ -173,12 +176,12 @@ function ListingDetailsScreen({ route, navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => next()}
-              style={{ position: "absolute", top: arrowMargin, right: 0 }}
+              style={{ position: "absolute", top: arrowTopMargin, right: 0 }}
             >
               <MaterialCommunityIcons
                 color="black"
                 name="chevron-right"
-                size={20}
+                size={25}
                 style={{
                   margin: 5,
                   borderRadius: 15,
@@ -225,15 +228,15 @@ function ListingDetailsScreen({ route, navigation }) {
             flexDirection: "row",
             justifyContent: "space-between",
             width: "100%",
-            marginBottom:10,
+            marginBottom:5,
             paddingRight: 20,
           }}
         >
-          <View>
+          {/* <View>
             <Text style={{ color: "gray", fontSize: 12 }}>
               {getPluralisedWord(numberOfComments, "comment")}
             </Text>
-          </View>
+          </View> */}
           {loadingLikes && <ActivityIndicator  size={15} />}
           { !loadingLikes &&
             <TouchableOpacity
@@ -263,10 +266,15 @@ function ListingDetailsScreen({ route, navigation }) {
       </View>
       <KeyboardAvoidingView behavior="position">
         <View
-          style={{ height: 320, backgroundColor: "#bbb", position: "relative",marginTop: 15 }}
+          style={{ height: 320, backgroundColor: "#bbb", position: "relative",marginTop: 0 }}
         >
+          <View style={{backgroundColor: 'white', paddingLeft: 20,paddingBottom:5 }}>
+          <Text style={{ color: "gray", fontSize: 14 }}>
+              {getPluralisedWord(numberOfComments, "comment")}
+            </Text>
+            </View>
           {loadingCommentOnPageVisit &&
-            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }} >
             <ActivityIndicator size={30} />
           <Text style={{textAlign: 'center'}}>Loading Comments</Text>
           </View>
@@ -276,7 +284,7 @@ function ListingDetailsScreen({ route, navigation }) {
             <>
               <View
                 style={{
-                  height: width / 1.6,
+                  height: 200,
                   backgroundColor: "#ddd",
                   paddingHorizontal: 10,
                 }}
@@ -345,17 +353,20 @@ function ListingDetailsScreen({ route, navigation }) {
                   flexDirection: "row",
                   justifyContent: "center",
                   gap: 10,
-                  alignItems: "center",
+                  
                 }}
-              >
-                <AppTextInput
-                  width="75%"
-                maxHeight={38}
+            >
+              
+              <View style={{width: '75%', }}>
+                <TextInput
+                  
+                maxHeight={80}
+                minHeight={40}
                 defaultValue={postingComments}
                  // value={postingComments}
                   allowFontScaling={false}
                   autoCorrect={true}
-                  style={{ padding: 0, width: "100%" }}
+                  style={{ padding: 10, width: "100%", position: 'absolute', bottom: postingComments !== ''? 0 : -40,backgroundColor:'white', borderRadius: 20}}
                   clearTextOnFocus={true}
                   multiline={true}
                   placeholder="Type comment"
@@ -363,10 +374,15 @@ function ListingDetailsScreen({ route, navigation }) {
                     setPostingComments(e);
                   
 
-                  }}
-                />
+                }}
+                onContentSizeChange={(event) => {
+                  setContent(event.nativeEvent.contentSize.height)
+                }}
+                  />
+                </View>
                 {loadingComment && <ActivityIndicator />}
                 {postingComments && !loadingComment && (
+                <View>
                   <PostComment
                     endPoint={endPoint}
                     setComments={setComments}
@@ -374,40 +390,20 @@ function ListingDetailsScreen({ route, navigation }) {
                     setPostingComments={setPostingComments}
                     loading={loadingComment}
                     setLoading={setLoadingComment}
-                  />
+                />
+                  </View>
                 )}
               </View></>}
         </View>
       </KeyboardAvoidingView>
       
-      <Button
-        title="open url"
-        onPress={() =>
-          Linking.openURL(
-            "whatsapp://send?phone=+2347080967435&text=you are stupid"
-          )
-        }
-      />
-      <Button
-        title="open url"
-        onPress={() => Linking.openURL("tel:+2348106218585")}
-      />
-      <Button
-        title="open url"
-        style={{ width: "40%" }}
-        onPress={() =>
-          Linking.openURL(
-            "whatsapp://send?phone=+2347080967435&text=you are stupid"
-          )
-        }
-      />
-    </Screen>
+          </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    marginTop,
+    marginTop: detailsContainerTopMargin,
     marginStart: 30,
     marginEnd: 10,
     paddingTop: 3,
