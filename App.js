@@ -14,6 +14,8 @@ import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ListItem } from "./app/components/lists";
+import BarStyleContext from "./app/context/barStyle";
+import { light } from "@cloudinary/url-gen/qualifiers/fontWeight";
 //import { navigationRef } from "./app/navigation/rootNavigation"
 
 SplashScreen.preventAutoHideAsync();
@@ -21,6 +23,8 @@ SplashScreen.preventAutoHideAsync();
 const App = () => {
   const [user, setUser] = useState(null);
   const [appIsReady, setAppIsReady] = useState(false);
+    const [barStyle, setBarStyle]= useState('dark-content')
+
 
   useEffect(() => {
     prepareApp();
@@ -52,6 +56,7 @@ const App = () => {
         onLayout={onLayoutRootView}
       >
         <GestureHandlerRootView>
+          <BarStyleContext.Provider value={{ barStyle, setBarStyle }}>
           <AuthContext.Provider value={{ user, setUser }}>
             {/* <StatusBar style={"auto"} /> */}
             <NavigationContainer
@@ -61,7 +66,8 @@ const App = () => {
               {user ? <TabNavigator /> : <AuthNavigator />}
             </NavigationContainer>
             <OfflineNotice />
-          </AuthContext.Provider>
+            </AuthContext.Provider>
+            </BarStyleContext.Provider>
         </GestureHandlerRootView>
       </View>
     </>

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text } from "react-native";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 
 import {
@@ -15,6 +15,8 @@ import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import UploadScreen from "./UploadScreen";
 import listingsApi from "../api/listings";
+import colors from "../config/colors";
+import BarStyleContext from "../context/barStyle";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -87,7 +89,11 @@ function ListingEditScreen() {
   const location = null;
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
-
+    const { setBarStyle } = useContext(BarStyleContext)
+  
+  useEffect(() => {
+  setBarStyle('dark-content')
+})
   const handleSubmit = async (listing, { resetForm }) => {
     setProgress(0);
     setUploadVisible(true);
@@ -107,7 +113,7 @@ function ListingEditScreen() {
   };
 
   return (
-    <Screen style={styles.container} statusBarColor="dark">
+    <Screen style={styles.container} barStyle='dark-content' background='green' >
 
       <Form
         initialValues={{

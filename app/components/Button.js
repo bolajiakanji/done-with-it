@@ -7,7 +7,7 @@ function AppButton({ title, onPress, color = "primary", style, active }) {
   const width =  style?.width || '100%'
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: colors[color]}, {...style}]}
+      style={[styles.button, { backgroundColor: 'white'}, {...style}]}
       onPress={onPress}
       disabled={active}
     >
@@ -18,7 +18,7 @@ function AppButton({ title, onPress, color = "primary", style, active }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.primary,
+    backgroundColor: '0055ff',
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     
   },
   text: {
-    color: colors.white,
+    color: colors.primary,
     fontSize: 18,
     textTransform: "uppercase",
     fontWeight: "bold",

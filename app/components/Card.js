@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 15,
     backgroundColor: colors.white,
-    marginBottom: 15,
+    marginBottom: 10,
     overflow: "hidden",
     width: "48%",
     height: 270,

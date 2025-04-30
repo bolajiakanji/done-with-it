@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -33,6 +33,7 @@ import useAuth from "../auth/useAuth";
 import UserShortInfo from "../components/UserShortInfo";
 import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 import routes from "../navigation/routes";
+import BarStyleContext from "../context/barStyle";
 
 //import { AdvancedImage } from "cloudinary-react-native";
 //import { Cloudinary } from "@cloudinary/url-gen";
@@ -56,6 +57,8 @@ function ListingDetailsScreen({ route, navigation }) {
   const [index, setIndex] = useState(0);
   const [loadingComment, setLoadingComment] = useState(false);
   const [loadingLikes, setLoadingLikes] = useState(false);
+    const { setBarStyle } = useContext(BarStyleContext)
+  
   const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = useState(false);
     const { user } = useAuth();
   
@@ -77,6 +80,9 @@ function ListingDetailsScreen({ route, navigation }) {
   const ref = useRef(null);
   console.log("hereuse");
 
+  useEffect(() => {
+    setBarStyle('dark-content');
+  });
   useEffect(() => {
     loadListing();
   }, []);
@@ -114,7 +120,7 @@ function ListingDetailsScreen({ route, navigation }) {
   const testarr = [2, 3, 4];
 
   return (
-    <Screen>
+    <Screen   barStyle='dark-content' style={{backgroundColor: 'yellow'}} background={colors.primary}>
       <View style={{ flex: 1, position: "relative" }}>
         <Carousel
           ref={ref}
@@ -269,7 +275,7 @@ function ListingDetailsScreen({ route, navigation }) {
           style={{ height: 320, backgroundColor: "#bbb", position: "relative",marginTop: 0 }}
         >
           <View style={{backgroundColor: 'white', paddingLeft: 20,paddingBottom:5 }}>
-          <Text style={{ color: "gray", fontSize: 14 }}>
+          <Text style={{ color: "dodgerblue", fontSize: 14 }}>
               {getPluralisedWord(numberOfComments, "comment")}
             </Text>
             </View>

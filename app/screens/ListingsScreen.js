@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, Text, View } from "react-native";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { FlatList, StyleSheet, RefreshControl, Text, View, StatusBar } from "react-native";
 import { Image } from "expo-image";
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
@@ -18,20 +18,23 @@ import useAuth from "../auth/useAuth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AdvancedImage } from "cloudinary-react-native";
 import { Cloudinary } from "@cloudinary/url-gen";
+import BarStyleContext from "../context/barStyle";
 
 
 
 function ListingsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
+  const [refresh, setRefres] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [listingsQueryObject, setListingsQueryObject] = useState({});
   const [displayItems, setDisplayItems] = useState([]);
+  const { setBarStyle } = useContext(BarStyleContext)
   const { request, setError, data, error, loading, setData, setLoading } =
     useApi(listingsApi.getListings);
   const { user } = useAuth();
   const cld = new Cloudinary({
     cloud: {
-        cloudName: 'dlutiw9i4'
+      cloudName: 'dlutiw9i4'
     }
   });
   // const myImage = cld.image('items/ca4ed4c3ed3f5c1689437f57f5a12408_full');
@@ -41,6 +44,10 @@ function ListingsScreen({ navigation }) {
   console.log('profileImage')
   console.log('profileImage')
 
+
+  useEffect(() => {
+    setBarStyle('light-content')
+  } )
 
   useEffect(() => {
     loadListings();
@@ -130,7 +137,8 @@ function ListingsScreen({ navigation }) {
   console.log("beating");
   return (
     <>
-      <Screen style={styles.screen}>
+      <Screen  style={styles.screen} barStyle='light-content'background={colors.primary}  >
+        <View style={{  paddingHorizontal: 13}}>
         <View
           style={{
             display: "flex",
@@ -181,7 +189,7 @@ function ListingsScreen({ navigation }) {
               
             )}
             </View>
-            <Text style={{ fontSize: 11 }}>
+            <Text style={{ fontSize: 11, color: colors.white }}>
               {user.email.slice(0, 8) + " ..."}
             </Text>
           </View>
@@ -202,7 +210,8 @@ function ListingsScreen({ navigation }) {
           request={request}
           setData={setData}
         />}
-
+        </View>
+        <View style={{backgroundColor: '#e6f2ff', paddingHorizontal:10, paddingTop: 10}}>
         <FlatList
           data={displayItems}
           keyExtractor={(listing, index) => index}
@@ -233,7 +242,8 @@ function ListingsScreen({ navigation }) {
 
           numColumns="2"
           columnWrapperStyle={{columnGap:10}}
-        />
+          />
+          </View>
       </Screen>
     </>
   );
@@ -241,9 +251,11 @@ function ListingsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
-    paddingHorizontal: 15,
-    backgroundColor: colors.light,
+    
+    marginBottom: 30,
+    
+    backgroundColor: colors.primary
+    
   },
 });
 
