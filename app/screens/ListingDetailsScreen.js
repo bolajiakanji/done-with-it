@@ -80,9 +80,7 @@ function ListingDetailsScreen({ route, navigation }) {
   const ref = useRef(null);
   console.log("hereuse");
 
-  useEffect(() => {
-    setBarStyle('dark-content');
-  });
+  
   useEffect(() => {
     loadListing();
   }, []);
@@ -120,7 +118,7 @@ function ListingDetailsScreen({ route, navigation }) {
   const testarr = [2, 3, 4];
 
   return (
-    <Screen   barStyle='dark-content' style={{backgroundColor: 'yellow'}} background={colors.primary}>
+    <Screen   barStyle='dark-content' style={{backgroundColor: '#e6f2ff'}} background='#e6f2ff'>
       <View style={{ flex: 1, position: "relative" }}>
         <Carousel
           ref={ref}
@@ -234,7 +232,7 @@ function ListingDetailsScreen({ route, navigation }) {
             flexDirection: "row",
             justifyContent: "space-between",
             width: "100%",
-            marginBottom:5,
+            
             paddingRight: 20,
           }}
         >
@@ -272,25 +270,32 @@ function ListingDetailsScreen({ route, navigation }) {
       </View>
       <KeyboardAvoidingView behavior="position">
         <View
-          style={{ height: 320, backgroundColor: "#bbb", position: "relative",marginTop: 0 }}
+          style={{ height: height/2.2, backgroundColor: "#bbb", position: "relative",marginTop: 0, width:'100%' }}
         >
-          <View style={{backgroundColor: 'white', paddingLeft: 20,paddingBottom:5 }}>
-          <Text style={{ color: "dodgerblue", fontSize: 14 }}>
+          <View style={{backgroundColor: '#e6f2ff', paddingLeft: 20,paddingVertical:5 }}>
+          <Text style={{ fontSize: 14 }}>
               {getPluralisedWord(numberOfComments, "comment")}
             </Text>
             </View>
           {loadingCommentOnPageVisit &&
-            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }} >
+            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop:50 }} >
             <ActivityIndicator size={30} />
           <Text style={{textAlign: 'center'}}>Loading Comments</Text>
           </View>
           }
+          {!loadingCommentOnPageVisit && comments.length === 0 &&
+            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height: 170 }} >
             
-          {!loadingCommentOnPageVisit &&
-            <>
+          <Text style={{textAlign: 'center'}}>No Comments yet</Text>
+          </View>
+          }
+          
+            
+          {!loadingCommentOnPageVisit && comments.length !== 0 &&
+            
               <View
                 style={{
-                  height: 200,
+                  height: height/3.8,
                   backgroundColor: "#ddd",
                   paddingHorizontal: 10,
                 }}
@@ -350,45 +355,59 @@ function ListingDetailsScreen({ route, navigation }) {
                       </View>
                     )
                   })}
-                </ScrollView>
-              </View>
+          
+                
+              </ScrollView>
+          
+              
+              
+            </View>
+          }
+          
+            
               <View
                 style={{
                   display: "flex",
                   marginTop: 10,
                   flexDirection: "row",
                   justifyContent: "center",
-                  gap: 10,
+                gap: 10,
+                width: '100%'
+                  
                   
                 }}
             >
               
-              <View style={{width: '75%', }}>
-                <TextInput
+            { !loadingCommentOnPageVisit && <View style={{ width: '75%', }}>
+              <TextInput
                   
                 maxHeight={80}
                 minHeight={40}
-                defaultValue={postingComments}
-                 // value={postingComments}
-                  allowFontScaling={false}
-                  autoCorrect={true}
-                  style={{ padding: 10, width: "100%", position: 'absolute', bottom: postingComments !== ''? 0 : -40,backgroundColor:'white', borderRadius: 20}}
-                  clearTextOnFocus={true}
-                  multiline={true}
-                  placeholder="Type comment"
-                  onChangeText={(e) => {
-                    setPostingComments(e);
+                //defaultValue={}
+                  
+                value={postingComments}
+                position='absolute'
+                bottom={0}
+                allowFontScaling={false}
+                autoCorrect={true}
+                style={{ padding: 10, width: "100%", position: 'absolute', bottom: postingComments !== '' ? 0 : -40, backgroundColor: 'white', borderRadius: 20 }}
+                clearTextOnFocus={true}
+                multiline={true}
+                placeholder="Type comment"
+                onChangeText={(e) => {
+                  setPostingComments(e);
                   
 
                 }}
-                onContentSizeChange={(event) => {
-                  setContent(event.nativeEvent.contentSize.height)
-                }}
-                  />
-                </View>
-                {loadingComment && <ActivityIndicator />}
+              // onContentSizeChange={(event) => {
+              //   setContent(event.nativeEvent.contentSize.height)
+              // }}
+              />
+            </View>
+            }
+                {loadingComment && <View style={{height: 40, display: 'flex', justifyContent: 'center'}}><ActivityIndicator /></View>}
                 {postingComments && !loadingComment && (
-                <View>
+                
                   <PostComment
                     endPoint={endPoint}
                     setComments={setComments}
@@ -397,9 +416,9 @@ function ListingDetailsScreen({ route, navigation }) {
                     loading={loadingComment}
                     setLoading={setLoadingComment}
                 />
-                  </View>
+                  
                 )}
-              </View></>}
+              </View>
         </View>
       </KeyboardAvoidingView>
       
@@ -412,21 +431,21 @@ const styles = StyleSheet.create({
     marginTop: detailsContainerTopMargin,
     marginStart: 30,
     marginEnd: 10,
-    paddingTop: 3,
+    
   },
 
   price: {
     color: colors.secondary,
     fontWeight: "bold",
     fontSize: 27,
-    marginBottom: 0,
+    
     textAlign: "center",
   },
   title: {
     fontSize: 15,
     fontWeight: "bold",
     color: "gray",
-    marginBottom: 3,
+    
   },
   image: {
     width: "100%",

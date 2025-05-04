@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect,  useState } from "react";
 import { FlatList, StyleSheet, RefreshControl, Text, View, StatusBar } from "react-native";
 import { Image } from "expo-image";
 import ActivityIndicator from "../components/ActivityIndicator";
@@ -138,7 +138,7 @@ function ListingsScreen({ navigation }) {
   return (
     <>
       <Screen  style={styles.screen} barStyle='light-content'background={colors.primary}  >
-        <View style={{  paddingHorizontal: 13}}>
+        <View style={{  paddingHorizontal: 13, backgroundColor: colors.primary}}>
         <View
           style={{
             display: "flex",
@@ -211,7 +211,6 @@ function ListingsScreen({ navigation }) {
           setData={setData}
         />}
         </View>
-        <View style={{backgroundColor: '#e6f2ff', paddingHorizontal:10, paddingTop: 10}}>
         <FlatList
           data={displayItems}
           keyExtractor={(listing, index) => index}
@@ -241,9 +240,9 @@ function ListingsScreen({ navigation }) {
           initialNumToRender={10}
 
           numColumns="2"
-          columnWrapperStyle={{columnGap:10}}
+          columnWrapperStyle={{columnGap:10,paddingTop: 10, paddingHorizontal: 10 }}
           />
-          </View>
+          
       </Screen>
     </>
   );
@@ -251,10 +250,10 @@ function ListingsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1,
     
-    marginBottom: 30,
     
-    backgroundColor: colors.primary
+    backgroundColor: '#e6f2ff'
     
   },
 });

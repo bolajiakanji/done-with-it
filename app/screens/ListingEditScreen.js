@@ -113,7 +113,7 @@ function ListingEditScreen() {
   };
 
   return (
-    <Screen style={styles.container} barStyle='dark-content' background='green' >
+    <Screen style={styles.container} barStyle='dark-content'background='#99ccff'  >
 
       <Form
         initialValues={{

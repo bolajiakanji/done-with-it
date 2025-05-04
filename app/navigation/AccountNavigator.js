@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 const AccountNavigator = () => (
   <Stack.Navigator  screenOptions={{ headerShown: false }}>
     <Stack.Screen name="My Account" component={AccountScreen} />
-    <Stack.Screen name="PosterItems" component={PosterItems} />
+    {/* <Stack.Screen name="PosterItems" component={PosterItems} /> */}
   </Stack.Navigator>
 );
 

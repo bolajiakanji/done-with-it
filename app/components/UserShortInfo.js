@@ -43,7 +43,7 @@ function UserShortInfo({
               style={[
                 {
                   borderRadius: 15,
-                  padding: 2,
+                  
                   backgroundColor: "#bbb",
                 },
                 iconStyle,
@@ -86,9 +86,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flexDirection: "row",
-    paddingTop: 10,
-    backgroundColor: colors.white,
-    marginBottom: 10,
+    
+    backgroundColor: '',
+    
   },
   detailsContainer: {
     flex: 1,

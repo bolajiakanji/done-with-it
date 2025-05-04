@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { Image } from "expo-image";
+
 import Text from "./Text";
 import colors from "../config/colors";
 import timeAgo from "../utility/timeAgo";
@@ -26,7 +26,7 @@ const likesColor = getLikesColor(user._id, item.likes)
       
       <View style={styles.card}>
           
-        <AdvancedImage cldImg={myImage} style={styles.image} />
+        {<AdvancedImage cldImg={myImage} style={styles.image} />}
         
 
         <View style={styles.detailsContainer}>

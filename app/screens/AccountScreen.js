@@ -197,10 +197,10 @@ function AccountScreen({ navigation }) {
           
         <View style={styles.container}>
           
-         <ListItem
-          title="My Listings"
-          IconComponent={<Icon name="format-list-bulleted" backgroundColor={colors.primary} />}
-          onPress={() => navigation.navigate(routes.POSTER_ITEMS) }
+          <ListItem
+            title="My Listings"
+            IconComponent={<Icon name="format-list-bulleted" backgroundColor={colors.primary} />}
+            onPress={() =>{} }
         />
          <ListItem
           title="Log Out"

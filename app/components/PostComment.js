@@ -13,11 +13,11 @@ function PostComment({ endPoint, postingComments, setPostingComments, setComment
         <MaterialCommunityIcons
                   onPress={async () => {
           console.log('clicked')
-          setPostingComments('')
           setLoading(true)
-                    const res = await client.post(endPoint, {
-                      comment: postingComments
-                    })
+          const res = await client.post(endPoint, {
+            comment: postingComments
+          })
+          setPostingComments('')
           setLoading(false)
                     console.log(res.data)
                     console.log('res.data')
