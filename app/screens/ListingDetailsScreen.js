@@ -223,7 +223,7 @@ function ListingDetailsScreen({ route, navigation }) {
           //email={listing.userId.email}
           itemsAvailable={`${listing.userId.userListings} items available for sell`}
           itemOnPress={() =>
-                            navigation.navigate(routes.ITEM_POSTER, {jh:'hdfjsj'})
+                            navigation.navigate(routes.ITEM_POSTER, listing.userId)
                           }
         />
         <View
@@ -268,9 +268,9 @@ function ListingDetailsScreen({ route, navigation }) {
           </View>
         </View>
       </View>
-      <KeyboardAvoidingView behavior="position">
+      <KeyboardAvoidingView behavior="position"contentContainerStyle={{backgroundColor:  "#bbb"}}>
         <View
-          style={{ height: height/2.2, backgroundColor: "#bbb", position: "relative",marginTop: 0, width:'100%' }}
+          style={{ height: height/2.2, position: "relative",marginTop: 0, width:'100%' }}
         >
           <View style={{backgroundColor: '#e6f2ff', paddingLeft: 20,paddingVertical:5 }}>
           <Text style={{ fontSize: 14 }}>
@@ -284,7 +284,7 @@ function ListingDetailsScreen({ route, navigation }) {
           </View>
           }
           {!loadingCommentOnPageVisit && comments.length === 0 &&
-            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height: 170 }} >
+            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height:height/3.8  }} >
             
           <Text style={{textAlign: 'center'}}>No Comments yet</Text>
           </View>
@@ -295,7 +295,7 @@ function ListingDetailsScreen({ route, navigation }) {
             
               <View
                 style={{
-                  height: height/3.8,
+                  height: height/3.7,
                   backgroundColor: "#ddd",
                   paddingHorizontal: 10,
                 }}
@@ -340,6 +340,9 @@ function ListingDetailsScreen({ route, navigation }) {
                             flexDirection: "row",
                             rowGap: 5,
                             flexWrap: "wrap",
+                            backgroundColor: '#eee',
+                            padding: 10,
+                            borderRadius:20
                           }}
                         >
                           <View>

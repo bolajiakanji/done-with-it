@@ -14,7 +14,8 @@ apiClient.addAsyncRequestTransform(async (request) => {
   console.log(authToken)
   if (authToken) {
     request.headers["x-auth-token"] = authToken
-  };ListingsScreen
+  };
+  
 });
 
 const get = apiClient.get;

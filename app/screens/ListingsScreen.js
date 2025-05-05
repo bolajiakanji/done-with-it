@@ -45,9 +45,7 @@ function ListingsScreen({ navigation }) {
   console.log('profileImage')
 
 
-  useEffect(() => {
-    setBarStyle('light-content')
-  } )
+  
 
   useEffect(() => {
     loadListings();

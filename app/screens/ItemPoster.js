@@ -31,11 +31,12 @@ const cld = new Cloudinary({
     }
 });
   
-const ItemPoster = () => {
+const ItemPoster = ({route}) => {
     const [contactInfo, setContactInfo] = useState([])
     const [openModal, setOpenModal] = useState(false)
     const [loading, setLoading] = useState(false)
-      const { user, login,  } = useAuth();
+    const { user, login, } = useAuth();
+    const poster = route.params
     
 
     
@@ -70,8 +71,8 @@ console.log(user.contacts)
             />
             <View style={{marginHorizontal: 10}}>
             <View style={{marginTop: 10}} >
-                <Text><Text style={{fontWeight:'bold', fontSize: 18, }}> Lukman bolaji</Text></Text>
-                <Text><Text style={{fontWeight:'bold', fontSize: 16, }}> bolajiakanji21@gmail.com</Text></Text>
+                    <Text><Text style={{ fontWeight: 'bold', fontSize: 18, }}>{poster.name}</Text></Text>
+                    <Text><Text style={{ fontWeight: 'bold', fontSize: 16, }}> { poster.email}</Text></Text>
                 
             </View>
                 <View style={{ marginVertical: 10 }}>
@@ -83,9 +84,9 @@ console.log(user.contacts)
                     
                                            <View style={{ marginBottom: 10}}> 
                         <Text style={{color: 'gray'}}>Email</Text>
-                            <Text style={{ fontWeight: 'bold'}}> bolajihddhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdddddddddddddddd</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{poster.email}</Text>
                             </View>
-                        {user.contacts?.map((info) => (
+                        {poster.contacts?.map((info) => (
                 <View style={{ width: '46%'}} key={info._id}>
                     <Text style={{color: 'gray', fontSize: 16}}>{info.heading}</Text>
                     <Text style={{ fontWeight: 'bold', fontSize: 14}}>{info.contactInfo}</Text>
@@ -94,55 +95,7 @@ console.log(user.contacts)
 ))}
             
             
-            <Pressable onPress={()=> setOpenModal(true)} >
-            <Text style={{color: 'blue'}}> Add contact info <MaterialCommunityIcons name='plus' /> </Text>
-            </Pressable>
-            <TouchableOpacity onPress={async () => {
-                const res = await client.get('/userListings', {
-                    
-                    userId: '67cbf3c7c11d6e3f8b3b8241',
-                    
-                })
-                console.log('runhere')
-            }}>
-                <Text> you said what replicate</Text>
-                <Text> you said what replicate</Text>
-                <Text> you said what replicate</Text>
-                <Text> you said what replicate</Text>
-                <Text> you said what replicate</Text>
-                <Text> you said what replicate</Text>
-                <Text> you said what replicate</Text>
-                </TouchableOpacity>
             </View>
-            <Modal visible={openModal} animationType="slide" >
-                <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20}}>Add Contact Info</Text>
-                
-                {!loading && <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end', marginRight: 10, marginTop: 10 }}>
-                    < MaterialCommunityIcons
-                        size={30} name='close' onPress={() => { setOpenModal(false) }} />
-                </View>}
-                <View style={{ marginHorizontal: 10, marginTop: 10 }}>
-                    <Form
-                        initialValues={{
-                          heading: "",
-                          contactInfo: "",
-                          
-                        }}
-                        onSubmit={handleSubmit}
-                    validationSchema={validationSchema}
-                    style={{ marginTop: 30}}
-                >
-                    <FormField maxLength={255} name="heading" placeholder="Heading"
-                        
-                    />
-                    <FormField maxLength={255} name="contactInfo" placeholder="Contact Info" />
-                    
-                            <SubmitButton  title={loading ? 'Submitting...' : 'Post'} active={loading}  />
-                    
-                    </Form>
-                    </View>
-                
-            </Modal>
         </ScrollView>
 )
 }
