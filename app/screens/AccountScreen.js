@@ -162,26 +162,49 @@ function AccountScreen({ navigation }) {
             </View>
       </TouchableOpacity>
       
-      <View style={{marginTop: 10, marginLeft: 10}} >
-        <Text style={{ fontWeight: 'bold', fontSize: 18, }}> { user.name}</Text>
-        <Text style={{ fontWeight: 'bold', fontSize: 16, }}>{ user.email}</Text>
-                
-      </View>
+    
 
-      <View style={{ marginVertical: 10 }}>
-                    <Text
-                        style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20, color: 'dodgerblue' }}> Contact Info </Text>
-                
-         </View>
       
- {user.contacts?.map((info) => (
-                <View style={{ width: '46%'}} key={info._id}>
-                    <Text style={{color: 'gray', fontSize: 16}}>{info.heading}</Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 14}}>{info.contactInfo}</Text>
-                </View >
-            
-))}
-            
+      
+ 
+        <View style={{ marginHorizontal: 10 }}>
+                <View style={{ marginVertical: 10 }}>
+                  <Text style={{  fontSize: 18 }}>
+                    {user.name}
+                  </Text>
+        
+                  <Text style={{  fontSize: 15 }}>
+                    {user.email}
+                  </Text>
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                      color: "dodgerblue",
+                    }}
+                  >
+                    {" "}
+                    Contact Info{" "}
+                  </Text>
+                </View>
+        
+                <View style={{ marginBottom: 10 }}>
+                  <Text style={{ color: "gray", fontWeight: 'bold' }}>Email</Text>
+                  <Text style={{  }}>{user.email}</Text>
+                </View>
+                {user.contacts?.map((info) => (
+                  <View style={{ width: "46%", marginBottom: 10 }} key={info._id}>
+                    <Text style={{ color: "gray",fontWeight: 'bold'  }}>{info.heading}</Text>
+                    <Text style={{ }}>
+                      {info.contactInfo}
+                    </Text>
+                  </View>
+                ))}
+         
+            </View>
             
             <Pressable onPress={()=> setOpenModal(true)} >
             <Text style={{color: 'blue'}}> Add contact info <MaterialCommunityIcons name='plus' /> </Text>
@@ -199,6 +222,7 @@ function AccountScreen({ navigation }) {
           
           <ListItem
             title="My Listings"
+            subTitle={`${user.userListings || 0} items available for sale`}
             IconComponent={<Icon name="format-list-bulleted" backgroundColor={colors.primary} />}
             onPress={() =>{} }
         />

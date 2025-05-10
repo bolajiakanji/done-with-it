@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import * as Yup from "yup";
 import { useState, useContext } from "react";
 
@@ -113,7 +113,8 @@ function ListingEditScreen() {
   };
 
   return (
-    <Screen style={styles.container} barStyle='dark-content'background='#99ccff'  >
+    <Screen style={styles.container} barStyle='dark-content' background='#99ccff'  >
+      <View style={{marginHorizontal: 10}}>
 
       <Form
         initialValues={{
@@ -153,20 +154,22 @@ function ListingEditScreen() {
         />
         <SubmitButton title="Post" />
       </Form>
-      {/* <UploadScreen
+      <UploadScreen
         onDone={() => setTimeout(() => setUploadVisible(false), 2000)}
         progress={progress}
         visible={uploadVisible}
-      /> */}
+      />
+        </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    
     backgroundColor: "#99ccff",
     flex: 1,
+    
     
   },
   item: {
