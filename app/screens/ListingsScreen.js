@@ -106,12 +106,12 @@ function ListingsScreen({ navigation }) {
   const listFooterComponent = () => {
     if (isLoading && displayItems?.length > 0) {
       return (
-        <Text style={{ textAlign: "center", marginBottom: 10 }}>Loading...</Text>
+        <Text style={{ textAlign: "center", paddingBottom: 10, backgroundColor: '#e6f2ff' }}>Loading...</Text>
       );
     }
     if (!isLoading && !listingsQueryObject.page) {
       return (
-        <Text style={{ textAlign: "center", marginBottom: 10 }}>
+        <Text style={{ textAlign: "center", paddingBottom: 10, backgroundColor: '#e6f2ff' }}>
           No more data
         </Text>
       );
@@ -242,7 +242,7 @@ function ListingsScreen({ navigation }) {
           initialNumToRender={10}
 
           numColumns="2"
-          columnWrapperStyle={{columnGap:10,paddingTop: 10, paddingHorizontal: 10 }}
+          columnWrapperStyle={{columnGap:10,paddingTop: 10, paddingHorizontal: 10, backgroundColor: '#e6f2ff' }}
           />
        
    
@@ -256,7 +256,8 @@ const styles = StyleSheet.create({
     flex: 1,
     
     
-    backgroundColor: '#e6f2ff'
+    backgroundColor: colors.primary
+    //backgroundColor: '#e6f2ff'
     
   },
 });
