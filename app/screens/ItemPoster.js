@@ -61,7 +61,7 @@ const ItemPoster = ({ route }) => {
     <ScrollView
       contentContainerStyle={{
         overflow: "visible",
-        height: 800,
+        
         paddingBottom: 0,
       }}
     >
