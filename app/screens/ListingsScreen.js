@@ -1,5 +1,5 @@
 import React, { useContext, useEffect,  useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, Text, View, StatusBar } from "react-native";
+import { FlatList, StyleSheet, RefreshControl, Text, View, StatusBar, ScrollView } from "react-native";
 import { Image } from "expo-image";
 import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
@@ -117,26 +117,8 @@ function ListingsScreen({ navigation }) {
       );
     }
   };
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    loadListings();
-    setRefreshing(false);
-  };
-  console.log(error);
-  //if (loading) return <Skeleton />;
-  const me = async () => {
-    const owner = await authStorage.getUser();
-    console.log(owner);
-    return owner.image;
-  };
-
-  console.log(user.image);
-  console.log("beating");
-  return (
-    <>
-      <Screen  style={styles.screen} barStyle='light-content'background={colors.primary}  >
-        <View style={{  paddingHorizontal: 13, backgroundColor: colors.primary}}>
+  const footer = () => { return(
+    <View style={{  paddingHorizontal: 13, backgroundColor: colors.primary}}>
         <View
           style={{
             display: "flex",
@@ -209,6 +191,27 @@ function ListingsScreen({ navigation }) {
           setData={setData}
         />}
         </View>
+  )}
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    loadListings();
+    setRefreshing(false);
+  };
+  console.log(error);
+  //if (loading) return <Skeleton />;
+  const me = async () => {
+    const owner = await authStorage.getUser();
+    console.log(owner);
+    return owner.image;
+  };
+
+  console.log(user.image);
+  console.log("beating");
+  return (
+    <>
+      <Screen style={styles.screen} barStyle='light-content' background={colors.primary}  >
+          
         <FlatList
           data={displayItems}
           keyExtractor={(listing, index) => index}
@@ -235,12 +238,14 @@ function ListingsScreen({ navigation }) {
           onEndReached={onEndReached}
           //ListEmptyComponent={listEmptyComponent}
           ListFooterComponent={listFooterComponent}
+          ListHeaderComponent={footer}
           initialNumToRender={10}
 
           numColumns="2"
           columnWrapperStyle={{columnGap:10,paddingTop: 10, paddingHorizontal: 10 }}
           />
-          
+       
+   
       </Screen>
     </>
   );

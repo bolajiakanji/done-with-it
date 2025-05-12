@@ -88,7 +88,7 @@ function ListItemm({ setImageModal, setpi }) {
       <MaterialCommunityIcons
         color="white"
         name="close"
-        size={25}
+        size={30}
         onPress={() => {
           setImageUri("");
           setImageModal(false);
@@ -98,7 +98,7 @@ function ListItemm({ setImageModal, setpi }) {
         <MaterialCommunityIcons
           color="white"
           name="plus"
-          size={25}
+          size={30}
           onPress={() => handlePress()}
           />
           </View>
@@ -110,13 +110,15 @@ function ListItemm({ setImageModal, setpi }) {
       
       {/* <Image style={styles.uploadImage} source={imageuri ? { uri: imageuri } : ''} /> */}
       <View style={styles.uploadImage}>
-        {imageuri && <><Image style={styles.uploadImage} source={{ uri: imageuri }} />
-          <View style={{ position: 'absolute',width: '100%', top: '155%', display: 'flex',alignItems: 'center', justifyContent: 'center', alignItems: 'center' }}>
+        {imageuri && <View style={styles.uploadImage}>
+          <Image style={{ width: '100%', height: 250 }} source={{ uri: imageuri }} />
+          <View style={{ }}>
           
           <AppButton
             title='Use this image preview'
             onPress={() => sendapi()}
-            style={{ position: 'absolute',width: '80%', top: '155%', display: 'flex',alignItems: 'center', justifyContent: 'center', alignItems: 'center' }} />
+              style={{ marginTop: 50 }}
+            width={75}/>
           {/* <TouchableOpacity  style={{ position: 'absolute',width: '100%', top: '155%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Button
               //disabled={true}
@@ -127,7 +129,7 @@ function ListItemm({ setImageModal, setpi }) {
           />
         </TouchableOpacity></>} */}
             </View>
-        </>}
+        </View>}
           {!imageuri && <AccountImage />}
         </View>
     </View>
@@ -157,9 +159,9 @@ const styles = StyleSheet.create({
     height: 300,
   },
   uploadImage: {
-    position: "absolute",
+    position: "relative",
     zIndex: 5,
-    top: "25%",
+    top: "15%",
     width: "100%",
     height: 200,
   },
