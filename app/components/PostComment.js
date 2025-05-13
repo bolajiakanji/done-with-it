@@ -1,6 +1,6 @@
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import client from "../api/client";
+import {meme as client } from "../api/client";
 import { useState } from "react";
 
 

@@ -18,7 +18,7 @@ import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
 import Carousel from "react-native-reanimated-carousel";
-import client from "../api/client";
+import  client, {meme as client_2} from "../api/client";
 import { configureReanimatedLogger } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useApi } from "../hooks";
@@ -87,7 +87,7 @@ function ListingDetailsScreen({ route, navigation }) {
 
   const loadListing = async () => {
     setLoadingCommentOnPageVisit(true)
-    const res = await client.get(endPoint);
+    const res = await client_2.get(endPoint);
     setLoadingCommentOnPageVisit(false)
 
     console.log(res.data);
