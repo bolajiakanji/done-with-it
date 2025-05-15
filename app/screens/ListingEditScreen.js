@@ -89,20 +89,25 @@ function ListingEditScreen() {
   const location = null;
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
     const { setBarStyle } = useContext(BarStyleContext)
   
   useEffect(() => {
   setBarStyle('dark-content')
 })
   const handleSubmit = async (listing, { resetForm }) => {
+    setError(false)
     setProgress(0);
+    setLoading(true);
     setUploadVisible(true);
 
     const response = await listingsApi.addListing({ ...listing }, (progress) =>
       setProgress(progress)
     );
-
+setLoading(false)
     if (!response.ok) {
+      setError(true)
       console.log(new Error(error));
 
       setUploadVisible(false);
@@ -157,7 +162,9 @@ function ListingEditScreen() {
       <UploadScreen
         onDone={() => setTimeout(() => setUploadVisible(false), 2000)}
         progress={progress}
-        visible={uploadVisible}
+          visible={uploadVisible}
+          loading={loading}
+          error={error}
       />
         </View>
     </Screen>

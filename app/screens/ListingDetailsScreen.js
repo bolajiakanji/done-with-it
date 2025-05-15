@@ -119,6 +119,7 @@ function ListingDetailsScreen({ route, navigation }) {
 
   return (
     <Screen   barStyle='dark-content' style={{backgroundColor: '#e6f2ff'}} background='#e6f2ff'>
+      
       <View style={{ flex: 1, position: "relative" }}>
         <Carousel
           ref={ref}

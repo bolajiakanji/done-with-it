@@ -111,14 +111,16 @@ function ListingsScreen({ navigation }) {
     }
     if (!isLoading && !listingsQueryObject.page) {
       return (
-        <Text style={{ textAlign: "center", paddingBottom: 10, backgroundColor: '#e6f2ff' }}>
-          No more data
+        <Text style={{
+          textAlign: "center", paddingBottom: 10,
+          backgroundColor: displayItems.length > 1 ? '#e6f2ff': 'blue' }}>
+          No Data
         </Text>
       );
     }
   };
   const footer = () => { return(
-    <View style={{  paddingHorizontal: 13, backgroundColor: colors.primary}}>
+    <View style={{  paddingHorizontal: 13, backgroundColor: colors.primary,}}>
         <View
           style={{
             display: "flex",
@@ -215,6 +217,7 @@ function ListingsScreen({ navigation }) {
         <FlatList
           data={displayItems}
           keyExtractor={(listing, index) => index}
+
           renderItem={({ item }) => {
             console.log('myinage')
             console.log(item.images[0])
@@ -239,6 +242,7 @@ function ListingsScreen({ navigation }) {
           //ListEmptyComponent={listEmptyComponent}
           ListFooterComponent={listFooterComponent}
           ListHeaderComponent={footer}
+          stickyHeaderIndices={[0]}
           initialNumToRender={10}
 
           numColumns="2"
