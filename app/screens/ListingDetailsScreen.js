@@ -352,9 +352,26 @@ function ListingDetailsScreen({ route, navigation }) {
                             </Text>
                           </View>
                           <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
-                          <Text style={{ fontSize: 11, color: "gray" }}>
-                            {timeAgo(comment.createdAt) + " ago"}
-                          </Text>
+                          <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', width: '100%',paddingEnd: 10}}>
+                            <View >
+                            <Text style={{ fontSize: 11, color: "gray" }}>
+                            {timeAgo(comment.createdAt) + " agoeet"}
+                            </Text>
+                              </View>
+                            { comment.userId._id == user._id && <View>
+                              <MaterialCommunityIcons name="delete" onPress={
+                                async () => {
+                                  const res = await client_2.delete(`/comments/${comment._id}/${listing._id}`)
+                                  console.log('res.data')
+                                  console.log(res.data)
+                                  if (res.data) setComments(res.data.reverse())
+                                  
+                                }
+                              } />
+                            </View>}
+                            
+                          </View>
+
                         </View>
                       </View>
                     )

@@ -51,15 +51,21 @@ meme.get =  async (url, data, axiosConfig) => {
     
   }
 meme.post =  async (url, data, axiosConfig) => {
-    //const result = await get(url, data, axiosConfig);
-
-  //   const response = await cache.get(url);
-  //   console.log('big')
-  //   console.log(response)
-  //  // return response ? { ok: true, data: response } : response;
-  //   if (response) 
-  //     return { ok: true, data: response }
+    
   const result = await apiClient.post(url, data, axiosConfig);
+  console.log('clic')
+  console.log(result.data)
+  console.log('clicxfdf')
+      if (result.ok) {
+        cache.store(url, result.data)
+        return result
+      }
+    
+  }
+meme.delete =  async (url, data, axiosConfig) => {
+    
+  
+  const result = await apiClient.delete(url, data, axiosConfig);
   console.log('clic')
   console.log(result.data)
   console.log('clicxfdf')
