@@ -359,8 +359,7 @@ function ListingDetailsScreen({ route, navigation }) {
                             {timeAgo(comment.createdAt) + " agoeet"}
                             </Text>
                               </View>
-                            { comment.userId._id == user._id && <View>
-                              <MaterialCommunityIcons name="delete" onPress={
+                            {comment.userId._id == user._id && <TouchableOpacity style={{paddingHorizontal:5}}  onPress={
                                 async () => {
                                   const res = await client_2.delete(`/comments/${comment._id}/${listing._id}`)
                                   console.log('res.data')
@@ -371,8 +370,10 @@ function ListingDetailsScreen({ route, navigation }) {
                                   }
                                   
                                 }
-                              } />
-                            </View>}
+                              } >
+                              
+                              <MaterialCommunityIcons name="delete"  />
+                            </TouchableOpacity>}
                             
                           </View>
 
