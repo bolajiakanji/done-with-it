@@ -57,7 +57,8 @@ function ListingDetailsScreen({ route, navigation }) {
   const [index, setIndex] = useState(0);
   const [loadingComment, setLoadingComment] = useState(false);
   const [loadingLikes, setLoadingLikes] = useState(false);
-    const { setBarStyle } = useContext(BarStyleContext)
+  const { setBarStyle } = useContext(BarStyleContext)
+  const count=useRef(true)
   
   const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = useState(false);
     const { user } = useAuth();
@@ -95,7 +96,7 @@ function ListingDetailsScreen({ route, navigation }) {
     if (res.data) setComments(res.data.reverse());
   };
   const numberOfComments =
-    comments.length === 0 ? listing.comments : comments.length;
+    count.current && comments.length == 0 ? listing.comments : comments.length;
   
   const numberOfLikes =
     likes.length;
@@ -364,7 +365,10 @@ function ListingDetailsScreen({ route, navigation }) {
                                   const res = await client_2.delete(`/comments/${comment._id}/${listing._id}`)
                                   console.log('res.data')
                                   console.log(res.data)
-                                  if (res.data) setComments(res.data.reverse())
+                                  if (res.data) {
+                                    count.current = false
+                                    setComments(res.data.reverse())
+                                  }
                                   
                                 }
                               } />
