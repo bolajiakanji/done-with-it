@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 
 const prefix = "cache";
-const expiryTimeInMinutes = 5;
+const expiryTimeInMinutes = 600;
 
 const store = async (key, value) => {
   console.log('store')

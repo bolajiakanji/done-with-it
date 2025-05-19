@@ -11,6 +11,7 @@ import {
   ScrollView,
   ActivityIndicator,
   TextInput,
+  Keyboard
 } from "react-native";
 import { Image } from "expo-image";
 import Screen from "../components/Screen";
@@ -34,6 +35,7 @@ import UserShortInfo from "../components/UserShortInfo";
 import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 import routes from "../navigation/routes";
 import BarStyleContext from "../context/barStyle";
+import ReactNativeModal from "react-native-modal";
 
 //import { AdvancedImage } from "cloudinary-react-native";
 //import { Cloudinary } from "@cloudinary/url-gen";
@@ -50,7 +52,9 @@ const detailsContainerTopMargin = height /3.5;
 
 function ListingDetailsScreen({ route, navigation }) {
   const listing = route.params;
+
   const [comments, setComments] = useState([]);
+  const [isVisible, setVisibility] = useState(false);
   const [likes, setLikes] = useState(listing.likes);
   const [content, setContent] = useState(0);
   const [postingComments, setPostingComments] = useState("");
@@ -58,7 +62,8 @@ function ListingDetailsScreen({ route, navigation }) {
   const [loadingComment, setLoadingComment] = useState(false);
   const [loadingLikes, setLoadingLikes] = useState(false);
   const { setBarStyle } = useContext(BarStyleContext)
-  const count=useRef(true)
+  const count = useRef(true)
+  
   
   const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = useState(false);
     const { user } = useAuth();
@@ -84,6 +89,14 @@ function ListingDetailsScreen({ route, navigation }) {
   
   useEffect(() => {
     loadListing();
+    
+  }, []);
+  useEffect(() => {
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setVisibility(false)
+    })
+    return () => { hideSubscription.remove() }
+
   }, []);
 
   const loadListing = async () => {
@@ -270,9 +283,13 @@ function ListingDetailsScreen({ route, navigation }) {
           </View>
         </View>
       </View>
-      <KeyboardAvoidingView behavior="position"contentContainerStyle={{backgroundColor:  "#bbb"}}>
+      <View style={{backgroundColor:  "#aaa"}}>
         <View
-          style={{ height: height/2.2, position: "relative",marginTop: 0, width:'100%' }}
+          style={{
+            height: height / 2.2,
+            position: "relative", marginTop: 0, width: '100%',
+            paddingBottom:80
+          }}
         >
           <View style={{backgroundColor: '#e6f2ff', paddingLeft: 20,paddingVertical:5 }}>
           <Text style={{ fontSize: 14 }}>
@@ -297,12 +314,12 @@ function ListingDetailsScreen({ route, navigation }) {
             
               <View
                 style={{
-                  height: height/3.7,
-                  backgroundColor: "#ddd",
+                 // height: height/3.7,
+                  backgroundColor: "green",
                   paddingHorizontal: 10,
                 }}
               >
-                <ScrollView style={{ width: "100%", paddingRight: 20 }}>
+                <ScrollView style={{ width: "100%", paddingRight: 20, paddingBottom: 180,backgroundColor: 'yellow' }}>
                   {comments.map((comment) => {
                     const profileImage = cld.image(comment.userId.image)
                     console.log(comment.userId.image)
@@ -356,12 +373,12 @@ function ListingDetailsScreen({ route, navigation }) {
                           <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', width: '100%',paddingEnd: 10}}>
                             <View >
                             <Text style={{ fontSize: 11, color: "gray" }}>
-                            {timeAgo(comment.createdAt) + " agoeet"}
+                            {timeAgo(comment.createdAt) + " ago"}
                             </Text>
                               </View>
                             {comment.userId._id == user._id && <TouchableOpacity style={{paddingHorizontal:5}}  onPress={
                                 async () => {
-                                  const res = await client_2.delete(`/comments/${comment._id}/${listing._id}`)
+                                  const res = await client_2.delete(`/comments/${listing._id}`, {commentId: comment._id})
                                   console.log('res.data')
                                   console.log(res.data)
                                   if (res.data) {
@@ -389,14 +406,15 @@ function ListingDetailsScreen({ route, navigation }) {
               
             </View>
           }
-          
+          <View style={{position: 'absolute', width: '100%', bottom:5}}>
             
               <View
                 style={{
                   display: "flex",
                   marginTop: 10,
                   flexDirection: "row",
-                  justifyContent: "center",
+              justifyContent: "center",
+                  alignItems: 'flex-end',
                 gap: 10,
                 width: '100%'
                   
@@ -407,31 +425,39 @@ function ListingDetailsScreen({ route, navigation }) {
             { !loadingCommentOnPageVisit && <View style={{ width: '75%', }}>
               <TextInput
                   
-                maxHeight={80}
-                minHeight={40}
+               height={40}
+               // minHeight={40}
                 //defaultValue={}
                   
                 value={postingComments}
-                position='absolute'
-                bottom={0}
-                allowFontScaling={false}
-                autoCorrect={true}
-                style={{ padding: 10, width: "100%", position: 'absolute', bottom: postingComments !== '' ? 0 : -40, backgroundColor: 'white', borderRadius: 20 }}
-                clearTextOnFocus={true}
-                multiline={true}
+                //position='absolute'
+                
+                style={{
+                  padding: 10, width: "100%",
+                 // position: 'absolute',
+                 // bottom: postingComments !== '' ? 0 : -40, 
+                 backgroundColor: 'white', borderRadius: 20
+                }}
+                
+                  multiline={false}
                 placeholder="Type comment"
-                onChangeText={(e) => {
+                  onChangeText={(e) => {
+                  
                   setPostingComments(e);
                   
 
-                }}
+                  }}
+                  onPress={()=>setVisibility(true)}
               // onContentSizeChange={(event) => {
               //   setContent(event.nativeEvent.contentSize.height)
               // }}
               />
             </View>
             }
-                {loadingComment && <View style={{height: 40, display: 'flex', justifyContent: 'center'}}><ActivityIndicator /></View>}
+            {loadingComment && <View style={{
+              //height: 40,
+              display: 'flex', justifyContent: 'center'
+            }}><ActivityIndicator /></View>}
                 {postingComments && !loadingComment && (
                 
                   <PostComment
@@ -446,7 +472,37 @@ function ListingDetailsScreen({ route, navigation }) {
                 )}
               </View>
         </View>
-      </KeyboardAvoidingView>
+        </View>
+        </View>
+      
+      <ReactNativeModal
+        isVisible={isVisible}
+        avoidKeyboard={true}
+        coverScreen={false}
+        style={{backgroundColor:'transparent', margin:0, marginTop:'30%'}}
+       hasBackdrop={false}
+        onBackButtonPress={()=>setVisibility(false)}
+        onBackdropPress={()=>setVisibility(false)}
+      >
+        <Text></Text>
+        <View style={{width: '100%',backgroundColor: 'blue'}}>
+
+
+
+
+
+
+          <TextInput style={{ width: '100%' }}
+            allowFontScaling={false}
+            autoCorrect={true}
+            clearTextOnFocus={true}
+            onChangeText={(e) => {
+                  setPostingComments(e)
+            }}
+
+            multiline numberOfLines={4} value={postingComments} />
+        </View>
+      </ReactNativeModal>
       
           </Screen>
   );

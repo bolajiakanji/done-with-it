@@ -16,9 +16,7 @@ const Screen = ({ children, background, style, colorStyle,barStyle,  ...otherPro
     <SafeAreaView style={[style,{
       
       paddingTop: insets.top,
-      paddingBottom: insets.bottom,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
+      
     },]}>
       {children}
       <FocusAwareStatusBar barStyle={barStyle} backgroundColor={ background} />
