@@ -537,7 +537,8 @@ function ListingDetailsScreen({ route, navigation }) {
                     postingComments={postingComments}
                     setPostingComments={setPostingComments}
                     loading={loadingComment}
-                    setLoading={setLoadingComment}
+                setLoading={setLoadingComment}
+                setModal={setVisibility}
                 />
                   
             )}
