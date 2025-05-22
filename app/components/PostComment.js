@@ -2,11 +2,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {meme as client } from "../api/client";
 import { useState } from "react";
+import { Keyboard } from "react-native";
 
 
 
 
-function PostComment({ endPoint, postingComments, setPostingComments, setComments, setLoading }) {
+function PostComment({ endPoint, postingComments, setPostingComments, setComments, setLoading, setModal }) {
   
     
     return (
@@ -21,7 +22,12 @@ function PostComment({ endPoint, postingComments, setPostingComments, setComment
           setLoading(false)
                     console.log(res.data)
                     console.log('res.data')
-                  if (res.ok) setComments(res.data.reverse())
+          if (res.ok) {
+            setComments(res.data.reverse())
+            setModal(false)
+            Keyboard.dismiss()
+
+          }
                   }}
                   name="send" size={20} style={{ padding: 10, backgroundColor: 'white', borderRadius: 25 }} />
     )

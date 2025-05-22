@@ -315,11 +315,11 @@ function ListingDetailsScreen({ route, navigation }) {
               <View
                 style={{
                  // height: height/3.7,
-                  backgroundColor: "green",
+                  backgroundColor: "#ccc",
                   paddingHorizontal: 10,
                 }}
               >
-                <ScrollView style={{ width: "100%", paddingRight: 20, paddingBottom: 180,backgroundColor: 'yellow' }}>
+                <ScrollView style={{ width: "100%", paddingRight: 20, paddingBottom: 180,backgroundColor: '' }}>
                   {comments.map((comment) => {
                     const profileImage = cld.image(comment.userId.image)
                     console.log(comment.userId.image)
@@ -434,6 +434,7 @@ function ListingDetailsScreen({ route, navigation }) {
                 
                 style={{
                   padding: 10, width: "100%",
+                  paddingHorizontal: 15,
                  // position: 'absolute',
                  // bottom: postingComments !== '' ? 0 : -40, 
                  backgroundColor: 'white', borderRadius: 20
@@ -479,28 +480,68 @@ function ListingDetailsScreen({ route, navigation }) {
         isVisible={isVisible}
         avoidKeyboard={true}
         coverScreen={false}
-        style={{backgroundColor:'transparent', margin:0, marginTop:'30%'}}
-       hasBackdrop={false}
+        style={{
+          backgroundColor: 'transparent',
+          margin: 0,
+          
+          top: '20%',
+          display: 'flex',justifyContent: 'center',alignItems: 'flex-end',width: '100%'
+        }}
+       hasBackdrop={true}
         onBackButtonPress={()=>setVisibility(false)}
-        onBackdropPress={()=>setVisibility(false)}
+        onBackdropPress={() => setVisibility(false)}
+        onModalHide={() => {
+          Keyboard.dismiss()
+        }}
+        backdropOpacity={0}
       >
-        <Text></Text>
-        <View style={{width: '100%',backgroundColor: 'blue'}}>
+        <View style={{width, marginBottom: 80, paddingTop: 15}}>
+        <View style={{
+                  display: "flex",
+                 // marginTop: 20,
+                  flexDirection: "row",
+             justifyContent: "center",
+                  alignItems: 'center',
+                gap: 15,
+          width: '100%',
+          //position: 'absolute',
+          backgroundColor: '#bbb',
+            height: 200, 
+          bottom:10
+        
+                
+                  
+                  
+        }}>
+            <View style={{ width: '75%',  }}>
 
-
-
-
-
-
-          <TextInput style={{ width: '100%' }}
+<TextInput style={{ backgroundColor: 'white', position: 'absolute',bottom: '-10%',width: '100%',borderRadius: 20, paddingHorizontal:15, }}
             allowFontScaling={false}
             autoCorrect={true}
             clearTextOnFocus={true}
             onChangeText={(e) => {
                   setPostingComments(e)
             }}
-
-            multiline numberOfLines={4} value={postingComments} />
+//style={{backgroundColor: 'white'}}
+              multiline numberOfLines={4} value={postingComments} />
+            </View>
+          {loadingComment && <View style={{
+              //height: 40,
+              
+            }}><ActivityIndicator /></View>}
+                {postingComments && !loadingComment && (
+                
+                  <PostComment
+                    endPoint={endPoint}
+                    setComments={setComments}
+                    postingComments={postingComments}
+                    setPostingComments={setPostingComments}
+                    loading={loadingComment}
+                    setLoading={setLoadingComment}
+                />
+                  
+            )}
+            </View>
         </View>
       </ReactNativeModal>
       
