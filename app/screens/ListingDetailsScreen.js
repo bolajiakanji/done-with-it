@@ -36,6 +36,7 @@ import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 import routes from "../navigation/routes";
 import BarStyleContext from "../context/barStyle";
 import ReactNativeModal from "react-native-modal";
+import DeleteComment from "../components/DeleteComment";
 
 //import { AdvancedImage } from "cloudinary-react-native";
 //import { Cloudinary } from "@cloudinary/url-gen";
@@ -333,7 +334,8 @@ function ListingDetailsScreen({ route, navigation }) {
                           flexDirection: "row",
                           gap: 10,
                           flex: "wrap",
-                          paddingRight: 30,
+                          paddingRight: 40,
+                          
                         }}
                       >
                         <View>
@@ -370,27 +372,17 @@ function ListingDetailsScreen({ route, navigation }) {
                             </Text>
                           </View>
                           <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
-                          <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', width: '100%',paddingEnd: 10}}>
+                          <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', width: '100%',paddingEnd: 0}}>
                             <View >
                             <Text style={{ fontSize: 11, color: "gray" }}>
                             {timeAgo(comment.createdAt) + " ago"}
                             </Text>
                               </View>
-                            {comment.userId._id == user._id && <TouchableOpacity style={{paddingHorizontal:5}}  onPress={
-                                async () => {
-                                  const res = await client_2.delete(`/comments/${listing._id}`, {commentId: comment._id})
-                                  console.log('res.data')
-                                  console.log(res.data)
-                                  if (res.data) {
-                                    count.current = false
-                                    setComments(res.data.reverse())
-                                  }
-                                  
-                                }
-                              } >
-                              
-                              <MaterialCommunityIcons name="delete"  />
-                            </TouchableOpacity>}
+                            {comment.userId._id == user._id && <DeleteComment
+                              listing={listing} 
+                              comment={comment}
+                              setComments={setComments}
+                            />}
                             
                           </View>
 

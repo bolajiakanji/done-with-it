@@ -5,7 +5,7 @@ import authStorage from "../auth/storage";
 import ListingsScreen from "../screens/ListingsScreen";
 
 const apiClient = create({
-  baseURL: "http://192.168.84.87:9000/api",
+  baseURL: "http://192.168.24.87:9000/api",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
@@ -62,11 +62,9 @@ meme.post =  async (url, data, axiosConfig) => {
       }
     
   }
-meme.delete =  async (url, data, axiosConfig) => {
-    
-  
-  const result = await apiClient.delete(url, data, axiosConfig);
-  console.log('clic')
+meme.delete =  async (url, axiosConfig) => {
+    console.log('clic')
+  const result = await apiClient.delete(url,  axiosConfig);
   console.log(result.data)
   console.log('clicxfdf')
       if (result.ok) {
