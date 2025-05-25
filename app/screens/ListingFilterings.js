@@ -9,7 +9,8 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displayItems, setDisplayItems,
     setData, request }) => {
     const [displayDatePicker, setDisplayDatePicker] = useState(false);
-    const [LoadingObject, setIsLoadingObject] = useState(null);
+    const [pickerLoading, setPickerLoading] = useState(false);
+    const [dateLoading, setDateLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
 
@@ -18,15 +19,16 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
     const handleAllButton = async (filter, object) => {
         const filt = {}
         filt[filter] = true
-        setIsLoadingObject(filt);
         let response
-        if (filter === 'all') {
-            console.log(filt)
-             response = await request({page:1})
+        filter === 'category' ?  setPickerLoading(true) : setDateLoading(true)
+        if (object.category === '0') {
+          console.log(filt)
+          response = await request({page:1, category: ''})
         } else {
-             response = await request({ ...listingsQueryObject, ...object, page: 1, });
-            setIsLoadingObject(null)
+          response = await request({ ...listingsQueryObject, ...object, page: 1, });
+          
         }
+        filter === 'category' ?  setPickerLoading(false) : setDateLoading(false)
         
         if (!response.ok) {
             if (response.data) return setError(response.data.error);
@@ -72,7 +74,9 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
                     style={{ width: 160, margin: -9,color: 'black',  }}
                     
           selectedValue={listingsQueryObject.category}
-                  onValueChange={(category) => {
+            onValueChange={(category) => {
+                    console.log('change')
+                    console.log('change2')
                        handleAllButton('category', {category: category})
                     //   setListingsQueryObject((listingsQuery) => ({
                     //       ...listingsQuery,
@@ -81,17 +85,22 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
                   }
           }
         >
-          <Picker.Item label="All" value="-"  />
-          <Picker.Item label="male" value="9" />
-          <Picker.Item label="female" value="3" />
-          <Picker.Item label="others" value="3" />
+          <Picker.Item label="All" value='0'  />
+          <Picker.Item label="Furniture" value="1" />
+          <Picker.Item label="Cars" value="2" />
+          <Picker.Item label="Camera" value="3" />
+          <Picker.Item label="Games" value="4" />
+          <Picker.Item label="Clothing" value="5" />
+          <Picker.Item label="Sport" value="6" />
+          <Picker.Item label="Books" value="8" />
+          <Picker.Item label="Others" value="9" />
         </Picker>
       </View>
 
       {displayDatePicker && (
         <RNDateTimePicker
           mode="date"
-          value={new Date()}
+          value={listingsQueryObject.date || new Date()}
           fullscreen={true}
           onChange={setDate}
         />
