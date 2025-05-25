@@ -68,7 +68,10 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
       <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 10, marginVertical: 20,}}>
     
 
-      <View style={{ borderRadius: 15, height:40,padding:0, margin:0, backgroundColor: '#ADD8E6' }}>
+        <View style={{
+          borderRadius: 15, height: 40, padding: 0, margin: 0, backgroundColor: '#ADD8E6',
+        opacity : pickerLoading ? 0.5 : 1
+       }}>
         <Picker
           mode="dropdown"
                     style={{ width: 160, margin: -9,color: 'black',  }}
@@ -102,14 +105,18 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           mode="date"
           value={listingsQueryObject.date || new Date()}
           fullscreen={true}
-          onChange={setDate}
+            onChange={setDate}
+            maximumDate={new Date()}
         />
       )}
       <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
         <View
-          style={{ borderRadius: 15,backgroundColor: '#ADD8E6',  width: 160, height: 40,  justifyContent: 'center', padding: 10 }}
+            style={{
+              borderRadius: 15, backgroundColor: '#ADD8E6', width: 140, height: 40,
+            opacity : dateLoading ? 0.5 : 1,  justifyContent: 'center', padding: 10
+            }}
         >
-          <Text style={{color: '#333'}}>Pick date from:</Text>
+          <Text style={{color: '#333'}}>Pick date :</Text>
         </View>
       </TouchableWithoutFeedback>
                 
