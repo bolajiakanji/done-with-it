@@ -112,8 +112,9 @@ function ListingsScreen({ navigation }) {
     if (!isLoading && !listingsQueryObject.page && displayItems.length === 0) {
       return (
         <Text style={{
-          textAlign: "center", paddingBottom: 10,
-          backgroundColor: displayItems.length > 1 ? '#e6f2ff': 'blue' }}>
+          textAlign: "center", paddingBottom: 10,marginTop: 20
+
+           }}>
           No Data
         </Text>
       );
@@ -222,7 +223,7 @@ function ListingsScreen({ navigation }) {
   return (
     <>
       <Screen style={styles.screen} barStyle='light-content' background={colors.primary}  >
-          
+         < View style={{position: 'absolute', zIndex:0, height: 150, backgroundColor: colors.primary, width: '100%'}}></View> 
         <FlatList
           data={displayItems}
           keyExtractor={(listing, index) => index}
@@ -269,8 +270,8 @@ const styles = StyleSheet.create({
     flex: 1,
     
     
-    backgroundColor: colors.primary
-    //backgroundColor: '#e6f2ff'
+    //backgroundColor: colors.primary
+    backgroundColor: '#e6f2ff'
     
   },
 });
