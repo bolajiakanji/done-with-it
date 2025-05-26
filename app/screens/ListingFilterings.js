@@ -16,7 +16,8 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
 
 
     
-    const handleAllButton = async (filter, object) => {
+  const handleAllButton = async (filter, object) => {
+      const initialQueryObject = {...listingsQueryObject}
         const filt = {}
         filt[filter] = true
         let response
@@ -33,7 +34,8 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
         if (!response.ok) {
             if (response.data) return setError(response.data.error);
             else {
-                return setError("An unexpected error occured.");
+              setListingsQueryObject(initialQueryObject)
+              return setError("An unexpected error occured.");
             }
         }
         setData(response.data);

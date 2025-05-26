@@ -109,12 +109,21 @@ function ListingsScreen({ navigation }) {
         <Text style={{ textAlign: "center", paddingBottom: 10, backgroundColor: '#e6f2ff' }}>Loading...</Text>
       );
     }
-    if (!isLoading && !listingsQueryObject.page) {
+    if (!isLoading && !listingsQueryObject.page && displayItems.length === 0) {
       return (
         <Text style={{
           textAlign: "center", paddingBottom: 10,
           backgroundColor: displayItems.length > 1 ? '#e6f2ff': 'blue' }}>
           No Data
+        </Text>
+      );
+    }
+    if (!isLoading && !listingsQueryObject.page) {
+      return (
+        <Text style={{
+          textAlign: "center", paddingBottom: 10,
+          backgroundColor: displayItems.length > 1 ? '#e6f2ff': 'blue' }}>
+          No more Data
         </Text>
       );
     }
