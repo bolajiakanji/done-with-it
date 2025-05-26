@@ -58,8 +58,11 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
       const {
         type,
         nativeEvent: { timestamp, utcOffset },
-        } = event;
-        handleAllButton('date', {date: date})
+      } = event;
+      if (event.type === 'set') {
+        handleAllButton('date', { date: date })
+      } 
+      
       // setListingsQueryObject((listingsQuery) => ({ ...listingsQuery, date }));
       setDisplayDatePicker(false);
       };
