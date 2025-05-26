@@ -81,7 +81,8 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           mode="dropdown"
                     style={{ width: 160, margin: -9,color: 'black',  }}
                     
-          selectedValue={listingsQueryObject.category}
+            selectedValue={listingsQueryObject.category}
+            enabled={!pickerLoading}
             onValueChange={(category) => {
                     console.log('change')
                     console.log('change2')
@@ -112,6 +113,7 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           fullscreen={true}
             onChange={setDate}
             maximumDate={new Date(Date.now() + 86400000)}
+            disabled={dateLoading}
         />
       )}
       <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
