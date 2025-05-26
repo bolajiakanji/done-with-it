@@ -105,10 +105,10 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
       {displayDatePicker && (
         <RNDateTimePicker
           mode="date"
-          value={listingsQueryObject.date || new Date()}
+          value={listingsQueryObject.date || new Date(Date.now() + 86400000)}
           fullscreen={true}
             onChange={setDate}
-            maximumDate={new Date()}
+            maximumDate={new Date(Date.now() + 86400000)}
         />
       )}
       <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>

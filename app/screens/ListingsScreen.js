@@ -123,7 +123,7 @@ function ListingsScreen({ navigation }) {
       return (
         <Text style={{
           textAlign: "center", paddingBottom: 10,
-          backgroundColor: displayItems.length > 1 ? '#e6f2ff': 'blue' }}>
+          }}>
           No more Data
         </Text>
       );
