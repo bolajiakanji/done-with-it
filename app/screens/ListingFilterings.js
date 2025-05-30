@@ -104,19 +104,17 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           <Picker.Item label="Others" value="9" />
         </Picker>
         </View>
-        {isLoading && (
-          <View>
-            <ActivityIndicator />
-          </View>)}
+        {isLoading && <ActivityIndicator />}
+          
 
-      {displayDatePicker && (
+      { !isLoading && displayDatePicker && (
         <RNDateTimePicker
           mode="date"
           value={listingsQueryObject.date || new Date(Date.now() + 86400000)}
           fullscreen={true}
             onChange={setDate}
             maximumDate={new Date(Date.now() + 86400000)}
-            disabled={isLoading}
+            disabled={!isLoading}
         />
       )}
       <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
