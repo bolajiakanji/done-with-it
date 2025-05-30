@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, ScrollView, TouchableWithoutFeedback,TouchableHighlight  } from "react-native";
+import { Text, View, ScrollView, TouchableWithoutFeedback,TouchableHighlight, ActivityIndicator  } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
@@ -9,9 +9,8 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displayItems, setDisplayItems,
     setData, request }) => {
     const [displayDatePicker, setDisplayDatePicker] = useState(false);
-    const [pickerLoading, setPickerLoading] = useState(false);
-    const [dateLoading, setDateLoading] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    
+    const [isLoading, setLoading] = useState(false);
 
 
 
@@ -21,7 +20,7 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
         const filt = {}
         filt[filter] = true
         let response
-        filter === 'category' ?  setPickerLoading(true) : setDateLoading(true)
+        setLoading(true)
         if (object.category === '0') {
           console.log(filt)
           response = await request({page:1, category: ''})
@@ -29,7 +28,7 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           response = await request({ ...listingsQueryObject, ...object, page: 1, });
           
         }
-        filter === 'category' ?  setPickerLoading(false) : setDateLoading(false)
+        setLoading(false)
         
         if (!response.ok) {
             if (response.data) return setError(response.data.error);
@@ -75,14 +74,14 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
 
         <View style={{
           borderRadius: 15, height: 40, padding: 0, margin: 0, backgroundColor: '#ADD8E6',
-        opacity : pickerLoading ? 0.5 : 1
+        opacity : isLoading ? 0.5 : 1
        }}>
         <Picker
           mode="dropdown"
                     style={{ width: 160, margin: -9,color: 'black',  }}
                     
             selectedValue={listingsQueryObject.category}
-            enabled={!pickerLoading}
+            enabled={!isLoading}
             onValueChange={(category) => {
                     console.log('change')
                     console.log('change2')
@@ -104,7 +103,11 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           <Picker.Item label="Books" value="8" />
           <Picker.Item label="Others" value="9" />
         </Picker>
-      </View>
+        </View>
+        {isLoading && (
+          <View>
+            <ActivityIndicator />
+          </View>)}
 
       {displayDatePicker && (
         <RNDateTimePicker
@@ -113,14 +116,14 @@ const ListingFilterings = ({ listingsQueryObject, setListingsQueryObject, displa
           fullscreen={true}
             onChange={setDate}
             maximumDate={new Date(Date.now() + 86400000)}
-            disabled={dateLoading}
+            disabled={isLoading}
         />
       )}
       <TouchableWithoutFeedback onPress={() => setDisplayDatePicker(true)}>
         <View
             style={{
               borderRadius: 15, backgroundColor: '#ADD8E6', width: 140, height: 40,
-            opacity : dateLoading ? 0.5 : 1,  justifyContent: 'center', padding: 10
+            opacity : isLoading ? 0.5 : 1,  justifyContent: 'center', padding: 10
             }}
         >
           <Text style={{color: '#333'}}>Pick date :</Text>

@@ -303,10 +303,22 @@ function ListingDetailsScreen({ route, navigation }) {
           <Text style={{textAlign: 'center'}}>Loading Comments</Text>
           </View>
           }
-          {!loadingCommentOnPageVisit && comments.length === 0 &&
+          {!loadingCommentOnPageVisit && comments.length === 0 && !numberOfComments &&
             <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height:height/3.8  }} >
             
           <Text style={{textAlign: 'center'}}>No Comments yet</Text>
+          </View>
+          }
+          {!loadingCommentOnPageVisit && comments.length === 0 && numberOfComments &&
+            <View style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', height:height/3.8  }} >
+            
+              <Text style={{ textAlign: 'center' }}>No comments gotten </Text>
+              <TouchableOpacity onPress={() => {
+                console.log('cli')
+                loadListing()
+              }}>
+                <Text style={{ textAlign: 'center', color: 'blue' }}>click to retry </Text>
+                </TouchableOpacity >
           </View>
           }
           
