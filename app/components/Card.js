@@ -61,7 +61,7 @@ const likesColor = getLikesColor(user._id, item.likes)
               {numberOfLikes + " "}
               <MaterialCommunityIcons name="thumb-up" />
             </Text>
-            <Text style={{ color: "#bbb", fontSize: 12 }}>
+            <Text style={{ color: "gray", fontSize: 12 }}>
               {displayTime} ago
             </Text>
           </View>
