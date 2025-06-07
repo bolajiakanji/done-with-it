@@ -522,7 +522,8 @@ function ListingDetailsScreen({ route, navigation }) {
 <TextInput style={{ backgroundColor: 'white', position: 'absolute',bottom: '-10%',width: '100%',borderRadius: 20, paddingHorizontal:15, }}
             allowFontScaling={false}
             autoCorrect={true}
-            clearTextOnFocus={true}
+                clearTextOnFocus={true}
+                autoFocus={true}
             onChangeText={(e) => {
                   setPostingComments(e)
             }}
