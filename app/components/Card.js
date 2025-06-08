@@ -55,6 +55,7 @@ const likesColor = getLikesColor(user._id, item.likes)
               flexDirection: "row",
               justifyContent: "space-between",
               width: "65%",
+              marginLeft: 5
             }}
           >
             <Text style={{ color: likesColor, fontSize: 12 }}>
