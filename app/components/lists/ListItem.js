@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingTop: 10,
     backgroundColor: colors.white,
+    marginBottom: 10,
+    padding:10
   },
   detailsContainer: {
     flex: 1,

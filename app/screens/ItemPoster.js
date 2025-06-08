@@ -62,11 +62,11 @@ const ItemPoster = ({ route }) => {
       contentContainerStyle={{
         overflow: "visible",
         
-        paddingBottom: 0,
+        paddingBottom: 15,
       }}
     >
       <AdvancedImage cldImg={myImage} style={{ height: 250, width: "100%" }} />
-      <View style={{ marginHorizontal: 10 }}>
+      <View style={{ marginHorizontal: 15 }}>
         <View style={{ marginVertical: 10 }}>
           <Text style={{  fontSize: 18 }}>
             {poster.name}

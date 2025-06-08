@@ -149,7 +149,7 @@ function AccountScreen({ navigation }) {
           </View>
         </TouchableOpacity>
 
-        <View style={{ marginHorizontal: 10 }}>
+        <View style={{ marginHorizontal: 15 }}>
           <View style={{ marginVertical: 10 }}>
             <Text style={{ fontSize: 18 }}>{user.name}</Text>
 
@@ -181,14 +181,14 @@ function AccountScreen({ navigation }) {
               <Text style={{}}>{info.contactInfo}</Text>
             </View>
           ))}
-        </View>
 
         <Pressable onPress={() => setOpenModal(true)}>
-          <Text style={{ color: "blue" }}>
-            {" "}
+          <Text style={{ color: "blue", fontSize: 20 }}>
+            
             Add contact info <MaterialCommunityIcons name="plus" />{" "}
           </Text>
         </Pressable>
+        </View>
 
         <View style={styles.container}>
           <ListItem
