@@ -61,8 +61,8 @@ const ItemPoster = ({ route }) => {
     <ScrollView
       contentContainerStyle={{
         overflow: "visible",
-        
-        paddingBottom: 15,
+        backgroundColor: colors.light,
+        paddingBottom: 5,
       }}
     >
       <AdvancedImage cldImg={myImage} style={{ height: 250, width: "100%" }} />
@@ -102,6 +102,7 @@ const ItemPoster = ({ route }) => {
             </Text>
           </View>
         ))}
+          </View>
         <ListItem
           title="My Listings"
           subTitle={`${poster.userListings} items available for sale`}
@@ -113,7 +114,6 @@ const ItemPoster = ({ route }) => {
           }
           onPress={() => {}}
         />
-      </View>
     </ScrollView>
   );
 };

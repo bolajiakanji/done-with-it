@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     backgroundColor: colors.white,
     marginBottom: 10,
-    padding:10
+    padding:15
   },
   detailsContainer: {
     flex: 1,
