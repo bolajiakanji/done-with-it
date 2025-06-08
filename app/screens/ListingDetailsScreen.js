@@ -247,9 +247,11 @@ function ListingDetailsScreen({ route, navigation }) {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            width: "100%",
+            width: "90%",
             
             paddingRight: 20,
+            marginLeft: 40,
+            marginTop:5
           }}
         >
           {/* <View>
@@ -271,7 +273,7 @@ function ListingDetailsScreen({ route, navigation }) {
                 console.log("res");
                 if (res.data) setLikes(res.data)
               }}>
-              <Text style={{ color: likesColor, fontSize: 12, padding: 3 }}>
+              <Text style={{ color: likesColor, fontSize: 12, padding: 3,  }}>
                 {numberOfLikes + " "}
                 <MaterialCommunityIcons name="thumb-up" />
               </Text>
