@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function Camera({  onShot, setCamera }) {
+export default function Camera({  onShot, setCamera, setShowButton }) {
   const [facing, setFacing] = useState("back");
   const [shot, setshot] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
@@ -40,6 +40,7 @@ export default function Camera({  onShot, setCamera }) {
         console.log(take);
         onShot(take.uri);
         setCamera(false);
+        setShowButton(true)
         return;
       }
       return null;
