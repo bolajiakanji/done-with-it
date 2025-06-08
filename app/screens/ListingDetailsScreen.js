@@ -558,7 +558,7 @@ function ListingDetailsScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   detailsContainer: {
     marginTop: detailsContainerTopMargin,
-    marginStart: 30,
+    marginStart: 15,
     marginEnd: 10,
     
   },
