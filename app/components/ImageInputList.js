@@ -21,8 +21,8 @@ function ImageInputList({ imageUris = [], onRemoveImage, onAddImage, setCamera }
               />
             </View>
           ))}
-          <ImageInput onChangeImage={(uri) => onAddImage(uri)} setCamera={setCamera}
- />
+          {imageUris.length < 6 && <ImageInput onChangeImage={(uri) => onAddImage(uri)} setCamera={setCamera}
+ />}
         </View>
       </ScrollView>
     </View>
