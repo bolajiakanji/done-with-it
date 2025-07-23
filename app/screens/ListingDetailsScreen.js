@@ -37,6 +37,7 @@ import routes from "../navigation/routes";
 import BarStyleContext from "../context/barStyle";
 import ReactNativeModal from "react-native-modal";
 import DeleteComment from "../components/DeleteComment";
+import ListingDetailCarousel from "../components/ListingDetailCarousel";
 
 //import { AdvancedImage } from "cloudinary-react-native";
 //import { Cloudinary } from "@cloudinary/url-gen";
@@ -134,7 +135,7 @@ function ListingDetailsScreen({ route, navigation }) {
 
   return (
     <Screen   barStyle='dark-content' style={{backgroundColor: '#e6f2ff'}} background='#e6f2ff'>
-      
+      <ListingDetailCarousel width={width} height={height} ref={ref} listing={listing} data={data} />
       <View style={{ flex: 1, position: "relative" }}>
         <Carousel
           ref={ref}
