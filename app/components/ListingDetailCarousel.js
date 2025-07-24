@@ -4,37 +4,34 @@ import {
   Dimensions,
   TouchableHighlight,
   TouchableOpacity,
-  Button,
-  Linking,
-  KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
-  TextInput,
-  Keyboard,
   Text
 } from "react-native";
 import React, { useEffect, useRef, useState,useContext } from "react";
 import { AdvancedImage } from "cloudinary-react-native";
-
-
-
 import Carousel from "react-native-reanimated-carousel";
-
-
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import myCloud from "../utility/cid";
 
 
 
 
-function ListingDetailCarousel({ width, height, ref, listing, data,  }) {
+function ListingDetailCarousel({ width, height, listing, data,  }) {
     const [index, setIndex] = useState(0);
+      const ref = useRef(null);
+    
       const uriArray = listing.images;
       const arrowTopMargin = height / 8;
       const marginTop = height /3.5;
 
 
 const cld = myCloud()
+
+const previous = () => {
+    ref?.current?.prev();
+  };
+  const next = () => {
+    ref?.current?.next();
+  };
   
 
 return (
@@ -50,7 +47,8 @@ return (
           onSnapToItem={(index) => setIndex(index)}
           renderItem={(data) => {
             const myImage = cld.image(data.item);
-
+console.log('new')
+console.log(myImage)
             return (
               <View
                 style={{
@@ -59,7 +57,7 @@ return (
                   justifyContent: "center",
                 }}
               >
-                <AdvancedImage cldImg={myImage} style={[styles.image, {marginTop}]} />
+                <AdvancedImage cldImg={myImage} style={styles.image } />
 
                 {/* <Image source={data} style={{ flex: 1 }} /> */}
               </View>
@@ -118,12 +116,11 @@ return (
 )}
 
 const styles = StyleSheet.create({
-  detailsContainer: {
-    
-    marginStart: 15,
-    marginEnd: 10,
-    
+  image: {
+    width: "100%",
+    height: "100%",
   },
+  
 })
 
 
