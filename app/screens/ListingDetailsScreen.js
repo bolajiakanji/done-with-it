@@ -39,6 +39,11 @@ import ReactNativeModal from "react-native-modal";
 import DeleteComment from "../components/DeleteComment";
 import ListingDetailCarousel from "../components/ListingDetailCarousel";
 import ListingInfo from "../components/ListingInfo";
+import CommentSection from "../components/commentSection";
+import Ab from "../components/ab";
+import CommentsSection from "../components/CommentsSection";
+
+
 
 //import { AdvancedImage } from "cloudinary-react-native";
 //import { Cloudinary } from "@cloudinary/url-gen";
@@ -136,14 +141,31 @@ const infoTopMargin = height /3.5;
     ref?.current?.next();
   };
   const testarr = [2, 3, 4];
+  const screenHeigth = height
 
   return (
     <Screen   barStyle='dark-content' style={{backgroundColor: '#e6f2ff'}} background='#e6f2ff'>
       <ListingDetailCarousel width={width} height={height} listing={listing} data={data} />
       
-<ListingInfo listing={listing} infoTopMargin={infoTopMargin} />
+<ListingInfo listing={listing} 
+infoTopMargin={infoTopMargin} 
+/>
+<View>
+  
+  
+<CommentsSection 
+comments={comments} 
+listing={listing}
+loadingCommentOnPageVisit={loadingCommentOnPageVisit} 
+postingComments={postingComments}
+loadingComment={loadingComment}
+height={height}
+
+/>
+
+</View>
       
-      <View style={{backgroundColor:  "#aaa"}}>
+      {/* <View style={{backgroundColor:  "#aaa"}}>
         <View
           style={{
             height: height / 2.2,
@@ -337,7 +359,7 @@ const infoTopMargin = height /3.5;
               </View>
         </View>
         </View>
-        </View>
+        </View> */}
       
       <ReactNativeModal
         isVisible={isVisible}
