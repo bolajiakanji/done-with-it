@@ -1,25 +1,18 @@
 import {
     View,
-    StyleSheet,
-    Dimensions,
-    TouchableHighlight,
     TouchableOpacity,
-    Button,
-    Linking,
-    KeyboardAvoidingView,
     ScrollView,
     ActivityIndicator,
     TextInput,
-    Keyboard,
     Text
 } from "react-native";
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { AdvancedImage } from "cloudinary-react-native";
-
-
 import PostComment from "./PostComment";
 import getPluralisedWord from "../utility/pluralisedWord";
 import myCloud from "../utility/cid";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import timeAgo from "../utility/timeAgo";
 import useAuth from "../auth/useAuth";
 
@@ -29,7 +22,7 @@ import useAuth from "../auth/useAuth";
 
 
 function CommentsSection({ comments, listing, loadingCommentOnPageVisit, postingComments,
-    loadingComment, height
+    loadingComment, height, setVisibility, endPoint, setComments, setPostingComments, setLoadingComment, DeleteComment
 }) {
         const { user } = useAuth();
     
@@ -132,12 +125,13 @@ function CommentsSection({ comments, listing, loadingCommentOnPageVisit, posting
                                         <View
                                             style={{
                                                 display: "flex",
-                                                flexDirection: "row",
+                                                flexDirection: "column",
                                                 rowGap: 5,
                                                 flexWrap: "wrap",
                                                 backgroundColor: '#eee',
                                                 padding: 10,
-                                                borderRadius: 20
+                                                borderRadius: 20,
+                                                width: '100%'
                                             }}
                                         >
                                             <View>
