@@ -39,10 +39,10 @@ import ReactNativeModal from "react-native-modal";
 import DeleteComment from "../components/DeleteComment";
 import ListingDetailCarousel from "../components/ListingDetailCarousel";
 import ListingInfo from "../components/ListingInfo";
-import CommentSection from "../components/commentSection";
-import Ab from "../components/ab";
+
 import CommentsSection from "../components/CommentsSection";
 import { deleteItemAsync } from "expo-secure-store";
+import CommentPosting from "../components/CommentPosting";
 
 
 
@@ -167,6 +167,24 @@ setComments={setComments}
 setPostingComments={setPostingComments}
 setLoadingComment={setLoadingComment}
 DeleteComment={DeleteComment}
+
+/>
+<CommentPosting 
+loadingCommentOnPageVisit={loadingCommentOnPageVisit} 
+postingComments={postingComments}
+loadingComment={loadingComment}
+setVisibility={setVisibility}
+endPoint={endPoint}
+setComments={setComments}
+setPostingComments={setPostingComments}
+setLoadingComment={setLoadingComment}
+
+
+
+
+
+
+
 
 />
 
