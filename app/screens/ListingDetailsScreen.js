@@ -3,46 +3,24 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  TouchableHighlight,
-  TouchableOpacity,
-  Button,
-  Linking,
-  KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
-  TextInput,
   Keyboard
 } from "react-native";
-import { Image } from "expo-image";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
-import ListItem from "../components/lists/ListItem";
-import Text from "../components/Text";
-import Carousel from "react-native-reanimated-carousel";
 import  client, {meme as client_2} from "../api/client";
 import { configureReanimatedLogger } from "react-native-reanimated";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useApi } from "../hooks";
-import { AdvancedImage } from "cloudinary-react-native";
 import { Cloudinary } from "@cloudinary/url-gen";
-import timeAgo from "../utility/timeAgo";
-import AppTextInput from "../components/TextInput";
-import PostComment from "../components/PostComment";
-import getPluralisedWord from "../utility/pluralisedWord";
 import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
-import UserShortInfo from "../components/UserShortInfo";
-import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
-import routes from "../navigation/routes";
 import BarStyleContext from "../context/barStyle";
-import ReactNativeModal from "react-native-modal";
 import DeleteComment from "../components/DeleteComment";
 import ListingDetailCarousel from "../components/ListingDetailCarousel";
 import ListingInfo from "../components/ListingInfo";
 
 import CommentsSection from "../components/CommentsSection";
-import { deleteItemAsync } from "expo-secure-store";
 import CommentPosting from "../components/CommentPosting";
+import CommentPostingModal from "../components/CommentPostingModal";
 
 
 
@@ -178,89 +156,23 @@ endPoint={endPoint}
 setComments={setComments}
 setPostingComments={setPostingComments}
 setLoadingComment={setLoadingComment}
-
-
-
-
-
-
-
-
 />
 
 </View>
-      
-      
-      <ReactNativeModal
-        isVisible={isVisible}
-        avoidKeyboard={true}
-        coverScreen={false}
-        style={{
-          backgroundColor: 'transparent',
-          margin: 0,
-          
-          top: '20%',
-          display: 'flex',justifyContent: 'center',alignItems: 'flex-end',width: '100%'
-        }}
-       hasBackdrop={true}
-        onBackButtonPress={()=>setVisibility(false)}
-        onBackdropPress={() => setVisibility(false)}
-        onModalHide={() => {
-          Keyboard.dismiss()
-        }}
-        backdropOpacity={0}
-      >
-        <View style={{width, marginBottom: 80, paddingTop: 15}}>
-        <View style={{
-                  display: "flex",
-                 // marginTop: 20,
-                  flexDirection: "row",
-             justifyContent: "center",
-                  alignItems: 'center',
-                gap: 15,
-          width: '100%',
-          //position: 'absolute',
-          backgroundColor: '#bbb',
-            height: 200, 
-          bottom:10
-        
-                
-                  
-                  
-        }}>
-            <View style={{ width: '75%',  }}>
 
-<TextInput style={{ backgroundColor: 'white', position: 'absolute',bottom: '-10%',width: '100%',borderRadius: 20, paddingHorizontal:15, }}
-            allowFontScaling={false}
-            autoCorrect={true}
-                clearTextOnFocus={true}
-                autoFocus={true}
-            onChangeText={(e) => {
-                  setPostingComments(e)
-            }}
-//style={{backgroundColor: 'white'}}
-              multiline numberOfLines={4} value={postingComments} />
-            </View>
-          {loadingComment && <View style={{
-              //height: 40,
-              
-            }}><ActivityIndicator /></View>}
-                {postingComments && !loadingComment && (
-                
-                  <PostComment
-                    endPoint={endPoint}
-                    setComments={setComments}
-                    postingComments={postingComments}
-                    setPostingComments={setPostingComments}
-                    loading={loadingComment}
-                setLoading={setLoadingComment}
-                setModal={setVisibility}
-                />
-                  
-            )}
-            </View>
-        </View>
-      </ReactNativeModal>
+<CommentPostingModal isVisible={isVisible} width={width} 
+loadingCommentOnPageVisit={loadingCommentOnPageVisit} 
+postingComments={postingComments}
+loadingComment={loadingComment}
+setVisibility={setVisibility}
+endPoint={endPoint}
+setComments={setComments}
+setPostingComments={setPostingComments}
+setLoadingComment={setLoadingComment}
+/>
+      
+      
+      
       
           </Screen>
   );

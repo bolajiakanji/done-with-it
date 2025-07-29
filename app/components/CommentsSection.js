@@ -4,7 +4,8 @@ import {
     ScrollView,
     ActivityIndicator,
     TextInput,
-    Text
+    Text,
+    
 } from "react-native";
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { AdvancedImage } from "cloudinary-react-native";
@@ -142,7 +143,7 @@ function CommentsSection({ comments, listing, loadingCommentOnPageVisit, posting
                                             <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingEnd: 0 }}>
                                                 <View >
-                                                    <Text style={{ fontSize: 11, color: "gray" }}>
+                                                    <Text style={{ fontSize: 11, color: "gray" }} numberOfLines={5}>
                                                         {timeAgo(comment.createdAt) + " ago"}
                                                     </Text>
                                                 </View>
