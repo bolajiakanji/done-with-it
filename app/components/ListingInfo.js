@@ -23,12 +23,13 @@ import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
 import timeAgo from "../utility/timeAgo";
 import  client, {meme as client_2} from "../api/client";
+import routes from "../navigation/routes";
 
  //import colors from "../config/colors";
  
  
  
- function ListingInfo ({ listing, route, navigation, infoTopMargin, like_value, likes, setLikes, 
+ function ListingInfo ({ listing,navigation, infoTopMargin, like_value, likes, setLikes, 
  }) {
                 const [loadingLikes, setLoadingLikes] = useState(false);
 
@@ -41,7 +42,7 @@ import  client, {meme as client_2} from "../api/client";
     getLikesColor(user._id, likes);
 console.log(likes)
 console.log('omomi')
-console.log(likes.length)
+console.log(navigation)
     const numberOfLikes =likes.length  || 0;
   
   

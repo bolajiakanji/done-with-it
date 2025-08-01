@@ -38,6 +38,8 @@ const arrowTopMargin = height / 8;
 const detailsContainerTopMargin = height /3.5;
 
 function ListingDetailsScreen({ route, navigation }) {
+  console.log(navigation)
+  console.log('navigation')
   const listing = route.params;
   const [isVisible, setVisibility] = useState(false);
   const [likes, setLikes] = useState(listing.likes);
@@ -136,7 +138,7 @@ const infoTopMargin = height /3.5;
 infoTopMargin={infoTopMargin} 
 like_value={like_value}
 setLikes={setLikes}
-
+navigation={navigation}
 likes={likes}
 />
 <View>
