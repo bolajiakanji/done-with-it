@@ -39,8 +39,6 @@ const detailsContainerTopMargin = height /3.5;
 
 function ListingDetailsScreen({ route, navigation }) {
   const listing = route.params;
-
-  const [comments, setComments] = useState([]);
   const [isVisible, setVisibility] = useState(false);
   const [likes, setLikes] = useState(listing.likes);
   const [content, setContent] = useState(0);
@@ -50,8 +48,12 @@ function ListingDetailsScreen({ route, navigation }) {
   const [loadingLikes, setLoadingLikes] = useState(false);
   const { setBarStyle } = useContext(BarStyleContext)
   const count = useRef(true)
-
+  
   const arrowTopMargin = height / 8;
+  console.log('akem')
+console.log(likes.length)
+console.log('akem2')
+  const [comments, setComments] = useState([]);
 const infoTopMargin = height /3.5;
 
    
@@ -109,6 +111,10 @@ const infoTopMargin = height /3.5;
   const uriArray = listing.images;
 
   const like_value = () => {
+    console.log('abi')
+    console.log(likes)
+    console.log('abi2')
+    console.log(user._id)
     if (likes.includes(user._id)) return '-1'
     return '1'
   }
@@ -128,6 +134,10 @@ const infoTopMargin = height /3.5;
       
 <ListingInfo listing={listing} 
 infoTopMargin={infoTopMargin} 
+like_value={like_value}
+setLikes={setLikes}
+
+likes={likes}
 />
 <View>
   

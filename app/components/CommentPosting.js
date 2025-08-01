@@ -30,7 +30,7 @@ return (
                         {!loadingCommentOnPageVisit && <View style={{ width: '75%', }}>
                             <TextInput
 
-                                //height={40}
+                                height={40}
                                 // minHeight={40}
                                 //defaultValue={}
 

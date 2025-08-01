@@ -140,10 +140,12 @@ function CommentsSection({ comments, listing, loadingCommentOnPageVisit, posting
                                                     {"@" + comment.userId.name}
                                                 </Text>
                                             </View>
+                                            <View>
                                             <Text style={{ fontSize: 16 }}>{comment.comment}</Text>
+                                            </View>
                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingEnd: 0 }}>
                                                 <View >
-                                                    <Text style={{ fontSize: 11, color: "gray" }} numberOfLines={5}>
+                                                    <Text style={{ fontSize: 11, color: "gray", }} >
                                                         {timeAgo(comment.createdAt) + " ago"}
                                                     </Text>
                                                 </View>

@@ -22,22 +22,27 @@ import UserShortInfo from "./UserShortInfo";
 import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
 import timeAgo from "../utility/timeAgo";
+import  client, {meme as client_2} from "../api/client";
+
  //import colors from "../config/colors";
  
  
  
- function ListingInfo ({ listing, route, navigate, infoTopMargin}) {
-      const [loadingLikes, setLoadingLikes] = useState(false);
-        const [likes, setLikes] = useState(listing.likes);
+ function ListingInfo ({ listing, route, navigation, infoTopMargin, like_value, likes, setLikes, 
+ }) {
+                const [loadingLikes, setLoadingLikes] = useState(false);
+
+        
       
           const { user } = useAuth();
       
 
       const likesColor =
     getLikesColor(user._id, likes);
-
-    const numberOfLikes =
-    likes.length;
+console.log(likes)
+console.log('omomi')
+console.log(likes.length)
+    const numberOfLikes =likes.length  || 0;
   
   
     
@@ -95,9 +100,11 @@ import timeAgo from "../utility/timeAgo";
               onPress={async () => {
                 setLoadingLikes(true)
                 console.log(like_value())
-                const res = await client.put(`/likes/${like_value()}`, {
+                const res = await client_2.put(`/likes/${like_value()}`, {
                   listingId: listing._id,
                 });
+                console.log('abike2')
+                console.log(like_value())
                 setLoadingLikes(false)
                 console.log(res.data);
                 console.log("res");
