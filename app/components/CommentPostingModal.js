@@ -1,92 +1,111 @@
 import {
     View,
-    TouchableOpacity,
-    ScrollView,
     ActivityIndicator,
     TextInput,
-    Text,
-    Keyboard
+    Keyboard,
+    StyleSheet
 } from "react-native";
 import ReactNativeModal from "react-native-modal";
 import PostComment from "./PostComment";
 
-function CommentPostingModal( {isVisible, width, postingComments,
-    loadingCommentOnPageVisit,
-    loadingComment, setVisibility, endPoint, setComments, setPostingComments,setLoadingComment
+function CommentPostingModal({
+    isVisible,
+    width,
+    postingComments,
+    loadingComment,
+    setVisibility,
+    endPoint, setComments,
+    setPostingComments,
+    setLoadingComment
 }) {
 
     return (
-<ReactNativeModal
-        isVisible={isVisible}
-        avoidKeyboard={true}
-        coverScreen={false}
-        style={{
-          backgroundColor: 'transparent',
-          margin: 0,
-          
-          top: '20%',
-          display: 'flex',justifyContent: 'center',alignItems: 'flex-end',width: '100%'
-        }}
-       hasBackdrop={true}
-        onBackButtonPress={()=>setVisibility(false)}
-        onBackdropPress={() => setVisibility(false)}
-        onModalHide={() => {
-          Keyboard.dismiss()
-        }}
-        backdropOpacity={0}
-      >
-        <View style={{width, marginBottom: 80, paddingTop: 15}}>
-        <View style={{
-                  display: "flex",
-                 // marginTop: 20,
-                  flexDirection: "row",
-             justifyContent: "center",
-                  alignItems: 'center',
-                gap: 15,
-          width: '100%',
-          //position: 'absolute',
-          backgroundColor: '#bbb',
-            height: 200, 
-          bottom:10
-        
-                
-                  
-                  
-        }}>
-            <View style={{ width: '75%',  }}>
+        <ReactNativeModal
+            style={styles.modal}
+            isVisible={isVisible}
+            avoidKeyboard={true}
+            coverScreen={false}
+            hasBackdrop={true}
+            onBackButtonPress={() => setVisibility(false)}
+            onBackdropPress={() => setVisibility(false)}
+            onModalHide={() => Keyboard.dismiss()}
+            backdropOpacity={0}
+        >
+            <View style={[styles.modalContainer, { width }]}>
+                <View style={styles.modalView}>
+                    <View style={styles.innerWidth}>
+                        <TextInput style={styles.textInput}
+                            allowFontScaling={false}
+                            autoCorrect={true}
+                            clearTextOnFocus={true}
+                            autoFocus={true}
+                            onChangeText={(e) => setPostingComments(e)}
+                            multiline
+                            numberOfLines={4}
+                            value={postingComments} />
+                    </View>
 
-<TextInput style={{ backgroundColor: 'white', position: 'absolute',bottom: '-10%',width: '100%',borderRadius: 20, paddingHorizontal:15, }}
-            allowFontScaling={false}
-            autoCorrect={true}
-                clearTextOnFocus={true}
-                autoFocus={true}
-            onChangeText={(e) => {
-                  setPostingComments(e)
-            }}
-//style={{backgroundColor: 'white'}}
-              multiline numberOfLines={4} value={postingComments} />
+                    {loadingComment && <View ><ActivityIndicator /></View>}
+
+                    {postingComments && !loadingComment &&
+                        <PostComment
+                            endPoint={endPoint}
+                            setComments={setComments}
+                            postingComments={postingComments}
+                            setPostingComments={setPostingComments}
+                            loading={loadingComment}
+                            setLoading={setLoadingComment}
+                            setModal={setVisibility}
+                        />
+                    }
+                </View>
             </View>
-          {loadingComment && <View style={{
-              //height: 40,
-              
-            }}><ActivityIndicator /></View>}
-                {postingComments && !loadingComment && (
-                
-                  <PostComment
-                    endPoint={endPoint}
-                    setComments={setComments}
-                    postingComments={postingComments}
-                    setPostingComments={setPostingComments}
-                    loading={loadingComment}
-                setLoading={setLoadingComment}
-                setModal={setVisibility}
-                />
-                  
-            )}
-            </View>
-        </View>
-      </ReactNativeModal>
+        </ReactNativeModal>
     )
 }
+
+const styles = StyleSheet.create({
+    innerWidth: {
+        width: "75%"
+    },
+
+    modal: {
+        backgroundColor: 'transparent',
+        margin: 0,
+        top: '20%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        width: '100%'
+    },
+
+    modalContainer: {
+        marginBottom: 80,
+        paddingTop: 15
+    },
+
+    modalView: {
+
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: 'center',
+        gap: 15,
+        width: '100%',
+        backgroundColor: '#bbb',
+        height: 200,
+        bottom: 10
+    },
+
+    textInput: {
+        backgroundColor: 'white',
+        position: 'absolute',
+        bottom: '-10%',
+        width: '100%',
+        borderRadius: 20,
+        paddingHorizontal: 15,
+    }
+
+})
 
 export default CommentPostingModal

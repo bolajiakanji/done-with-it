@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -53,6 +53,7 @@ function ListingDetailsScreen({ route, navigation }) {
     setLoadingCommentOnPageVisit(true)
     const res = await client_2.get(endPoint);
     setLoadingCommentOnPageVisit(false)
+
     if (res.data) setComments(res.data.reverse());
   };
 
@@ -73,9 +74,9 @@ function ListingDetailsScreen({ route, navigation }) {
 
   return (
     <Screen barStyle='dark-content' style={{ backgroundColor: bg }} background={bg}>
-      
+
       <ListingDetailCarousel width={width} height={height} listing={listing} data={data} />
-      
+
       <ListingInfo listing={listing}
         infoTopMargin={infoTopMargin}
         like_value={like_value}
@@ -83,23 +84,18 @@ function ListingDetailsScreen({ route, navigation }) {
         navigation={navigation}
         likes={likes}
       />
-      
+
       <View>
         <CommentsSection
           comments={comments}
           listing={listing}
           loadingCommentOnPageVisit={loadingCommentOnPageVisit}
-          postingComments={postingComments}
-          loadingComment={loadingComment}
           height={height}
-          setVisibility={setVisibility}
-          endPoint={endPoint}
           setComments={setComments}
-          setPostingComments={setPostingComments}
-          setLoadingComment={setLoadingComment}
           DeleteComment={DeleteComment}
+          loadListing={loadListing}
         />
-        
+
         <CommentPosting
           loadingCommentOnPageVisit={loadingCommentOnPageVisit}
           postingComments={postingComments}
@@ -111,7 +107,7 @@ function ListingDetailsScreen({ route, navigation }) {
           setLoadingComment={setLoadingComment}
         />
       </View>
-      
+
       <CommentPostingModal isVisible={isVisible} width={width}
         loadingCommentOnPageVisit={loadingCommentOnPageVisit}
         postingComments={postingComments}
