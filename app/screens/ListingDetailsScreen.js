@@ -51,9 +51,11 @@ function ListingDetailsScreen({ route, navigation }) {
 
   const loadListing = async () => {
     setLoadingCommentOnPageVisit(true)
+    console.log('me56')
     const res = await client_2.get(endPoint);
-    setLoadingCommentOnPageVisit(false)
 
+    setLoadingCommentOnPageVisit(false)
+console.log('me34')
     if (res.data) setComments(res.data.reverse());
   };
 

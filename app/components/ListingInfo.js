@@ -15,7 +15,13 @@ import timeAgo from "../utility/timeAgo";
 import { meme as client_2 } from "../api/client";
 import routes from "../navigation/routes";
 
-function ListingInfo({ listing, navigation, infoTopMargin, like_value, likes, setLikes,
+function ListingInfo({
+  listing,
+  navigation,
+  infoTopMargin,
+  like_value,
+  likes,
+  setLikes,
 }) {
   const [loadingLikes, setLoadingLikes] = useState(false);
 
@@ -23,6 +29,16 @@ function ListingInfo({ listing, navigation, infoTopMargin, like_value, likes, se
 
   const likesColor = getLikesColor(user._id, likes);
   const numberOfLikes = likes.length;
+
+  const onPress = async () => {
+    setLoadingLikes(true)
+    const res = await client_2.put(`/likes/${like_value()}`, {
+      listingId: listing._id,
+    });
+    setLoadingLikes(false)
+
+    if (res.data) setLikes(res.data)
+  }
 
   return (
     <View style={[{ ...styles.detailsContainer }, { marginTop: infoTopMargin }]}>
@@ -33,53 +49,27 @@ function ListingInfo({ listing, navigation, infoTopMargin, like_value, likes, se
         {listing.description}
       </Text>
       <Text style={styles.price}>
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 18,
-            color: colors.secondary,
-          }}
-        >
+        <Text style={styles.price} >
           #
-        </Text>
-        {parseInt(listing.price).toLocaleString()}
+        </Text>{parseInt(listing.price).toLocaleString()}
       </Text>
 
       <UserShortInfo
         image={listing.userId.image}
         name={listing.userId.name}
-        //email={listing.userId.email}
         itemsAvailable={`${listing.userId.userListings} items available for sell`}
         itemOnPress={() =>
           navigation.navigate(routes.ITEM_POSTER, listing.userId)
         }
       />
 
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          width: "90%",
-
-          paddingRight: 20,
-          marginLeft: 40,
-          marginTop: 5
-        }}
-      >
+      <View style={styles.likesContainer}>
         {loadingLikes && <ActivityIndicator size={15} />}
 
         {!loadingLikes &&
           <TouchableOpacity
-            onPress={async () => {
-              setLoadingLikes(true)
-              const res = await client_2.put(`/likes/${like_value()}`, {
-                listingId: listing._id,
-              });
-              setLoadingLikes(false)
-              if (res.data) setLikes(res.data)
-            }}>
-            <Text style={{ color: likesColor, fontSize: 12, padding: 3, }}>
+            onPress={() => onPress()}>
+            <Text style={[styles.likes, { color: likesColor }]}>
               {numberOfLikes + " "}
               <MaterialCommunityIcons name="thumb-up" />
             </Text>
@@ -87,7 +77,7 @@ function ListingInfo({ listing, navigation, infoTopMargin, like_value, likes, se
         }
 
         <View>
-          <Text style={{ color: "gray", fontSize: 12 }}>
+          <Text style={styles.timeAgo}>
             {timeAgo(listing.createdAt) + " ago"}
           </Text>
         </View>
@@ -113,8 +103,33 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "gray",
-
   },
+
+  price: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: colors.secondary,
+  },
+
+  likes: {
+    fontSize: 12,
+    padding: 3,
+  },
+
+  likesContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+    paddingRight: 20,
+    marginLeft: 40,
+    marginTop: 5
+  },
+
+  timeAgo: {
+    color: "gray",
+    fontSize: 12
+  }
 })
 
 export default ListingInfo

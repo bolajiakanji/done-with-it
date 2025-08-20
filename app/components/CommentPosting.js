@@ -35,7 +35,8 @@ function CommentPosting({
                 {loadingComment &&
                     <View style={styles.indicatorWrappper}>
                         <ActivityIndicator />
-                    </View>}
+                    </View>
+                    }
 
                 {postingComments && !loadingComment &&
                     <PostComment
