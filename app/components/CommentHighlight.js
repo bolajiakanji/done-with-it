@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "react-native"
 import getPluralisedWord from "../utility/pluralisedWord"
 
-function CommentHighlight(numberOfComments) {
+function CommentHighlight({ numberOfComments }) {
 
     return (
         <View style={styles.commentsNumber}>
-            <Text style={{ fontSize: 14 }}>
+            <Text style={{ fontSize: 14, }}>
                 {getPluralisedWord(numberOfComments, "comment")}
             </Text>
         </View>

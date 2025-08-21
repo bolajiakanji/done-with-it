@@ -48,7 +48,7 @@ function ListingInfo({
       <Text numberOfLines={1}>
         {listing.description}
       </Text>
-      <Text style={styles.price}>
+      <Text style={styles.priceWraper}>
         <Text style={styles.price} >
           #
         </Text>{parseInt(listing.price).toLocaleString()}
@@ -109,6 +109,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     color: colors.secondary,
+  },
+
+  priceWraper: {
+    color: colors.secondary,
+    fontWeight: "bold",
+    fontSize: 27,
+    textAlign: "center",
   },
 
   likes: {

@@ -1,7 +1,6 @@
-import React, { useContext, useEffect,  useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, Text, View, StatusBar, ScrollView } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { FlatList, StyleSheet, RefreshControl, Text, View } from "react-native";
 import { Image } from "expo-image";
-import ActivityIndicator from "../components/ActivityIndicator";
 import AppText from "../components/Text";
 import Button from "../components/Button";
 import Card from "../components/Card";
@@ -11,7 +10,6 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import { useApi } from "../hooks";
 import ListingFilterings from "./ListingFilterings";
-import SkeletonLoading from "expo-skeleton-loading";
 import Skeleton from "./Skeleton";
 import authStorage from "../auth/storage";
 import useAuth from "../auth/useAuth";
@@ -19,8 +17,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AdvancedImage } from "cloudinary-react-native";
 import { Cloudinary } from "@cloudinary/url-gen";
 import BarStyleContext from "../context/barStyle";
-
-
+import myCloud from "../utility/cid";
 
 function ListingsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
@@ -28,24 +25,13 @@ function ListingsScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listingsQueryObject, setListingsQueryObject] = useState({});
   const [displayItems, setDisplayItems] = useState([]);
-  const { setBarStyle } = useContext(BarStyleContext)
-  const { request, setError, data, error, loading, setData, setLoading } =
+
+  const { request, setError, error, loading, setData, setLoading } =
     useApi(listingsApi.getListings);
   const { user } = useAuth();
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: 'dlutiw9i4'
-    }
-  });
-  // const myImage = cld.image('items/ca4ed4c3ed3f5c1689437f57f5a12408_full');
+  const cld = myCloud()
 
   const profileImage = cld.image(user.image)
-  console.log(profileImage)
-  console.log('profileImage')
-  console.log('profileImage')
-
-
-  
 
   useEffect(() => {
     loadListings();
@@ -55,13 +41,8 @@ function ListingsScreen({ navigation }) {
     setLoading(true);
     const response = await request({ page: 1 });
     setLoading(false);
-    console.log("notoka2");
-    console.log(response);
-    if (!response) {
-      console.log("notokay");
+    if (!response) return setError("An unexpected error occured.");
 
-      return setError("An unexpected error occured.");
-    }
     if (response.data.error) return setError(response.data.error);
 
     setListingsQueryObject((queryObject) => {
@@ -69,20 +50,15 @@ function ListingsScreen({ navigation }) {
     });
     setData(response.data);
     setDisplayItems(response.data.resources);
-    console.log(response.data.resources);
-    console.log('response.data.resources');
   };
   const loadListings_2 = async () => {
-    console.log("heresh");
     setIsLoading(true);
 
     const response = await request({ page: listingsQueryObject.page });
     setIsLoading(false);
 
-    if (!response) {
-      console.log("notokay");
-      return setError("An unexpected error occured.");
-    }
+    if (!response) return setError("An unexpected error occured.");
+
     if (response.data.error) return setError(response.data.error);
 
     setListingsQueryObject((queryObject) => ({
@@ -92,17 +68,11 @@ function ListingsScreen({ navigation }) {
     setDisplayItems((dat) => [...dat, ...response.data.resources]);
   };
   const onEndReached = () => {
-    console.log("hre21");
-
     if (!isLoading && listingsQueryObject.page) {
       loadListings_2();
     }
   };
-  // const listEmptyComponent = () => {
-  //   if (!isLoading && !listingsQueryObject.page) {
-  //     return <Text style={{ textAlign: 'center'}}>No Data</Text>;
-  //   }
-  // };
+
   const listFooterComponent = () => {
     if (isLoading && displayItems?.length > 0) {
       return (
@@ -112,9 +82,9 @@ function ListingsScreen({ navigation }) {
     if (!isLoading && !listingsQueryObject.page && displayItems.length === 0) {
       return (
         <Text style={{
-          textAlign: "center", paddingBottom: 10,marginTop: 20
+          textAlign: "center", paddingBottom: 10, marginTop: 20
 
-           }}>
+        }}>
           No Data
         </Text>
       );
@@ -123,21 +93,21 @@ function ListingsScreen({ navigation }) {
       return (
         <Text style={{
           textAlign: "center", paddingBottom: 10,
-          }}>
+        }}>
           No more Data
         </Text>
       );
     }
   };
-  const footer = () => { return(
-    <View style={{  paddingHorizontal: 13, backgroundColor: colors.primary,}}>
+  const Header = () => {
+    return (
+      <View style={{ paddingHorizontal: 13, backgroundColor: colors.primary, }}>
         <View
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            //alignItems: "center",
-            marginTop:5
+            marginTop: 5
           }}
         >
           <View
@@ -148,19 +118,17 @@ function ListingsScreen({ navigation }) {
               columnGap: 5,
             }}
           >
-             <Image
+            <Image
               source={require("../../assets/images/adaptiveIcon.png")}
               style={{ width: 40, height: 39, borderRadius: 8 }}
-            /> 
+            />
 
             <Text
               style={{ color: "dodgerblue", fontWeight: "bold", fontSize: 25 }}
             >
-              {/* 'http://192.168.127.87:9000/assets/http://res.cloudinary.com/dlutiw9i4/image/upload/v1741593827/items/c5db80428d74a5602b8fcb542033dde4_full.jpg */}
               BORJI
             </Text>
           </View>
-                    {/* <AdvancedImage cldImg={myImage} style={{ width: 100, height: 100, alignSelf: 'center'}} /> */}
           <View
             style={{
               display: "flex",
@@ -169,17 +137,17 @@ function ListingsScreen({ navigation }) {
               marginRight: 10,
             }}
           >
-            <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: '#ccc',overflow:'hidden' }}>
-            {user.image ? (
-              <AdvancedImage
-                cldImg={profileImage}
-                style={{ height:'100%',width: '100%' }}
-              />
+            <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: '#ccc', overflow: 'hidden' }}>
+              {user.image ? (
+                <AdvancedImage
+                  cldImg={profileImage}
+                  style={{ height: '100%', width: '100%' }}
+                />
               ) : (
-                
-              <MaterialCommunityIcons name="account" size={28} color="gray"  />
-              
-            )}
+
+                <MaterialCommunityIcons name="account" size={28} color="gray" />
+
+              )}
             </View>
             <Text style={{ fontSize: 11, color: colors.white }}>
               {user.email.slice(0, 8) + " ..."}
@@ -202,39 +170,26 @@ function ListingsScreen({ navigation }) {
           request={request}
           setData={setData}
         />}
-        </View>
-  )}
+      </View>
+    )
+  }
 
   const onRefresh = () => {
     setRefreshing(true);
     loadListings();
     setRefreshing(false);
   };
-  console.log(error);
-  //if (loading) return <Skeleton />;
-  const me = async () => {
-    const owner = await authStorage.getUser();
-    console.log(owner);
-    return owner.image;
-  };
 
-  console.log(user.image);
-  console.log("beating");
   return (
     <>
       <Screen style={styles.screen} barStyle='light-content' background={colors.primary}  >
-         < View style={{position: 'absolute', zIndex:0, height: 100, backgroundColor: colors.primary, width: '100%'}}></View> 
+        < View style={{ position: 'absolute', zIndex: 0, height: 100, backgroundColor: colors.primary, width: '100%' }}></View>
         <FlatList
           data={displayItems}
           keyExtractor={(listing, index) => index}
 
           renderItem={({ item }) => {
-            console.log('myinage')
-            console.log(item.images[0])
             const myImage = cld.image(item.images[0]);
-            console.log(myImage)
-            console.log('myin33age')
-
             return (
               <Card
                 item={item}
@@ -251,15 +206,15 @@ function ListingsScreen({ navigation }) {
           onEndReached={onEndReached}
           //ListEmptyComponent={listEmptyComponent}
           ListFooterComponent={listFooterComponent}
-          ListHeaderComponent={footer}
+          ListHeaderComponent={Header}
           stickyHeaderIndices={[0]}
           initialNumToRender={10}
 
           numColumns="2"
-          columnWrapperStyle={{columnGap:10,paddingTop: 10, paddingHorizontal: 10, backgroundColor: '#e6f2ff' }}
-          />
-       
-   
+          columnWrapperStyle={{ columnGap: 10, paddingTop: 10, paddingHorizontal: 10, backgroundColor: '#e6f2ff' }}
+        />
+
+
       </Screen>
     </>
   );
@@ -268,11 +223,7 @@ function ListingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    
-    
-    //backgroundColor: colors.primary
     backgroundColor: '#e6f2ff'
-    
   },
 });
 

@@ -10,12 +10,13 @@ import Carousel from "react-native-reanimated-carousel";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import myCloud from "../utility/cid";
 
-function ListingDetailCarousel({ width, height, listing, data, }) {
+function ListingDetailCarousel({ width, height, listing, }) {
   const [index, setIndex] = useState(0);
   const ref = useRef(null);
 
   const uriArray = listing.images;
-  const carouselHeight = height / 6;
+  const carouselHeight = height / 3.6;
+  const arrowTopMargin = height / 8;
   const cld = myCloud()
 
   const previous = () => {
@@ -56,7 +57,7 @@ function ListingDetailCarousel({ width, height, listing, data, }) {
         <>
           <TouchableOpacity
             onPress={() => previous()}
-            style={stylesleftArrowWrapper}
+            style={[styles.leftArrowWrapper, { top: arrowTopMargin }]}
           >
             <MaterialCommunityIcons
               color="black"
@@ -67,7 +68,7 @@ function ListingDetailCarousel({ width, height, listing, data, }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => next()}
-            style={styles.rightArrowWrapper}
+            style={[styles.rightArrowWrapper, { top: arrowTopMargin }]}
           >
             <MaterialCommunityIcons
               color="black"
@@ -91,13 +92,11 @@ const styles = StyleSheet.create({
 
   leftArrowWrapper: {
     position: "absolute",
-    top: arrowTopMargin,
     left: 0
   },
 
   rightArrowWrapper: {
     position: "absolute",
-    top: arrowTopMargin,
     right: 0
   },
 

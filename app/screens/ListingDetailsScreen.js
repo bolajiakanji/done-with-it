@@ -51,12 +51,10 @@ function ListingDetailsScreen({ route, navigation }) {
 
   const loadListing = async () => {
     setLoadingCommentOnPageVisit(true)
-    console.log('me56')
     const res = await client_2.get(endPoint);
-
-    setLoadingCommentOnPageVisit(false)
-console.log('me34')
-    if (res.data) setComments(res.data.reverse());
+setLoadingCommentOnPageVisit(false)
+    
+if (res.data) setComments(res.data.reverse());
   };
 
   const infoTopMargin = height / 3.5;
