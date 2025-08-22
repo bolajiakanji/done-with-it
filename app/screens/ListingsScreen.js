@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, RefreshControl, Text, View } from "react-native";
-import { Image } from "expo-image";
-import AppText from "../components/Text";
-import Button from "../components/Button";
 import Card from "../components/Card";
 import colors from "../config/colors";
 import listingsApi from "../api/listings";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import { useApi } from "../hooks";
-import ListingFilterings from "./ListingFilterings";
-import Skeleton from "./Skeleton";
 import useAuth from "../auth/useAuth";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AdvancedImage } from "cloudinary-react-native";
 import myCloud from "../utility/cid";
-import ListingHeader from "../components/ListingHeader";
+import Flatlist_header from "../components/Flatlist_header";
 
 function ListingsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
-  const [refresh, setRefres] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [listingsQueryObject, setListingsQueryObject] = useState({});
   const [displayItems, setDisplayItems] = useState([]);
@@ -99,72 +91,62 @@ function ListingsScreen({ navigation }) {
   };
   const Header = () => {
     return (
-      <View style={{ paddingHorizontal: 13, backgroundColor: colors.primary, }}>
-        <ListingHeader user={user} />
-        {error && (
-          <>
-            <AppText style={{ color: "red", marginTop: 10 }}>{error}</AppText>
-            <Button title="Retry" onPress={loadListings} />
-          </>
-        )}
-        {loading && <Skeleton />}
-
-        {!error && !loading && <ListingFilterings
-          listingsQueryObject={listingsQueryObject}
-          setListingsQueryObject={setListingsQueryObject}
-          displayItems={displayItems}
-          setDisplayItems={setDisplayItems}
-          request={request}
-          setData={setData}
-        />}
-      </View>
-    )
-  }
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    loadListings();
-    setRefreshing(false);
-  };
-
-  return (
-    <>
-      <Screen style={styles.screen} barStyle='light-content' background={colors.primary}  >
-        < View style={{ position: 'absolute', zIndex: 0, height: 100, backgroundColor: colors.primary, width: '100%' }}></View>
-        <FlatList
-          data={displayItems}
-          keyExtractor={(listing, index) => index}
-
-          renderItem={({ item }) => {
-            const myImage = cld.image(item.images[0]);
-            return (
-              <Card
-                item={item}
-                myImage={myImage}
-                onPress={() =>
-                  navigation.navigate(routes.LISTING_DETAILS, item)
-                }
-              />
-            );
-          }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          onEndReached={onEndReached}
-          //ListEmptyComponent={listEmptyComponent}
-          ListFooterComponent={listFooterComponent}
-          ListHeaderComponent={Header}
-          stickyHeaderIndices={[0]}
-          initialNumToRender={10}
-
-          numColumns="2"
-          columnWrapperStyle={{ columnGap: 10, paddingTop: 10, paddingHorizontal: 10, backgroundColor: '#e6f2ff' }}
+      <Flatlist_header
+        listingsQueryObject={listingsQueryObject}
+        setListingsQueryObject={setListingsQueryObject}
+        displayItems={displayItems}
+        setDisplayItems={setDisplayItems}
+        loading={loading}
+        setData={setData}
+        error={error}
+        request={request}
         />
+      )}
+
+const onRefresh = () => {
+  setRefreshing(true);
+  loadListings();
+  setRefreshing(false);
+};
+
+return (
+  <>
+    <Screen style={styles.screen} barStyle='light-content' background={colors.primary}  >
+      < View style={{ position: 'absolute', zIndex: 0, height: 100, backgroundColor: colors.primary, width: '100%' }}></View>
+      <FlatList
+        data={displayItems}
+        keyExtractor={(listing, index) => index}
+
+        renderItem={({ item }) => {
+          const myImage = cld.image(item.images[0]);
+          return (
+            <Card
+              item={item}
+              myImage={myImage}
+              onPress={() =>
+                navigation.navigate(routes.LISTING_DETAILS, item)
+              }
+            />
+          );
+        }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        onEndReached={onEndReached}
+        //ListEmptyComponent={listEmptyComponent}
+        ListFooterComponent={listFooterComponent}
+        ListHeaderComponent={Header}
+        stickyHeaderIndices={[0]}
+        initialNumToRender={10}
+
+        numColumns="2"
+        columnWrapperStyle={{ columnGap: 10, paddingTop: 10, paddingHorizontal: 10, backgroundColor: '#e6f2ff' }}
+      />
 
 
-      </Screen>
-    </>
-  );
+    </Screen>
+  </>
+);
 }
 
 const styles = StyleSheet.create({

@@ -4,9 +4,12 @@ import { Image } from "expo-image"
 import { AdvancedImage } from "cloudinary-react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import myCloud from "../utility/cid";
+import useAuth from "../auth/useAuth";
 
 
-const ListingHeader = ({user}) => {
+const ListingHeader = () => {
+          const { user } = useAuth();
+    
     const cld = myCloud()
       const profileImage = cld.image(user.image)
 
