@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   View,
   StyleSheet,
-  Dimensions,
-  Keyboard
-} from "react-native";
+  Dimensions} from "react-native";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
-import client, { meme as client_2 } from "../api/client";
+import client from "../api/client";
 import { configureReanimatedLogger } from "react-native-reanimated";
-import { useApi } from "../hooks";
+import { useApi, useItemDetailsLogic, useKeyboard } from "../hooks";
 import useAuth from "../auth/useAuth";
 import DeleteComment from "../components/DeleteComment";
 import ListingDetailCarousel from "../components/ListingDetailCarousel";
@@ -28,6 +26,8 @@ const detailsContainerTopMargin = height / 3.5;
 
 function ListingDetailsScreen({ route, navigation }) {
   const listing = route.params;
+  const endPoint = "/comments/" + listing._id;
+
   const [isVisible, setVisibility] = useState(false);
   const [likes, setLikes] = useState(listing.likes);
   const [postingComments, setPostingComments] = useState("");
@@ -35,31 +35,17 @@ function ListingDetailsScreen({ route, navigation }) {
   const [comments, setComments] = useState([]);
   const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = useState(false);
 
+  useKeyboard()
   const { user } = useAuth();
   const { data } = useApi(getComment);
-
-  useEffect(() => {
-    loadListing();
-  }, []);
-
-  useEffect(() => {
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      setVisibility(false)
-    })
-    return () => { hideSubscription.remove() }
-  }, []);
-
-  const loadListing = async () => {
-    setLoadingCommentOnPageVisit(true)
-    const res = await client_2.get(endPoint);
-setLoadingCommentOnPageVisit(false)
-    
-if (res.data) setComments(res.data.reverse());
-  };
+  const loadListing = useItemDetailsLogic(
+    setComments,
+    endPoint,
+    setLoadingCommentOnPageVisit,
+    listing
+  )
 
   const infoTopMargin = height / 3.5;
-
-  const endPoint = "/comments/" + listing._id;
 
   const getComment = (_comment) => {
     return client.get(endPoint, _comment);
