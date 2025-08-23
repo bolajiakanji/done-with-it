@@ -3,13 +3,9 @@ import ListingHeader from "./ListingHeader"
 import AppText from "../../components/Text"
 import Skeleton from "../screens/Skeleton"
 import ListingFilterings from "../screens/ListingFilterings"
-import listingsApi from "../api/listings";
-
-import { useApi } from "../hooks"
 import useAuth from "../auth/useAuth"
 import AppButton from "./Button"
 import colors from "../config/colors"
-
 
 const Flatlist_header = ({
 loadListings,
@@ -21,10 +17,7 @@ listingsQueryObject,
   setData,
   error,
   request
-
-
 }) => {
-  
   const { user } = useAuth();
 
   return (

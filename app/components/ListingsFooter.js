@@ -1,6 +1,5 @@
 import { Text, } from "react-native";
 
-
 const ListingsFooter = ({ displayItems, isLoading, listingsQueryObject }) => {
     if (isLoading && displayItems?.length > 0) {
         return (

@@ -63,8 +63,7 @@ function ListingsScreen({ navigation }) {
   };
 
   return (
-
-    <Screen style={styles.screen} barStyle='light-content' background={colors.primary}  >
+<Screen style={styles.screen} barStyle='light-content' background={colors.primary}  >
       < View style={{ position: 'absolute', zIndex: 0, height: 100, backgroundColor: colors.primary, width: '100%' }}></View>
       <FlatList
         data={displayItems}

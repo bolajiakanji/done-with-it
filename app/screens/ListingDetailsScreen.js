@@ -35,7 +35,7 @@ function ListingDetailsScreen({ route, navigation }) {
   const [comments, setComments] = useState([]);
   const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = useState(false);
 
-  useKeyboard()
+  useKeyboard(setVisibility)
   const { user } = useAuth();
   const { data } = useApi(getComment);
   const loadListing = useItemDetailsLogic(

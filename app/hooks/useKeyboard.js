@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Keyboard } from "react-native";
 
-const useKeyboard = () => {
+const useKeyboard = (setVisibility) => {
 useEffect(() => {
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
       setVisibility(false)
