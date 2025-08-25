@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import * as Yup from "yup";
 import { useState, useContext } from "react";
-
-
 import {
   Form,
   FormField,
@@ -15,7 +13,6 @@ import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import UploadScreen from "./UploadScreen";
 import listingsApi from "../api/listings";
-import colors from "../config/colors";
 import BarStyleContext from "../context/barStyle";
 import categories from "../utility/categoryList";
 

@@ -21,17 +21,20 @@ listingsQueryObject,
   const { user } = useAuth();
 
   return (
-    <View style={{ paddingHorizontal: 13, backgroundColor: colors.primary, }}>
+    <View style={styles.container}>
       <ListingHeader user={user} />
-      {error && (
+
+      {error && 
         <>
-          <AppText style={{ color: "red", marginTop: 10 }}>{error}</AppText>
+          <AppText style={styles.error}>{error}</AppText>
           <AppButton title="Retry" onPress={loadListings} />
         </>
-      )}
+      }
+
       {loading && <Skeleton />}
 
-      {!error && !loading && <ListingFilterings
+      {!error && !loading && 
+      <ListingFilterings
         listingsQueryObject={listingsQueryObject}
         setListingsQueryObject={setListingsQueryObject}
         displayItems={displayItems}
@@ -42,5 +45,17 @@ listingsQueryObject,
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: { 
+    paddingHorizontal: 13, 
+    backgroundColor: colors.primary, 
+  },
+
+  error: { 
+    color: "red", 
+    marginTop: 10 
+  }
+})
 
 export default Flatlist_header

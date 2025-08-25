@@ -2,7 +2,8 @@ import { useState } from "react";
 import {
   View,
   StyleSheet,
-  Dimensions} from "react-native";
+  Dimensions
+} from "react-native";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import client from "../api/client";
@@ -61,7 +62,12 @@ function ListingDetailsScreen({ route, navigation }) {
   return (
     <Screen barStyle='dark-content' style={{ backgroundColor: bg }} background={bg}>
 
-      <ListingDetailCarousel width={width} height={height} listing={listing} data={data} />
+      <ListingDetailCarousel
+        width={width}
+        height={height}
+        listing={listing}
+        data={data}
+      />
 
       <ListingInfo listing={listing}
         infoTopMargin={infoTopMargin}
