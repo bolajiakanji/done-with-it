@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import * as Yup from "yup";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import {
   Form,
   FormField,
@@ -13,32 +12,14 @@ import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import UploadScreen from "./UploadScreen";
 import listingsApi from "../api/listings";
-import BarStyleContext from "../context/barStyle";
 import categories from "../utility/categoryList";
-
-const validationSchema = Yup.object().shape({
-  title: Yup.string().required().min(1).label("Title"),
-  price: Yup.number().required().min(100).max(10000000).label("Price"),
-  description: Yup.string().label("Description"),
-  category: Yup.object().required().nullable().label("Category"),
-  images: Yup.array()
-    .min(1, "Please select at least one image.")
-    .max(6, "Selected image should not be more than 6 images"),
-});
-
+import validationSchema from "../utility/validation_schema";
 
 function ListingEditScreen() {
-  const location = null;
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-    const { setBarStyle } = useContext(BarStyleContext)
-  
-  useEffect(() => {
-  setBarStyle('dark-content')
-})
-
 
   const handleSubmit = async (listing, { resetForm }) => {
     setError(false)
@@ -49,11 +30,11 @@ function ListingEditScreen() {
     const response = await listingsApi.addListing({ ...listing }, (progress) =>
       setProgress(progress)
     );
-setLoading(false)
+
+    setLoading(false)
+
     if (!response.ok) {
       setError(true)
-      console.log(new Error(error));
-
       setUploadVisible(false);
       return alert("Could not save the listing");
     }
@@ -62,72 +43,81 @@ setLoading(false)
   };
 
   return (
-    <Screen style={styles.container} barStyle='dark-content' background='#99ccff'  >
-      <View style={{marginHorizontal: 10}}>
+    <Screen
+      style={styles.container}
+      barStyle='dark-content'
+      background='#99ccff'
+    >
+      <View style={{ marginHorizontal: 10 }}>
+        <Form
+          initialValues={{
+            title: "",
+            price: "",
+            description: "",
+            category: null,
+            images: [],
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <Text style={styles.item}>Add Item</Text>
 
-      <Form
-        initialValues={{
-          title: "",
-          price: "",
-          description: "",
-          category: null,
-          images: [],
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <Text style={styles.item}>Add Item</Text>
-        <FormImagePicker name="images" />
-        <FormField maxLength={255} name="title" placeholder="Title" />
-        <FormField
-          keyboardType="numeric"
-          maxLength={8}
-          name="price"
-          placeholder="Price"
-          width={120}
-        />
-        <Picker
-          items={categories}
-          name="category"
-          numberOfColumns={3}
-          PickerItemComponent={CategoryPickerItem}
-          placeholder="Category"
-          width="50%"
-        />
-        <FormField
-          maxLength={255}
-          multiline
-          name="description"
-          numberOfLines={2}
-          placeholder="Description"
-        />
-        <SubmitButton title="Post" />
-      </Form>
-      <UploadScreen
-        onDone={() => setTimeout(() => setUploadVisible(false), 2000)}
-        progress={progress}
+          <FormImagePicker name="images" />
+
+          <FormField maxLength={255} name="title" placeholder="Title" />
+
+          <FormField
+            keyboardType="numeric"
+            maxLength={8}
+            name="price"
+            placeholder="Price"
+            width={120}
+          />
+
+          <Picker
+            items={categories}
+            name="category"
+            numberOfColumns={3}
+            PickerItemComponent={CategoryPickerItem}
+            placeholder="Category"
+            width="50%"
+          />
+
+          <FormField
+            maxLength={255}
+            multiline
+            name="description"
+            numberOfLines={2}
+            placeholder="Description"
+          />
+
+          <SubmitButton title="Post" />
+        </Form>
+
+        <UploadScreen
+          onDone={() => setTimeout(() => setUploadVisible(false), 2000)}
+          progress={progress}
           visible={uploadVisible}
           loading={loading}
           error={error}
-      />
-        </View>
+        />
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    
     backgroundColor: "#99ccff",
     flex: 1,
-    
-    
   },
+
   item: {
     textAlign: "center",
     fontWeight: "bold",
     marginTopTop: "80",
     fontSize: 18,
   },
-});
+})
+
 export default ListingEditScreen;

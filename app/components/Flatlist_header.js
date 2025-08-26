@@ -1,4 +1,4 @@
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import ListingHeader from "./ListingHeader"
 import AppText from "../../components/Text"
 import Skeleton from "../screens/Skeleton"

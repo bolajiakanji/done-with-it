@@ -1,4 +1,4 @@
-import { Text, } from "react-native";
+import { StyleSheet, Text, } from "react-native";
 
 const ListingsFooter = ({ displayItems, isLoading, listingsQueryObject }) => {
     if (isLoading && displayItems?.length > 0) {
@@ -15,7 +15,7 @@ const ListingsFooter = ({ displayItems, isLoading, listingsQueryObject }) => {
             </Text>
         );
     }
-    
+
     if (!isLoading && !listingsQueryObject.page) {
         return (
             <Text style={styles.noMoreData}>
