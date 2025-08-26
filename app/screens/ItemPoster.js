@@ -1,21 +1,14 @@
 import { AdvancedImage } from "cloudinary-react-native";
 import { Cloudinary } from "@cloudinary/url-gen";
 import {
-  Modal,
-  Pressable,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import client from "../api/client";
 import { useEffect, useState } from "react";
 import useAuth from "../auth/useAuth";
 import authStorage from "../auth/storage";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import AppTextInput from "../components/TextInput";
-
-import { Form, FormField, SubmitButton } from "../components/forms";
 import * as Yup from "yup";
 import { ListItem } from "../components/lists";
 import Icon from "../components/Icon";

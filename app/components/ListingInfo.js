@@ -12,7 +12,7 @@ import UserShortInfo from "./UserShortInfo";
 import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
 import timeAgo from "../utility/timeAgo";
-import { meme as client_2 } from "../api/client";
+import { client_2 } from "../api/client";
 import routes from "../navigation/routes";
 
 function ListingInfo({

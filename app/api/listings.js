@@ -1,6 +1,4 @@
 import client from "./client";
-//import { fileFromPath } from 'formdata-node/file-from-path';
-//import fs from 'fs';
 
 const endpoint = "/listings";
 
@@ -24,9 +22,8 @@ export const addListing = (listing, onUploadProgress) => {
 
   return client.post(endpoint, data, {
     headers: { "content-type": "multipart/form-data" },
-
     onUploadProgress: (progress) => {
-      onUploadProgress(progress.loaded / progress.total), console.log(progress);
+      onUploadProgress(progress.loaded / progress.total);
     },
   });
 };
@@ -36,14 +33,3 @@ export default {
   getListings,
 };
 
-//   {
-//   name: "image" + index,
-//   type: "image/jpeg",
-//   url: image,
-// }
-
-//const result = listing.images.map((image, index) =>image
-// if (listing.location)
-//   data.append("location", JSON.stringify(listing.location));
-//const { title, price, description, category: { value } } = listing
-//let you = { title, price, description, categoryId: value}

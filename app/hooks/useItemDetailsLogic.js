@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { meme as client_2 } from "../api/client";
+import { client_2 } from "../api/client";
 
 const useItemDetailsLogic = (
     setComments,
@@ -9,6 +9,7 @@ const useItemDetailsLogic = (
     useEffect(() => {
         loadListing();
     }, []);
+
     const loadListing = async () => {
         setLoadingCommentOnPageVisit(true)
         const res = await client_2.get(endPoint);
