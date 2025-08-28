@@ -5,7 +5,13 @@ import TextInput from "../TextInput";
 import ErrorMessage from "./ErrorMessage";
 
 function AppFormField({ name, width, ...otherProps }) {
-  const { setFieldTouched, setFieldValue, errors, touched, values } = useFormikContext();
+  const {
+    setFieldTouched,
+    setFieldValue,
+    errors,
+    touched,
+    values
+  } = useFormikContext();
 
   return (
     <>
@@ -16,6 +22,7 @@ function AppFormField({ name, width, ...otherProps }) {
         width={width}
         {...otherProps}
       />
+
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
   );

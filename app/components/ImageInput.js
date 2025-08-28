@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { } from "react";
 import {
   View,
   StyleSheet,
@@ -8,13 +8,10 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-
 import colors from "../config/colors";
-import Camera from "./Camera";
 
 
 function ImageInput({ imageUri, onChangeImage, setCamera }) {
-
   const handlePress = () => {
     if (!imageUri) {
       Alert.alert("", "Choose image", [
@@ -22,11 +19,11 @@ function ImageInput({ imageUri, onChangeImage, setCamera }) {
         { text: "Camera", onPress: () => setCamera(true) },
         { text: "Gallery", onPress: () => selectImage() },
       ]);
-    } else
+    } else {
       Alert.alert("Delete", "Are you sure you want to delete this image?", [
         { text: "Yes", onPress: () => onChangeImage(null) },
         { text: "No" },
-      ]);
+      ])};
   };
 
   const selectImage = async () => {
@@ -43,8 +40,6 @@ function ImageInput({ imageUri, onChangeImage, setCamera }) {
 
   return (
     <View>
-      
-
       <TouchableWithoutFeedback onPress={handlePress}>
         <View style={styles.container}>
           {!imageUri && (
@@ -54,9 +49,10 @@ function ImageInput({ imageUri, onChangeImage, setCamera }) {
               size={40}
             />
           )}
-          {imageUri && (
+
+          {imageUri &&
             <Image source={{ uri: imageUri }} style={styles.image} />
-          )}
+          }
         </View>
       </TouchableWithoutFeedback>
     </View>
@@ -74,6 +70,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: 80,
   },
+
   image: {
     height: "100%",
     width: "100%",

@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Modal, Text } from "react-native";
 import LottieView from "lottie-react-native";
 
-function UploadScreen({ onDone, loading, error, progress = 0, visible = false }) {
+function UploadScreen({ onDone, loading, error, visible = false }) {
 
   return (
     <Modal visible={visible}>
@@ -24,7 +24,6 @@ function UploadScreen({ onDone, loading, error, progress = 0, visible = false })
               keypath: 'button',
               color: "#fc5c65"
             },
-
           ]}
         />}
       </View>

@@ -1,17 +1,20 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useFormikContext } from "formik";
-import { View,Text, Modal } from "react-native";
-
-
+import { View, Modal } from "react-native";
 import ErrorMessage from "./ErrorMessage";
 import ImageInputList from "../ImageInputList";
 import Camera from "../Camera";
 
-
 function FormImagePicker({ name }) {
   const [camera, setCamera] = useState(false);
 
-  const { errors, setFieldValue, touched, values } = useFormikContext();
+  const { 
+    errors, 
+    setFieldValue, 
+    touched, 
+    values 
+  } = useFormikContext();
+
   const imageUris = values[name];
 
   const handleAdd = (uri) => {
@@ -27,13 +30,10 @@ function FormImagePicker({ name }) {
 
   return (
     <View>
-      
-        <Modal 
-        visible={camera}
-        >
-          <Camera onShot={handleAdd} setCamera={setCamera} />
-        
-        </Modal> 
+      <Modal visible={camera}>
+        <Camera onShot={handleAdd} setCamera={setCamera} />
+      </Modal>
+
       <ImageInputList
         imageUris={imageUris}
         onAddImage={handleAdd}
