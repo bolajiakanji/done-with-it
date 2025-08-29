@@ -13,7 +13,7 @@ import FormImagePicker from "../components/forms/FormImagePicker";
 import UploadScreen from "./UploadScreen";
 import listingsApi from "../api/listings";
 import categories from "../utility/categoryList";
-import validationSchema from "../utility/validation_schema";
+import { editValidationSchema } from "../utility/validation_schema";
 
 function ListingEditScreen() {
   const [uploadVisible, setUploadVisible] = useState(false);
@@ -58,7 +58,7 @@ function ListingEditScreen() {
             images: [],
           }}
           onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+          validationSchema={editValidationSchema}
         >
           <Text style={styles.item}>Add Item</Text>
 

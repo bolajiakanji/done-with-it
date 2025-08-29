@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const validationSchema = Yup.object().shape({
+export const editValidationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
   price: Yup.number().required().min(100).max(10000000).label("Price"),
   description: Yup.string().label("Description"),
@@ -9,4 +9,9 @@ const validationSchema = Yup.object().shape({
     .min(1, "Please select at least one image.")
     .max(6, "Selected image should not be more than 6 images"),
 });
- export default validationSchema
+
+export const accountValidationSchema = Yup.object().shape({
+  heading: Yup.string().required().min(1).label("Heading"),
+  contactInfo: Yup.string().required().min(1).label("Contact_info"),
+});
+

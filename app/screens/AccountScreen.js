@@ -2,105 +2,51 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  FlatList,
-  TouchableHighlight,
-  Image,
   Modal,
   Text,
   TouchableOpacity,
   Pressable,
   ScrollView,
 } from "react-native";
-
-import { ListItem, ListItemSeparator } from "../components/lists";
+import { ListItem } from "../components/lists";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
-import routes from "../navigation/routes";
 import Screen from "../components/Screen";
-import AuthContext from "../auth/context";
 import useAuth from "../auth/useAuth";
 import ListItemm from "../components/lists/listingitemmde";
-import UserShortInfo from "../components/UserShortInfo";
 import { AdvancedImage } from "cloudinary-react-native";
-import { Cloudinary } from "@cloudinary/url-gen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import client from "../api/client";
-//import useAuth from "../auth/useAuth";
 import authStorage from "../auth/storage";
-//import { MaterialCommunityIcons } from "@expo/vector-icons";
-//import AppTextInput from "../components/TextInput";
-
 import { Form, FormField, SubmitButton } from "../components/forms";
-import * as Yup from "yup";
+import { accountValidationSchema } from "../utility/validation_schema";
+import myCloud from "../utility/cid";
 
-const validationSchema = Yup.object().shape({
-  heading: Yup.string().required().min(1).label("Heading"),
-  contactInfo: Yup.string().required().min(1).label("Contact_info"),
-});
-
-const menuItems = [
-  {
-    title: "My Listings",
-    icon: {
-      name: "format-list-bulleted",
-      backgroundColor: colors.primary,
-    },
-  },
-  {
-    title: "My Messages",
-    icon: {
-      name: "email",
-      backgroundColor: colors.secondary,
-    },
-    targetScreen: routes.MESSAGES,
-  },
-];
-
-function AccountScreen({ navigation }) {
+function AccountScreen() {
   const [showImageModal, setImageModal] = useState(false);
   const [pi, setpi] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { user, logOut, login } = useAuth();
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: "dlutiw9i4",
-    },
-  });
-  const image = user.image;
+
+  const cld = myCloud()
   const profileImage = cld.image(image);
+
+  const image = user.image;
 
   const handleSubmit = async (info) => {
     setLoading(true);
-    console.log(info);
     const output = await client.put("/contacts", {
       ...info,
     });
+
     await authStorage.storeToken(output.data);
     setLoading(false);
     login(output.data);
-    console.log("runhere");
+
     if (output.ok) setOpenModal(false);
   };
-
-  const styling = showImageModal
-    ? {
-        position: "absolute",
-        top: "40%",
-        width: "100%",
-        height: 50,
-        zIndex: 90,
-        backgroundColor: "green",
-      }
-    : {
-        position: "initial",
-        top: "initial",
-        width: "initial",
-        height: "initial",
-        backgroundColor: "green",
-      };
-  console.log(pi);
 
   return (
     <Screen style={styles.screen}>
@@ -242,7 +188,7 @@ function AccountScreen({ navigation }) {
                 contactInfo: "",
               }}
               onSubmit={handleSubmit}
-              validationSchema={validationSchema}
+              validationSchema={accountValidationSchema}
               style={{ marginTop: 30 }}
             >
               <FormField maxLength={255} name="heading" placeholder="Heading" />
