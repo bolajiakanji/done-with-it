@@ -1,5 +1,18 @@
-function displayPicture() {
-    return(<TouchableOpacity
+const { TouchableOpacity, View } = require("react-native");
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AdvancedImage } from "cloudinary-react-native";
+import colors from "../../config/colors";
+
+
+function DisplayPicture({
+    setImageModal, 
+image,
+profileImage,
+
+
+}) {
+return(
+    <TouchableOpacity
           underlayColor={colors.light}
           onPress={() => setImageModal(true)}
         >
@@ -44,3 +57,5 @@ function displayPicture() {
         </TouchableOpacity>
 
         )}
+
+        export default DisplayPicture

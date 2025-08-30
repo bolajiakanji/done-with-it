@@ -21,6 +21,7 @@ import authStorage from "../auth/storage";
 import { Form, FormField, SubmitButton } from "../components/forms";
 import { accountValidationSchema } from "../utility/validation_schema";
 import myCloud from "../utility/cid";
+import DisplayPicture from "../components/account/DisplayPicture";
 
 function AccountScreen() {
   const [showImageModal, setImageModal] = useState(false);
@@ -31,11 +32,10 @@ function AccountScreen() {
   const { user, logOut, login } = useAuth();
 
   const cld = myCloud()
+  const image = user.image;
   const profileImage = cld.image(image);
 
-  const image = user.image;
-
-  const handleSubmit = async (info) => {
+const handleSubmit = async (info) => {
     setLoading(true);
     const output = await client.put("/contacts", {
       ...info,
@@ -50,52 +50,14 @@ function AccountScreen() {
 
   return (
     <Screen style={styles.screen}>
-      <ScrollView>
-        <TouchableOpacity
-          underlayColor={colors.light}
-          onPress={() => setImageModal(true)}
-        >
-          <View style={{ width: "100%", height: 200 }}>
-            {!image ? (
-              <View
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "100%",
-                  backgroundColor: "#bbb",
-                  height: "100%",
-                }}
-              >
-                <MaterialCommunityIcons
-                  name="account"
-                  size={40}
-                  color="gray"
-                  style={[
-                    {
-                      borderRadius: 50,
-                      padding: 25,
-                      backgroundColor: "black",
-                    },
-                  ]}
-                />
-              </View>
-            ) : (
-              <AdvancedImage
-                cldImg={profileImage}
-                style={[{ width: "100%", height: "100%" }]}
-              />
-            )}
+            <ScrollView>
+<DisplayPicture 
+      profileImage={profileImage} 
+      image={image}
+      setImageModal={setImageModal}
+      />
 
-            <MaterialCommunityIcons
-              size={30}
-              name="camera"
-              style={{ position: "absolute", top: 5, right: 15 }}
-            />
-          </View>
-        </TouchableOpacity>
-
-        <View style={{ marginHorizontal: 15 }}>
+        <View style={{ marginHorizontal: 15, }}>
           <View style={{ marginVertical: 10 }}>
             <Text style={{ fontSize: 18 }}>{user.name}</Text>
 
