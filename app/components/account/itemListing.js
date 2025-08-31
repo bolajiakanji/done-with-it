@@ -1,6 +1,7 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ListItem } from "../lists";
 import colors from "../../config/colors";
+import Icon from "../Icon";
 
 function ItemListing({ user, logOut }) {
     return (
@@ -24,5 +25,17 @@ function ItemListing({ user, logOut }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+
+  container: {
+    marginVertical: 5,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+});
 
 export default ItemListing

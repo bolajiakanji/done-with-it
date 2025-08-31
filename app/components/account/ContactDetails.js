@@ -1,11 +1,11 @@
-import { View, View, Modal } from "react-native";
+import { useState } from "react";
+import { View, Text, Modal, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { accountValidationSchema } from "../../utility/validation_schema";
 import { Form, FormField, SubmitButton } from "../forms";
 import client from "../../api/client";
 import authStorage from "../../auth/storage";
-
-
+import colors from "../../config/colors";
 
 function ContactDetails({ openModal, setOpenModal, login, }) {
     const [loading, setLoading] = useState(false);
@@ -77,5 +77,17 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
         </Modal>
  )
 }
+
+const styles = StyleSheet.create({
+  
+  container: {
+    marginVertical: 5,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+});
 
 export default ContactDetails
