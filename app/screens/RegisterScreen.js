@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet } from "react-native";
 import * as Yup from "yup";
-
 import Screen from "../components/Screen";
 import {
   ErrorMessage,
@@ -10,11 +9,8 @@ import {
   SubmitButton,
 } from "../components/forms";
 import authApi from "../api/auth";
-
 import useAuth from "../auth/useAuth";
 import { useApi } from "../hooks";
-//import authApi  from "../hooks/"
-import ActivityIndicator from "../components/ActivityIndicator";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -29,9 +25,7 @@ const Register = () => {
   const auth = useAuth();
 
   const handleSubmit = async ({ email, name, password }) => {
-    console.log(email + name + password)
     const response = await registerApi.request({ name, email, password });
-console.log('reshere')
     if (!response.ok) {
       if (response.data) setError(response.data.error);
       else {

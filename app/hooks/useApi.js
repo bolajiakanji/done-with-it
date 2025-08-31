@@ -5,7 +5,6 @@ export default useApi = (apiFunc) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  console.log('dee1')
   const request = async (...args) => {
     setError("")
     return apiFunc(...args);

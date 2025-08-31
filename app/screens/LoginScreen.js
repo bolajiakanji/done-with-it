@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet } from "react-native";
 import * as Yup from "yup";
-import { jwtDecode } from "jwt-decode";
-
-//import Wrapper from "../components/Wrapper"
 import {
   ErrorMessage,
   Form,
@@ -12,7 +9,6 @@ import {
 } from "../components/forms";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
-import ActivityIndicator from "../components/ActivityIndicator";
 import Screen from "../components/Screen";
 import { useApi } from "../hooks";
 
@@ -91,48 +87,3 @@ const styles = StyleSheet.create({
 
 export default LoginScreen;
 
-// const [seller, setSeller] = useState();
-//   const [index, setIndex] = useState(0);
-//   const listing = route.params;
-//   const endPoint = "/comments/" + listing._id;
-//   //const endpoint = "/comments";
-
-// const getComment = (bol) => {
-//   return client.get(endPoint, bol);
-// };
-
-//   const { data, request, error, setError, setData } = useApi(getComment);
-//   const ref = useRef(null);
-
-// useEffect(() => {
-    
-//   loadListing();
-  
-// }, []);
-
-// const loadListing = async () => {
-//   const response = await request({});
-
-//   console.log(response.data)
-//   console.log('response.data')
-//   if (!response.ok) {
-//     if (response.data) setError(response.data.error);
-//     else {
-//       setError("An unexpected error occured.");
-//     }
-//   }
-  
-// };
-
-// const uriArray = [];
-
-// for (const image of listing.images) {
-//   uriArray.push(image.url);
-// }
-
-// const previous = () => {
-//   ref?.current?.prev();
-// };
-// const next = () => {
-//   ref?.current?.next();
-// };

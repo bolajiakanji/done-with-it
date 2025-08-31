@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 
-function OwnerInfo() {
+function OwnerInfo({user, setOpenModal}) {
     return (
         <View style={{ marginHorizontal: 15, }}>
           <View style={{ marginVertical: 10 }}>

@@ -4,8 +4,6 @@ import {
   View,
   Modal,
   Text,
-  TouchableOpacity,
-  Pressable,
   ScrollView,
 } from "react-native";
 import { ListItem } from "../components/lists";
@@ -14,7 +12,6 @@ import Icon from "../components/Icon";
 import Screen from "../components/Screen";
 import useAuth from "../auth/useAuth";
 import ListItemm from "../components/lists/listingitemmde";
-import { AdvancedImage } from "cloudinary-react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import client from "../api/client";
 import authStorage from "../auth/storage";
@@ -22,6 +19,7 @@ import { Form, FormField, SubmitButton } from "../components/forms";
 import { accountValidationSchema } from "../utility/validation_schema";
 import myCloud from "../utility/cid";
 import DisplayPicture from "../components/account/DisplayPicture";
+import OwnerInfo from "../components/account/OwnerInfo";
 
 function AccountScreen() {
   const [showImageModal, setImageModal] = useState(false);
@@ -35,7 +33,7 @@ function AccountScreen() {
   const image = user.image;
   const profileImage = cld.image(image);
 
-const handleSubmit = async (info) => {
+  const handleSubmit = async (info) => {
     setLoading(true);
     const output = await client.put("/contacts", {
       ...info,
@@ -50,53 +48,14 @@ const handleSubmit = async (info) => {
 
   return (
     <Screen style={styles.screen}>
-            <ScrollView>
-<DisplayPicture 
-      profileImage={profileImage} 
-      image={image}
-      setImageModal={setImageModal}
-      />
+      <ScrollView>
+        <DisplayPicture
+          profileImage={profileImage}
+          image={image}
+          setImageModal={setImageModal}
+        />
 
-        <View style={{ marginHorizontal: 15, }}>
-          <View style={{ marginVertical: 10 }}>
-            <Text style={{ fontSize: 18 }}>{user.name}</Text>
-
-            <Text style={{ fontSize: 15 }}>{user.email}</Text>
-          </View>
-          <View style={{ marginBottom: 10 }}>
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "dodgerblue",
-              }}
-            >
-              {" "}
-              Contact Info{" "}
-            </Text>
-          </View>
-
-          <View style={{ marginBottom: 10 }}>
-            <Text style={{ color: "gray", fontWeight: "bold" }}>Email</Text>
-            <Text style={{}}>{user.email}</Text>
-          </View>
-          {user.contacts?.map((info) => (
-            <View style={{ width: "46%", marginBottom: 10 }} key={info._id}>
-              <Text style={{ color: "gray", fontWeight: "bold" }}>
-                {info.heading}
-              </Text>
-              <Text style={{}}>{info.contactInfo}</Text>
-            </View>
-          ))}
-
-        <Pressable onPress={() => setOpenModal(true)}>
-          <Text style={{ color: "blue", fontSize: 20 }}>
-            
-            Add contact info <MaterialCommunityIcons name="plus" />{" "}
-          </Text>
-        </Pressable>
-        </View>
+        <OwnerInfo user={user} setOpenModal={setOpenModal} />
 
         <View style={styles.container}>
           <ListItem
@@ -108,14 +67,16 @@ const handleSubmit = async (info) => {
                 backgroundColor={colors.primary}
               />
             }
-            onPress={() => {}}
+            onPress={() => { }}
           />
+
           <ListItem
             title="Log Out"
             IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
             onPress={() => logOut()}
           />
-        </View>
+</View>
+
         <Modal visible={openModal} animationType="slide">
           <Text
             style={{ fontWeight: "bold", textAlign: "center", fontSize: 20 }}
