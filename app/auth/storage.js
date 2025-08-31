@@ -5,10 +5,7 @@ const key = "authToken";
 
 const storeToken = async (authToken) => {
   try {
-    console.log(authToken)
-    console.log('authTokenx')
     await SecureStore.setItemAsync(key, authToken);
-    console.log('storex')
   } catch (error) {
     console.log("Error occured while storing the auth token");
   }
@@ -25,7 +22,6 @@ const getToken = async () => {
 const getUser = async () => {
   try {
     const token = await getToken();
-    console.log(jwtDecode(token))
     return token ? jwtDecode(token) : null;
   } catch (error) {
     console.log("Error occured while getting user");
