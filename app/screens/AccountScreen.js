@@ -27,7 +27,7 @@ function AccountScreen() {
 
 
   return (
-    <Screen style={styles.screen}>
+    <Screen style={{backgroundColor: colors.light}}>
       <ScrollView>
         <DisplayPicture
           profileImage={profileImage}
@@ -53,18 +53,5 @@ function AccountScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: colors.light,
-  },
-  container: {
-    marginVertical: 5,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
-});
 
 export default AccountScreen;

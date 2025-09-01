@@ -5,7 +5,6 @@ import { accountValidationSchema } from "../../utility/validation_schema";
 import { Form, FormField, SubmitButton } from "../forms";
 import client from "../../api/client";
 import authStorage from "../../auth/storage";
-import colors from "../../config/colors";
 
 function ContactDetails({ openModal, setOpenModal, login, }) {
     const [loading, setLoading] = useState(false);

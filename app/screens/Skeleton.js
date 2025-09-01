@@ -1,11 +1,6 @@
 import SkeletonLoading from "expo-skeleton-loading";
 import {
-  FlatList,
-  StyleSheet,
-  RefreshControl,
-  Text,
   View,
-  Image,
 } from "react-native";
 
 import React from "react";
@@ -13,6 +8,7 @@ import React from "react";
 const Skeleton = () => {
   const itemSkeletonArray = [1, 2, 3, 4, 5, 6]
   const filterSkeletonArray = [1, 2, 3]
+  
   return (
     <SkeletonLoading background={"#adadad"} highlight={"#ffffff"}>
       <View style={{ flexDirection: "column", marginTop: 15 }}>

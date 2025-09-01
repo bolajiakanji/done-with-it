@@ -1,4 +1,4 @@
-import client, {client_2} from "./client"
+import {client_2} from "./client"
 
 const login = (userInfo) => client_2.post("/auth", userInfo)
 
