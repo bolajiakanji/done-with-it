@@ -24,33 +24,17 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
 
     return (
         <Modal visible={openModal} animationType="slide">
-            <Text
-                style={{ fontWeight: "bold", textAlign: "center", fontSize: 20 }}
-            >
-                Add Contact Info
-            </Text>
-
-            {!loading && (
-                <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                        justifyContent: "flex-end",
-                        marginRight: 10,
-                        marginTop: 10,
-                    }}
-                >
+            <Text style={styles.contact}>Add Contact Info</Text>
+            {!loading &&
+                <View style={styles.loading}>
                     <MaterialCommunityIcons
                         size={35}
                         name="close"
-                        onPress={() => {
-                            setOpenModal(false);
-                        }}
+                        onPress={() => { setOpenModal(false) }}
                     />
                 </View>
-            )}
-            <View style={{ marginHorizontal: 10, marginTop: 10 }}>
+            }
+            <View style={styles.contactModal}>
                 <Form
                     initialValues={{
                         heading: "",
@@ -66,7 +50,6 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
                         name="contactInfo"
                         placeholder="Contact Info"
                     />
-
                     <SubmitButton
                         title={loading ? "Submitting..." : "Post"}
                         active={loading}
@@ -74,19 +57,36 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
                 </Form>
             </View>
         </Modal>
- )
+    )
 }
 
 const styles = StyleSheet.create({
-  
-  container: {
-    marginVertical: 5,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
+
+    container: {
+        marginVertical: 5,
+    },
+    contact: {
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 20
+    },
+    contactModal: {
+        marginHorizontal: 10,
+        marginTop: 10
+    },
+    image: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+    },
+    loading: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "flex-end",
+        marginRight: 10,
+        marginTop: 10,
+    }
 });
 
 export default ContactDetails

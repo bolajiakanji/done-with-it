@@ -11,9 +11,9 @@ import client from "../../api/client";
 import authStorage from "../../auth/storage";
 import useAuth from "../../auth/useAuth";
 import Camera from "../Camera";
-import * as ImagePicker from "expo-image-picker";
 import AccountImage from "../AccountImage";
 import AppButton from "../Button";
+import selectImage from "../../utility/selectImage";
 
 function DpUPLoad({ setImageModal, setpi }) {
   const [camera, setCamera] = useState(false);
@@ -21,19 +21,10 @@ function DpUPLoad({ setImageModal, setpi }) {
   const [showButon, setShowButton] = useState(true);
   const [imageuri, setImageUri] = useState("");
   const { login } = useAuth()
-  const selectImage = async () => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
-        quality: 0.5,
-      });
-      if (!result.canceled) setImageUri(result.assets[0].uri)
-      setShowButton(true)
-    } catch (error) {
-      alert("Error reading an image", error);
-    }
-  };
-  const sendapi = async () => {
+  
+selectImage(setImageUri, setShowButton)
+  
+const sendapi = async () => {
     setLoading(true)
     if (imageuri) {
       const data = new FormData();
@@ -70,48 +61,43 @@ function DpUPLoad({ setImageModal, setpi }) {
 
   return (
     <View style={styles.modalContainer}>
-      {!loading && <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 20, paddingHorizontal: 20 }}>
-        <MaterialCommunityIcons
-          color="white"
-          name="close"
-          size={30}
-          onPress={() => {
-            setImageUri("");
-            setImageModal(false)
-            setShowButton(true);
-          }}
-        />
-
-        <MaterialCommunityIcons
-          color="white"
-          name="plus"
-          size={30}
-          onPress={() => {
-            handlePress()
-
-          }}
-        />
-      </View>}
-
-
+      {!loading &&
+        <View style={styles.loading}>
+          <MaterialCommunityIcons
+            color="white"
+            name="close"
+            size={30}
+            onPress={() => {
+              setImageUri("");
+              setImageModal(false)
+              setShowButton(true);
+            }}
+          />
+          <MaterialCommunityIcons
+            color="white"
+            name="plus"
+            size={30}
+            onPress={() => handlePress()}
+          />
+        </View>}
       <Modal visible={camera}>
-        <Camera setCamera={setCamera} onShot={handleShot} setShowButton={setShowButton} />
+        <Camera
+          setCamera={setCamera}
+          onShot={handleShot}
+          setShowButton={setShowButton}
+        />
       </Modal>
       <View style={styles.uploadImage}>
         {imageuri && <View style={styles.uploadImage}>
-          <Image style={{ width: '100%', height: 250 }} source={{ uri: imageuri }} />
+          <Image style={styles.image} source={{ uri: imageuri }} />
           <View style={{ marginHorizontal: 15 }}>
-
-            {showButon && <AppButton
-              title={!loading ? 'Use this image preview' : 'posting...'}
-              onPress={() => {
-                sendapi()
-
-              }}
-              style={{ marginTop: 50 }}
-              active={loading}
- />}
-
+            {showButon &&
+              <AppButton
+                title={!loading ? 'Use this image preview' : 'posting...'}
+                onPress={() => sendapi()}
+                style={{ marginTop: 50 }}
+                active={loading}
+              />}
           </View>
         </View>}
         {!imageuri && <AccountImage />}
@@ -126,16 +112,27 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
 
-  title: {
-    fontWeight: "500",
-
-  },
   camContainer: {
     position: "absolute",
     zIndex: 6,
     flex: 1,
     width: "100%",
     height: 300,
+  },
+  loading: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 20,
+    paddingHorizontal: 20
+  },
+  image: {
+    width: '100%',
+    height: 250
+  },
+  title: {
+    fontWeight: "500",
   },
   uploadImage: {
     position: "relative",

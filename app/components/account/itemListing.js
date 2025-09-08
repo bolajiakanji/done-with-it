@@ -28,14 +28,14 @@ function ItemListing({ user, logOut }) {
 
 const styles = StyleSheet.create({
 
-  container: {
-    marginVertical: 5,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
+    container: {
+        marginVertical: 5,
+    },
+    image: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+    },
 });
 
 export default ItemListing
