@@ -7,55 +7,38 @@ import {
   Modal,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import client from "../../api/client";
-import authStorage from "../../auth/storage";
-import useAuth from "../../auth/useAuth";
 import Camera from "../Camera";
 import AccountImage from "../AccountImage";
 import AppButton from "../Button";
 import selectImage from "../../utility/selectImage";
+import updateDp from "../../utility/updateDp";
+import useAuth from "../../auth/useAuth";
 
 function DpUPLoad({ setImageModal, setpi }) {
   const [camera, setCamera] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showButon, setShowButton] = useState(true);
   const [imageuri, setImageUri] = useState("");
-  const { login } = useAuth()
-  
-selectImage(setImageUri, setShowButton)
-  
-const sendapi = async () => {
-    setLoading(true)
-    if (imageuri) {
-      const data = new FormData();
-      data.append("profileImage", {
-        uri: imageuri,
-        name: "profileImage",
-        type: "image/jpeg",
-      })
-      const owner = await authStorage.getUser();
+      const { login } = useAuth()
 
-      const output = await client.post('/my/profileImage/', data, {
-        headers: { 'content-type': 'multipart/form-data' }
-      })
-      setpi(output.data.image)
-      await authStorage.storeToken(output.data)
-      login(output.data)
-      setLoading(false)
-      setShowButton(false)
-    }
+
+  const updateDpObject = {
+    setLoading,
+    imageuri,
+    setpi,
+    setShowButton,
+    login
   }
 
   const handlePress = () => {
     Alert.alert("", "Choose image", [
       { text: "cancel" },
       { text: "Camera", onPress: () => setCamera(true) },
-      { text: "Gallery", onPress: () => selectImage() },
+      { text: "Gallery", onPress: () => selectImage(setImageUri, setShowButton) },
     ]);
   };
 
   const handleShot = (selectedImage) => {
-    console.log(selectedImage);
     setImageUri(selectedImage);
   };
 
@@ -88,13 +71,14 @@ const sendapi = async () => {
         />
       </Modal>
       <View style={styles.uploadImage}>
-        {imageuri && <View style={styles.uploadImage}>
+        {imageuri && 
+        <View style={styles.uploadImage}>
           <Image style={styles.image} source={{ uri: imageuri }} />
           <View style={{ marginHorizontal: 15 }}>
             {showButon &&
               <AppButton
                 title={!loading ? 'Use this image preview' : 'posting...'}
-                onPress={() => sendapi()}
+                onPress={() => updateDp(updateDpObject)}
                 style={{ marginTop: 50 }}
                 active={loading}
               />}

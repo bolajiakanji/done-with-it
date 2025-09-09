@@ -33,7 +33,7 @@ function DisplayPicture({
         <MaterialCommunityIcons
           size={30}
           name="camera"
-          style={styles.dp}
+          style={styles.camera}
         />
       </View>
     </TouchableOpacity>

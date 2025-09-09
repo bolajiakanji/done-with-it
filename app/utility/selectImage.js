@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 
-const selectImage = async () => {
+const selectImage = async (setImageUri, setShowButton) => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ["images"],
