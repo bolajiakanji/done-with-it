@@ -13,14 +13,14 @@ import AppButton from "../Button";
 import selectImage from "../../utility/selectImage";
 import updateDp from "../../utility/updateDp";
 import useAuth from "../../auth/useAuth";
+import imageTriger from "../../utility/imageTriger";
 
 function DpUPLoad({ setImageModal, setpi }) {
   const [camera, setCamera] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showButon, setShowButton] = useState(true);
   const [imageuri, setImageUri] = useState("");
-      const { login } = useAuth()
-
+  const { login } = useAuth()
 
   const updateDpObject = {
     setLoading,
@@ -31,11 +31,9 @@ function DpUPLoad({ setImageModal, setpi }) {
   }
 
   const handlePress = () => {
-    Alert.alert("", "Choose image", [
-      { text: "cancel" },
-      { text: "Camera", onPress: () => setCamera(true) },
-      { text: "Gallery", onPress: () => selectImage(setImageUri, setShowButton) },
-    ]);
+    const cameraPress = () => setCamera(true)
+    const galleryPress = () => selectImage(setImageUri, setShowButton)
+    imageTriger(cameraPress, galleryPress)
   };
 
   const handleShot = (selectedImage) => {
@@ -56,6 +54,7 @@ function DpUPLoad({ setImageModal, setpi }) {
               setShowButton(true);
             }}
           />
+
           <MaterialCommunityIcons
             color="white"
             name="plus"
@@ -63,6 +62,7 @@ function DpUPLoad({ setImageModal, setpi }) {
             onPress={() => handlePress()}
           />
         </View>}
+
       <Modal visible={camera}>
         <Camera
           setCamera={setCamera}
@@ -70,20 +70,24 @@ function DpUPLoad({ setImageModal, setpi }) {
           setShowButton={setShowButton}
         />
       </Modal>
+
       <View style={styles.uploadImage}>
-        {imageuri && 
-        <View style={styles.uploadImage}>
-          <Image style={styles.image} source={{ uri: imageuri }} />
-          <View style={{ marginHorizontal: 15 }}>
-            {showButon &&
-              <AppButton
-                title={!loading ? 'Use this image preview' : 'posting...'}
-                onPress={() => updateDp(updateDpObject)}
-                style={{ marginTop: 50 }}
-                active={loading}
-              />}
+        {imageuri &&
+          <View style={styles.uploadImage}>
+            <Image style={styles.image} source={{ uri: imageuri }} />
+
+            <View style={{ marginHorizontal: 15 }}>
+              {showButon &&
+                <AppButton
+                  title={!loading ? 'Use this image preview' : 'posting...'}
+                  onPress={() => updateDp(updateDpObject)}
+                  style={{ marginTop: 50 }}
+                  active={loading}
+                />}
+            </View>
           </View>
-        </View>}
+        }
+
         {!imageuri && <AccountImage />}
       </View>
     </View>
@@ -103,6 +107,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 300,
   },
+
   loading: {
     display: 'flex',
     flexDirection: 'row',
@@ -111,13 +116,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 20
   },
+
   image: {
     width: '100%',
     height: 250
   },
+
   title: {
     fontWeight: "500",
   },
+
   uploadImage: {
     position: "relative",
     zIndex: 5,

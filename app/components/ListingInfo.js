@@ -41,13 +41,11 @@ function ListingInfo({
   }
 
   return (
-    <View style={[{ ...styles.detailsContainer }, { marginTop: infoTopMargin }]}>
+    <View style={[styles.detailsContainer , { marginTop: infoTopMargin }]}>
       <Text style={styles.title} numberOfLines={1}>
         {listing.title}
       </Text>
-      <Text numberOfLines={1}>
-        {listing.description}
-      </Text>
+      <Text numberOfLines={1}>{listing.description}</Text>
       <Text style={styles.priceWraper}>
         <Text style={styles.price} >
           #
@@ -57,7 +55,7 @@ function ListingInfo({
       <UserShortInfo
         image={listing.userId.image}
         name={listing.userId.name}
-        itemsAvailable={`${listing.userId.userListings} items available for sell`}
+        itemsAvailable={`${listing.userId.userListings} items available for sale`}
         itemOnPress={() =>
           navigation.navigate(routes.ITEM_POSTER, listing.userId)
         }

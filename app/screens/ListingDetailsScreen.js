@@ -34,7 +34,8 @@ function ListingDetailsScreen({ route, navigation }) {
   const [postingComments, setPostingComments] = useState("");
   const [loadingComment, setLoadingComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = useState(false);
+  const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = 
+  useState(false);
 
   useKeyboard(setVisibility)
   const { user } = useAuth();
@@ -60,8 +61,11 @@ function ListingDetailsScreen({ route, navigation }) {
   const bg = '#e6f2ff'
 
   return (
-    <Screen barStyle='dark-content' style={{ backgroundColor: bg }} background={bg}>
-
+    <Screen 
+    barStyle='dark-content' 
+    style={{ backgroundColor: bg }} 
+    background={bg}
+    >
       <ListingDetailCarousel
         width={width}
         height={height}
@@ -119,22 +123,21 @@ const styles = StyleSheet.create({
     marginTop: detailsContainerTopMargin,
     marginStart: 15,
     marginEnd: 10,
-
   },
 
   price: {
     color: colors.secondary,
     fontWeight: "bold",
     fontSize: 27,
-
     textAlign: "center",
   },
+
   title: {
     fontSize: 15,
     fontWeight: "bold",
     color: "gray",
-
   },
+
   image: {
     width: "100%",
     height: "100%",

@@ -8,6 +8,7 @@ import myCloud from "../utility/cid";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import useListings from "../hooks/useListings";
+import { View } from "react-native";
 
 function ListingsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
@@ -22,14 +23,14 @@ function ListingsScreen({ navigation }) {
       setDisplayItems,
       setIsLoading
     );
-  const { 
-    request, 
-    error, 
-    loading, 
-    setData, 
-    loadListings, 
+  const {
+    request,
+    error,
+    loading,
+    setData,
+    loadListings,
     loadListings_2
-   } = listingsObj
+  } = listingsObj
 
   const cld = myCloud()
 
@@ -76,6 +77,8 @@ function ListingsScreen({ navigation }) {
       barStyle='light-content'
       background={colors.primary}
     >
+      <View style={styles.underlay}></View>
+
       <FlatList
         data={displayItems}
         keyExtractor={(listing, index) => index}
@@ -117,6 +120,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingHorizontal: 10,
     backgroundColor: '#e6f2ff'
+  },
+
+  underlay: {
+    position: 'absolute',
+    zIndex: 0,
+    height: 100,
+    backgroundColor: colors.primary,
+    width: '100%'
   }
 });
 

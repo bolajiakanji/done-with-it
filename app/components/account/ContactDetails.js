@@ -25,6 +25,7 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
     return (
         <Modal visible={openModal} animationType="slide">
             <Text style={styles.contact}>Add Contact Info</Text>
+
             {!loading &&
                 <View style={styles.loading}>
                     <MaterialCommunityIcons
@@ -34,6 +35,7 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
                     />
                 </View>
             }
+
             <View style={styles.contactModal}>
                 <Form
                     initialValues={{
@@ -45,11 +47,13 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
                     style={{ marginTop: 30 }}
                 >
                     <FormField maxLength={255} name="heading" placeholder="Heading" />
+
                     <FormField
                         maxLength={255}
                         name="contactInfo"
                         placeholder="Contact Info"
                     />
+
                     <SubmitButton
                         title={loading ? "Submitting..." : "Post"}
                         active={loading}
@@ -61,24 +65,27 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
 }
 
 const styles = StyleSheet.create({
-
     container: {
         marginVertical: 5,
     },
+
     contact: {
         fontWeight: "bold",
         textAlign: "center",
         fontSize: 20
     },
+
     contactModal: {
         marginHorizontal: 10,
         marginTop: 10
     },
+
     image: {
         width: 50,
         height: 50,
         borderRadius: 25,
     },
+
     loading: {
         display: "flex",
         flexDirection: "row",

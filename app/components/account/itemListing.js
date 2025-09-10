@@ -27,10 +27,10 @@ function ItemListing({ user, logOut }) {
 }
 
 const styles = StyleSheet.create({
-
-    container: {
+container: {
         marginVertical: 5,
     },
+    
     image: {
         width: 50,
         height: 50,

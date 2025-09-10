@@ -16,12 +16,14 @@ function OwnerInfo({ user, setOpenModal }) {
                 <Text style={styles.emailAsTitle}>Email</Text>
                 <Text>{user.email}</Text>
             </View>
+
             {user.contacts?.map((info) => (
                 <View style={styles.contactBox} key={info._id}>
                     <Text style={styles.contactHeading}>{info.heading}</Text>
                     <Text style={{}}>{info.contactInfo}</Text>
                 </View>
             ))}
+            
             <Pressable onPress={() => setOpenModal(true)}>
                 <Text style={styles.addContact}>
                     Add contact info
@@ -37,29 +39,32 @@ const styles = StyleSheet.create({
         color: "blue",
         fontSize: 20
     },
+
     bottomMargin: {
         marginBottom: 10
     },
+
     contactInfo: {
         textAlign: "center",
         fontWeight: "bold",
         fontSize: 20,
         color: "dodgerblue",
     },
+
     emailAsTitle: {
         color: "gray",
         fontWeight: "bold"
     },
+
     contactBox: {
         width: "46%",
         marginBottom: 10
     },
+
     contactHeading: {
         color: "gray",
         fontWeight: "bold"
     },
-
-
 })
 
 export default OwnerInfo

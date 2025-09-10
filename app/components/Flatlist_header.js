@@ -22,7 +22,6 @@ const Flatlist_header = ({
 
   return (
     <>
-      {/* < View style={styles.underlay}></View> */}
       <View style={styles.container}>
         <ListingHeader user={user} />
         {error &&
@@ -59,14 +58,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
 
-  underlay: { 
-    position: 'absolute', 
-    zIndex: 0, 
-    height: 100, 
-    backgroundColor: 
-    colors.primary, 
-    width: '100%' 
-  }
+  
 })
 
 export default Flatlist_header
