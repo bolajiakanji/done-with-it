@@ -8,8 +8,8 @@ import AppButton from "./Button"
 import colors from "../config/colors"
 
 const Flatlist_header = ({
-loadListings,
-listingsQueryObject,
+  loadListings,
+  listingsQueryObject,
   setListingsQueryObject,
   displayItems,
   setDisplayItems,
@@ -21,40 +21,51 @@ listingsQueryObject,
   const { user } = useAuth();
 
   return (
-    <View style={styles.container}>
-      <ListingHeader user={user} />
+    <>
+      {/* < View style={styles.underlay}></View> */}
+      <View style={styles.container}>
+        <ListingHeader user={user} />
+        {error &&
+          <>
+            <AppText style={styles.error}>{error}</AppText>
+            <AppButton title="Retry" onPress={loadListings} />
+          </>
+        }
 
-      {error && 
-        <>
-          <AppText style={styles.error}>{error}</AppText>
-          <AppButton title="Retry" onPress={loadListings} />
-        </>
-      }
+        {loading && <Skeleton />}
 
-      {loading && <Skeleton />}
-
-      {!error && !loading && 
-      <ListingFilterings
-        listingsQueryObject={listingsQueryObject}
-        setListingsQueryObject={setListingsQueryObject}
-        displayItems={displayItems}
-        setDisplayItems={setDisplayItems}
-        request={request}
-        setData={setData}
-      />}
-    </View>
+        {!error && !loading &&
+          <ListingFilterings
+            listingsQueryObject={listingsQueryObject}
+            setListingsQueryObject={setListingsQueryObject}
+            displayItems={displayItems}
+            setDisplayItems={setDisplayItems}
+            request={request}
+            setData={setData}
+          />}
+      </View>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    paddingHorizontal: 13, 
-    backgroundColor: colors.primary, 
+  container: {
+    paddingHorizontal: 13,
+    backgroundColor: colors.primary,
   },
 
-  error: { 
-    color: "red", 
-    marginTop: 10 
+  error: {
+    color: "red",
+    marginTop: 10
+  },
+
+  underlay: { 
+    position: 'absolute', 
+    zIndex: 0, 
+    height: 100, 
+    backgroundColor: 
+    colors.primary, 
+    width: '100%' 
   }
 })
 

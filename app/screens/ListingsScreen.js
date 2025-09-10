@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, RefreshControl, View } from "react-native";
+import { FlatList, StyleSheet, RefreshControl } from "react-native";
 import Card from "../components/Card";
 import colors from "../config/colors";
 import Flatlist_header from "../components/Flatlist_header";
@@ -15,13 +15,21 @@ function ListingsScreen({ navigation }) {
   const [listingsQueryObject, setListingsQueryObject] = useState({});
   const [displayItems, setDisplayItems] = useState([]);
 
-  const { request, error, loading, setData, loadListings, loadListings_2 } =
+  const listingsObj =
     useListings(
       listingsQueryObject,
       setListingsQueryObject,
       setDisplayItems,
       setIsLoading
     );
+  const { 
+    request, 
+    error, 
+    loading, 
+    setData, 
+    loadListings, 
+    loadListings_2
+   } = listingsObj
 
   const cld = myCloud()
 
@@ -63,10 +71,10 @@ function ListingsScreen({ navigation }) {
   };
 
   return (
-    <Screen 
-    style={styles.screen} 
-    barStyle='light-content' 
-    background={colors.primary}
+    <Screen
+      style={styles.screen}
+      barStyle='light-content'
+      background={colors.primary}
     >
       <FlatList
         data={displayItems}
