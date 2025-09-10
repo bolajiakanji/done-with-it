@@ -12,7 +12,6 @@ function UserShortInfo({
   itemsAvailable,
   image,
   itemOnPress,
-  imageOnPress,
   imageStyle,
   iconStyle,
   iconSize,
@@ -28,15 +27,14 @@ function UserShortInfo({
             name="account"
             size={iconSize || 28}
             color="gray"
-            style={[styles, icon, iconStyle]}
+            style={[styles.icon, iconStyle]}
           />
           :
-          <TouchableOpacity onPress={imageOnPress}>
             <AdvancedImage
               cldImg={profileImage}
               style={[styles.advanceImage, imageStyle]}
             />
-          </TouchableOpacity>
+          
         }
 
         <View style={styles.detailsContainer}>
@@ -86,6 +84,7 @@ const styles = StyleSheet.create({
   icon: {
     borderRadius: 15,
     backgroundColor: "#bbb",
+    height: 30,
   },
 
   image: {

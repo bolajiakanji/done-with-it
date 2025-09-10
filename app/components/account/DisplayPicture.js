@@ -1,4 +1,4 @@
-const { TouchableOpacity, View, StyleSheet } = require("react-native");
+import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AdvancedImage } from "cloudinary-react-native";
 import colors from "../../config/colors";
@@ -14,7 +14,7 @@ function DisplayPicture({
       onPress={() => setImageModal(true)}
     >
       <View style={styles.dpBox}>
-        {!image ? (
+        {!image ? 
           <View style={styles.noImage}>
             <MaterialCommunityIcons
               name="account"
@@ -23,12 +23,12 @@ function DisplayPicture({
               style={styles.noImageIcon}
             />
           </View>
-        ) : (
+         : 
           <AdvancedImage
             cldImg={profileImage}
             style={styles.dp}
           />
-        )}
+        }
 
         <MaterialCommunityIcons
           size={30}
@@ -55,12 +55,6 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  noImageIcon: {
-    borderRadius: 50,
-    padding: 25,
-    backgroundColor: "black",
-  },
-
   dp: {
     width: "100%",
     height: "100%"
@@ -71,6 +65,13 @@ const styles = StyleSheet.create({
     top: 5,
     right: 15
   },
+
+  noImageIcon: {
+    borderRadius: 50,
+    padding: 25,
+    backgroundColor: "black",
+  },
+
 })
 
 export default DisplayPicture
