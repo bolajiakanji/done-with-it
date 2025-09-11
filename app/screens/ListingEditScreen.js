@@ -27,8 +27,8 @@ function ListingEditScreen() {
     setLoading(true);
     setUploadVisible(true);
 
-    const response = await listingsApi.addListing({ ...listing }, (progress) =>
-      setProgress(progress)
+    const response = await listingsApi.addListing({ ...listing },
+      (progress) => setProgress(progress)
     );
 
     setLoading(false)

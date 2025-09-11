@@ -1,7 +1,6 @@
 import React from "react"
 import { StyleSheet, TouchableHighlight } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-
 import colors from "../config/colors"
 
 const TabActionButton = ({ onPress }) => {
@@ -19,15 +18,9 @@ const TabActionButton = ({ onPress }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-         
-        
-        
-        
-        
-        
         justifyContent: "center",
-        
     },
+
     icon: {
         fontSize: 40,
         color: colors.primary,

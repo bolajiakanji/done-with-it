@@ -1,15 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import AccountNavigator from "./AccountNavigator";
 import FeedNavigator from "./FeedNavigator";
 import ListingEditScreen from "../screens/ListingEditScreen";
-import TabActionButton from "./TabActionButton";
-import Routes from "./routes";
-//import pushTokenApi from "../api/expoPushToken"
-//import { useNotifications } from "../hooks"
-//import Navigation from "../navigation/rootNavigation"
 
 const Tab = createBottomTabNavigator();
 
@@ -18,9 +12,8 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarHideOnKeyboard: true,
-        
-        
-    }}>
+      }}
+    >
       <Tab.Screen
         name="Feed"
         component={FeedNavigator}
@@ -35,10 +28,8 @@ const TabNavigator = () => {
         name="Add"
         component={ListingEditScreen}
         options={({ navigation }) => ({
-          tabBarIcon: ({size, color}) => (
+          tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons name="plus" size={size} color={color} />
-
-            
           ),
           headerShown: false,
         })}
@@ -56,4 +47,5 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
+
 export default TabNavigator;

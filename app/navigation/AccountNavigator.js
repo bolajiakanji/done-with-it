@@ -1,16 +1,12 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import AccountScreen from "../screens/AccountScreen";
-import MessagesScreen from "../screens/PosterItems";
-import PosterItems from "../screens/PosterItems";
 
 const Stack = createNativeStackNavigator();
 
 const AccountNavigator = () => (
   <Stack.Navigator  screenOptions={{ headerShown: false }}>
     <Stack.Screen name="My Account" component={AccountScreen} />
-    {/* <Stack.Screen name="PosterItems" component={PosterItems} /> */}
   </Stack.Navigator>
 );
 

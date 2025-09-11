@@ -83,7 +83,8 @@ function DpUPLoad({ setImageModal, setpi }) {
                   onPress={() => updateDp(updateDpObject)}
                   style={{ marginTop: 50 }}
                   active={loading}
-                />}
+                />
+                }
             </View>
           </View>
         }
