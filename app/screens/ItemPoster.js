@@ -11,7 +11,6 @@ import colors from "../config/colors";
 import myCloud from "../utility/cid";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-
 const ItemPoster = ({ route }) => {
   const poster = route.params;
   const image = poster.image
