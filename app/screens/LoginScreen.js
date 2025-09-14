@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Image, StyleSheet } from "react-native";
 import * as Yup from "yup";
 import {
@@ -7,10 +7,8 @@ import {
   FormField,
   SubmitButton,
 } from "../components/forms";
-import authApi from "../api/auth";
-import useAuth from "../auth/useAuth";
 import Screen from "../components/Screen";
-import { useApi } from "../hooks";
+import useLogin from "../hooks/useLogin";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -18,23 +16,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginScreen = () => {
-  const loginApi = useApi(authApi.login);
-  const [error, setError] = useState(null);
-  const { login } = useAuth();
+  const log = useLogin()
 
   const handleLogin = async ({ email, password }) => {
-    const response = await loginApi.request({ email, password });
+    await log.request({ email, password });
 
-    if (!response.ok) {
-      if (response.data) setError(response.data.error);
-      else {
-        setError("An unexpected error occured.");
-      }
-      return;
-    }
-
-    setError(false);
-    login(response.data);
+   
   };
 
   return (

@@ -23,6 +23,7 @@ function ListingsScreen({ navigation }) {
       setDisplayItems,
       setIsLoading
     );
+    
   const {
     request,
     error,

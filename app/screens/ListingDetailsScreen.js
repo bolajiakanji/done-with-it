@@ -7,7 +7,6 @@ import {
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import client from "../api/client";
-import { configureReanimatedLogger } from "react-native-reanimated";
 import { useApi, useItemDetailsLogic, useKeyboard } from "../hooks";
 import useAuth from "../auth/useAuth";
 import DeleteComment from "../components/DeleteComment";
@@ -17,18 +16,12 @@ import CommentsSection from "../components/CommentsSection";
 import CommentPosting from "../components/CommentPosting";
 import CommentPostingModal from "../components/CommentPostingModal";
 
-configureReanimatedLogger({
-  strict: false,
-});
-
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-const detailsContainerTopMargin = height / 3.5;
+const infoTopMargin = height / 3.5;
 
 function ListingDetailsScreen({ route, navigation }) {
   const listing = route.params;
-  const endPoint = "/comments/" + listing._id;
-
   const [isVisible, setVisibility] = useState(false);
   const [likes, setLikes] = useState(listing.likes);
   const [postingComments, setPostingComments] = useState("");
@@ -36,10 +29,11 @@ function ListingDetailsScreen({ route, navigation }) {
   const [comments, setComments] = useState([]);
   const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = 
   useState(false);
-
+  
   useKeyboard(setVisibility)
   const { user } = useAuth();
   const { data } = useApi(getComment);
+  const endPoint = "/comments/" + listing._id;
   const loadListing = useItemDetailsLogic(
     setComments,
     endPoint,
@@ -47,7 +41,7 @@ function ListingDetailsScreen({ route, navigation }) {
     listing
   )
 
-  const infoTopMargin = height / 3.5;
+const bg = '#e6f2ff'
 
   const getComment = (_comment) => {
     return client.get(endPoint, _comment);
@@ -58,9 +52,7 @@ function ListingDetailsScreen({ route, navigation }) {
     return '1'
   }
 
-  const bg = '#e6f2ff'
-
-  return (
+return (
     <Screen 
     barStyle='dark-content' 
     style={{ backgroundColor: bg }} 
@@ -120,7 +112,7 @@ function ListingDetailsScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    marginTop: detailsContainerTopMargin,
+    marginTop: infoTopMargin,
     marginStart: 15,
     marginEnd: 10,
   },

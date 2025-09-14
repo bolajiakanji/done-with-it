@@ -1,46 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Image, StyleSheet } from "react-native";
-import * as Yup from "yup";
 import Screen from "../components/Screen";
+import { registerValidation as validationSchema }
+  from "../utility/validation_schema";
 import {
   ErrorMessage,
   Form,
   FormField,
   SubmitButton,
 } from "../components/forms";
-import authApi from "../api/auth";
-import useAuth from "../auth/useAuth";
-import { useApi } from "../hooks";
-
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  name: Yup.string().required().min(1).label("Name"),
-  password: Yup.string().required().min(4).label("Password"),
-});
+import useRegister from "../hooks/useRegister";
 
 const Register = () => {
-  const registerApi = useApi(authApi.register);
-  const loginApi = useApi(authApi.login);
-  const [error, setError] = useState(null);
-  const auth = useAuth();
+  const registerApi = useRegister()
 
   const handleSubmit = async ({ email, name, password }) => {
-    const response = await registerApi.request({ name, email, password });
-    if (!response.ok) {
-      if (response.data) setError(response.data.error);
-      else {
-        setError("An unexpected error occured.");
-      }
-      return;
-    }
-
-    const { data: authToken } = await loginApi.request({
-      email,
-      password,
-    });
-
-    auth.login(authToken);
-  };
+    await registerApi.request({ email,name, password });
+};
 
   return (
     <>

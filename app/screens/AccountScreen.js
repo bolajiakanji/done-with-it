@@ -24,9 +24,8 @@ function AccountScreen() {
   const image = user.image;
   const profileImage = cld.image(image);
 
-
   return (
-    <Screen style={{backgroundColor: colors.light}}>
+    <Screen style={{ backgroundColor: colors.light }}>
       <ScrollView>
         <DisplayPicture
           profileImage={profileImage}

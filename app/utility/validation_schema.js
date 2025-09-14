@@ -15,3 +15,9 @@ export const accountValidationSchema = Yup.object().shape({
   contactInfo: Yup.string().required().min(1).label("Contact_info"),
 });
 
+export const registerValidation = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+  name: Yup.string().required().min(1).label("Name"),
+  password: Yup.string().required().min(4).label("Password"),
+});
+

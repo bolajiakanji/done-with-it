@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
 import {
   Form,
   FormField,
@@ -11,35 +10,24 @@ import CategoryPickerItem from "../components/CategoryPickerItem";
 import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import UploadScreen from "./UploadScreen";
-import listingsApi from "../api/listings";
 import categories from "../utility/categoryList";
 import { editValidationSchema } from "../utility/validation_schema";
+import usePostItem from "../hooks/usePostItem";
 
 function ListingEditScreen() {
-  const [uploadVisible, setUploadVisible] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const postItemApi = usePostItem()
+
+  const {
+    error,
+    loading,
+    postItem,
+    progress,
+    uploadVisible,
+    setUploadVisible
+  } = postItemApi
 
   const handleSubmit = async (listing, { resetForm }) => {
-    setError(false)
-    setProgress(0);
-    setLoading(true);
-    setUploadVisible(true);
-
-    const response = await listingsApi.addListing({ ...listing },
-      (progress) => setProgress(progress)
-    );
-
-    setLoading(false)
-
-    if (!response.ok) {
-      setError(true)
-      setUploadVisible(false);
-      return alert("Could not save the listing");
-    }
-
-    resetForm();
+    postItem(listing, resetForm)
   };
 
   return (
