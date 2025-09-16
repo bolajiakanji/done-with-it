@@ -3,12 +3,15 @@ import cache from "../utility/cache";
 import authStorage from "../auth/storage";
 
 const apiClient = create({
-  baseURL: "https://borji-backend-5.onrender.com/api",
+   baseURL: "https://borji-backend-5.onrender.com/api/",
+  // baseURL: "http://10.140.219.87:3000/api/",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
   const authToken = await authStorage.getToken();
-  if (authToken) request.headers["x-auth-token"] = authToken 
+  if (authToken) {
+    request.headers["x-auth-token"] = authToken 
+  }
 });
 
 const get = apiClient.get;
@@ -41,6 +44,7 @@ client_2.get = async (url, data, axiosConfig) => {
     cache.store(url, result.data)
     return result
   }
+  return result
 }
 
 client_2.post = async (url, data, axiosConfig) => {
@@ -50,6 +54,7 @@ client_2.post = async (url, data, axiosConfig) => {
     cache.store(url, result.data)
     return result
   }
+  return result
 }
 
 client_2.delete = async (url, axiosConfig) => {
@@ -59,6 +64,7 @@ client_2.delete = async (url, axiosConfig) => {
     cache.store(url, result.data)
     return result
   }
+  return result
 }
 
 export default client;

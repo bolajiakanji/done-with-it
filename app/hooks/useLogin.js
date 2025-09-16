@@ -5,37 +5,28 @@ import useAuth from "../auth/useAuth";
 const useLogin = (apiFunc) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const auth = useAuth();
-
 
     const request = async (registerObj) => {
         setLoading(true)
         const response = await authApi.login(registerObj)
+        console.log(response)
         if (!response.ok) {
-            if (response.data) setError(response.data.error);
-            else setError("An unexpected error occured.");
-            auth.login(response);
-
-
+            if (response.data) {
+                setError(response.data.error)
+            setLoading(false)
+            return
+            };
+            setError("An unexpected error occured.");
+            setLoading(false)
+            return
         }
-            auth.login(response.data);
+        auth.login(response.data);
+        setLoading(false)
     };
-     return { request, data, error, loading, setError, setLoading, setData };
+    return { request, data, error, loading };
 };
 
 export default useLogin
 
-// const response = await loginApi.request({ email, password });
-
-//     if (!response.ok) {
-//       if (response.data) setError(response.data.error);
-//       else {
-//         setError("An unexpected error occured.");
-//       }
-//       return;
-//     }
-
-//     setError(false);
-//     login(response.data);
-//   ;

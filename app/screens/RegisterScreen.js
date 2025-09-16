@@ -1,8 +1,7 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 import Screen from "../components/Screen";
-import { registerValidation as validationSchema }
-  from "../utility/validation_schema";
+import { registerValidation  } from "../utility/validation_schema";
 import {
   ErrorMessage,
   Form,
@@ -14,8 +13,10 @@ import useRegister from "../hooks/useRegister";
 const Register = () => {
   const registerApi = useRegister()
 
+  const { request, data, error, loading, } = registerApi
+
   const handleSubmit = async ({ email, name, password }) => {
-    await registerApi.request({ email,name, password });
+    await request({ email,name, password });
 };
 
   return (
@@ -26,7 +27,7 @@ const Register = () => {
         <Form
           initialValues={{ email: "", name: "", password: "" }}
           onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+          validationSchema={registerValidation}
         >
           <ErrorMessage error={error} visible={error} />
           <FormField

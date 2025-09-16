@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-import * as Yup from "yup";
 import {
   ErrorMessage,
   Form,
@@ -9,20 +8,16 @@ import {
 } from "../components/forms";
 import Screen from "../components/Screen";
 import useLogin from "../hooks/useLogin";
-
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
-});
+import { loginValidation } from "../utility/validation_schema";
 
 const LoginScreen = () => {
-  const log = useLogin()
+  const loginApi = useLogin()
+
+  const { request, data, error, loading } = loginApi
 
   const handleLogin = async ({ email, password }) => {
-    await log.request({ email, password });
-
-   
-  };
+    await request({ email, password });
+};
 
   return (
     <>
@@ -31,7 +26,7 @@ const LoginScreen = () => {
         <Form
           initialValues={{ email: "", password: "" }}
           onSubmit={handleLogin}
-          validationSchema={validationSchema}
+          validationSchema={loginValidation}
         >
           <ErrorMessage error={error} visible={!!error} />
           <FormField
@@ -52,7 +47,7 @@ const LoginScreen = () => {
             secureTextEntry
             textContentType="password"
           />
-          <SubmitButton title="Login" />
+          <SubmitButton title="Login" active={!loading} />
         </Form>
       </Screen>
     </>

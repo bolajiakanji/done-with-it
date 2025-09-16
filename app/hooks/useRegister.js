@@ -10,11 +10,21 @@ const useRegister = (apiFunc) => {
 
     const request = async (registerObj) => {
         setLoading(true)
-        const response = await authApi.register(registerObj)
-        if (!response.ok) {
-            if (response.data) setError(response.data.error);
-            else setError("An unexpected error occured.")
+        try {
+            const response = await authApi.register(registerObj)
+            console.log('response2')
+            console.log(response)
+            
+            
+        } catch (error) {
+            console.log('response24')
+            console.log(response)
+            
         }
+        // if (!response.ok) {
+        //     if (response.data) setError(response.data.error);
+        //     else setError("An unexpected error occured.")
+        // }
         const { email, password } = registerObj
         const { data: authToken } = await authApi.login({
             email,
@@ -22,7 +32,7 @@ const useRegister = (apiFunc) => {
         });
         auth.login(authToken);
     };
-    return { request, data, error, loading, setError, setLoading, setData };
+    return { request, data, error, loading, };
 };
 
 export default useRegister
