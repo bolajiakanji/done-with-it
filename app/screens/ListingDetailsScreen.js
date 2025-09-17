@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
+import { configureReanimatedLogger } from "react-native-reanimated";
 import client from "../api/client";
 import { useApi, useItemDetailsLogic, useKeyboard } from "../hooks";
 import useAuth from "../auth/useAuth";
@@ -15,6 +16,10 @@ import ListingInfo from "../components/ListingInfo";
 import CommentsSection from "../components/CommentsSection";
 import CommentPosting from "../components/CommentPosting";
 import CommentPostingModal from "../components/CommentPostingModal";
+
+configureReanimatedLogger({
+  strict: false,
+});
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -27,9 +32,9 @@ function ListingDetailsScreen({ route, navigation }) {
   const [postingComments, setPostingComments] = useState("");
   const [loadingComment, setLoadingComment] = useState(false);
   const [comments, setComments] = useState([]);
-  const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] = 
-  useState(false);
-  
+  const [loadingCommentOnPageVisit, setLoadingCommentOnPageVisit] =
+    useState(false);
+
   useKeyboard(setVisibility)
   const { user } = useAuth();
   const { data } = useApi(getComment);
@@ -41,7 +46,7 @@ function ListingDetailsScreen({ route, navigation }) {
     listing
   )
 
-const bg = '#e6f2ff'
+  const bg = '#e6f2ff'
 
   const getComment = (_comment) => {
     return client.get(endPoint, _comment);
@@ -52,11 +57,11 @@ const bg = '#e6f2ff'
     return '1'
   }
 
-return (
-    <Screen 
-    barStyle='dark-content' 
-    style={{ backgroundColor: bg }} 
-    background={bg}
+  return (
+    <Screen
+      barStyle='dark-content'
+      style={{ backgroundColor: bg }}
+      background={bg}
     >
       <ListingDetailCarousel
         width={width}

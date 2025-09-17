@@ -11,19 +11,12 @@ const useLogin = (apiFunc) => {
     const request = async (registerObj) => {
         setLoading(true)
         const response = await authApi.login(registerObj)
-        console.log(response)
+        setLoading(false)
         if (!response.ok) {
-            if (response.data) {
-                setError(response.data.error)
-            setLoading(false)
-            return
-            };
-            setError("An unexpected error occured.");
-            setLoading(false)
-            return
+            if (response.data) return setError(response.data.error)
+            return setError("An unexpected error occured.");
         }
         auth.login(response.data);
-        setLoading(false)
     };
     return { request, data, error, loading };
 };

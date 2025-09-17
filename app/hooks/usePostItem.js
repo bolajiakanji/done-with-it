@@ -13,6 +13,7 @@ const usePostItem = () => {
         setLoading(true);
         setUploadVisible(true);
 
+        console('keseirutie')
         const response = await listingsApi.addListing({ ...listing },
             (progress) => setProgress(progress)
         );

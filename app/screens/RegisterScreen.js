@@ -55,7 +55,7 @@ const Register = () => {
             secureTextEntry
             textContentType="password"
           />
-          <SubmitButton title="Register" color="secondary" />
+          <SubmitButton title="Register" active={!loading} />
         </Form>
       </Screen>
     </>

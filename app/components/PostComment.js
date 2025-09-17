@@ -13,6 +13,7 @@ function PostComment({
 
   const handleSubmit = async () => {
     setLoading(true)
+    console.log('mwef')
     const res = await client_2.post(endPoint, {
       comment: postingComments
     })

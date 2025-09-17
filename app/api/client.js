@@ -3,7 +3,7 @@ import cache from "../utility/cache";
 import authStorage from "../auth/storage";
 
 const apiClient = create({
-   baseURL: "https://borji-backend-5.onrender.com/api/",
+   baseURL: "https://borji-backend-5.onrender.com/api",
   // baseURL: "http://10.140.219.87:3000/api/",
 });
 
