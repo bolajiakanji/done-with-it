@@ -1,15 +1,23 @@
 import { create } from "apisauce";
 import cache from "../utility/cache";
 import authStorage from "../auth/storage";
+import { jwtDecode } from "jwt-decode";
+
 
 const apiClient = create({
-   baseURL: "https://borji-backend-5.onrender.com/api",
-  // baseURL: "http://10.140.219.87:3000/api/",
+   //baseURL: "https://borji-backend-5.onrender.com/api",
+  baseURL: "http://10.207.200.87:3000/api",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
   const authToken = await authStorage.getToken();
+  
   if (authToken) {
+    console.log(authToken)
+        const user = jwtDecode(authToken);
+        console.log(user)
+
+    
     request.headers["x-auth-token"] = authToken 
   }
 });
@@ -48,6 +56,7 @@ client_2.get = async (url, data, axiosConfig) => {
 }
 
 client_2.post = async (url, data, axiosConfig) => {
+  console.log('bullsd')
   const result = await apiClient.post(url, data, axiosConfig);
 
   if (result.ok) {

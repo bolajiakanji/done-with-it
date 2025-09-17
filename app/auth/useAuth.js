@@ -9,6 +9,8 @@ export default useAuth = () => {
   const login = async (auth_token) => {
     await authStorage.storeToken(auth_token);
     const user = jwtDecode(auth_token);
+    console.log('user123')
+    console.log(user)
     setUser(user);
   };
 

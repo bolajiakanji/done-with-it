@@ -26,8 +26,11 @@ function ListingEditScreen() {
     setUploadVisible
   } = postItemApi
 
-  const handleSubmit = async (listing, { resetForm }) => {
+  const handleSubmit = (listing, { resetForm }) => {
+    console.log('me45')
+    console.log(postItem)
     postItem(listing, resetForm)
+    console.log('me456')
   };
 
   return (
