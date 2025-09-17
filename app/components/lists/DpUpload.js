@@ -14,6 +14,7 @@ import selectImage from "../../utility/selectImage";
 import updateDp from "../../utility/updateDp";
 import useAuth from "../../auth/useAuth";
 import imageTriger from "../../utility/imageTriger";
+import { ActivityIndicator } from "react-native";
 
 function DpUPLoad({ setImageModal, setpi }) {
   const [camera, setCamera] = useState(false);
@@ -39,6 +40,9 @@ function DpUPLoad({ setImageModal, setpi }) {
   const handleShot = (selectedImage) => {
     setImageUri(selectedImage);
   };
+  const   LoadingIndicator = () => (
+      <ActivityIndicator size={23} color='#000000'/>
+    )
 
   return (
     <View style={styles.modalContainer}>
@@ -79,10 +83,10 @@ function DpUPLoad({ setImageModal, setpi }) {
             <View style={{ marginHorizontal: 15 }}>
               {showButon &&
                 <AppButton
-                  title={!loading ? 'Use this image preview' : 'posting...'}
+                  title={!loading ? 'UPLOAD' : <LoadingIndicator />}
                   onPress={() => updateDp(updateDpObject)}
                   style={{ marginTop: 50 }}
-                  active={loading}
+                  active={!loading}
                 />
                 }
             </View>

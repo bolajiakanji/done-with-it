@@ -12,7 +12,7 @@ function AppButton({
   const defaultStyle = { 
     backgroundColor: buttonBackground, 
     opacity: active ? 1 : 0.4
-  }
+  } 
 
   return (
     <TouchableOpacity
