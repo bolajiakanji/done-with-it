@@ -82,7 +82,7 @@ function ListingEditScreen() {
             placeholder="Description"
           />
 
-          <SubmitButton title="Post" />
+          <SubmitButton title="Post" active={!loading}/>
         </Form>
 
         <UploadScreen

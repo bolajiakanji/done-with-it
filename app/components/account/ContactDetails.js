@@ -55,8 +55,8 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
                     />
 
                     <SubmitButton
-                        title={loading ? "Submitting..." : "Post"}
-                        active={loading}
+                        title="Submit"
+                        active={!loading}
                     />
                 </Form>
             </View>

@@ -38,7 +38,7 @@ function AccountScreen() {
         <ContactDetails
           login={login}
           openModal={openModal}
-          setOpenModal={setImageModal}
+          setOpenModal={setOpenModal}
         />
 
         <ItemListing user={user} logOut={logOut} />
