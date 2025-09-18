@@ -13,8 +13,7 @@ function ItemListing({ user, logOut }) {
                     <Icon
                         name="format-list-bulleted"
                         backgroundColor={colors.primary}
-                    />
-                }
+                    />}
             />
 
             <ListItem

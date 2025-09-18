@@ -63,8 +63,7 @@ function ListingsScreen({ navigation }) {
         error={error}
         request={request}
       />
-    )
-  }
+    )}
 
   const onRefresh = () => {
     setRefreshing(true);

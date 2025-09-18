@@ -28,10 +28,9 @@ const Flatlist_header = ({
           <>
             <AppText style={styles.error}>{error}</AppText>
             <AppButton title="Retry" onPress={loadListings} />
-          </>
-        }
+          </>}
 
-        {loading && <Skeleton />}
+        {!!loading && <Skeleton />}
 
         {!error && !loading &&
           <ListingFilterings

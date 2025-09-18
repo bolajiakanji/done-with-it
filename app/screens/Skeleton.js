@@ -1,8 +1,8 @@
 import React from "react";
 import SkeletonLoading from "expo-skeleton-loading";
 import {
-  StyleSheet,
   View,
+  StyleSheet
 } from "react-native";
 
 const skeletonColor = '#adadad'
@@ -12,7 +12,7 @@ const Skeleton = () => {
   const filterSkeletonArray = [1, 2]
 
   return (
-    <SkeletonLoading background={skeletonColor} highlight={"#ffffff"}>
+    <SkeletonLoading background={skeletonColor} highlight="#ffffff">
       <View style={styles.container}>
         <View style={styles.wrapper}>
           {filterSkeletonArray.map(item => (
@@ -21,15 +21,15 @@ const Skeleton = () => {
         </View>
         <View style={styles.itemSkeletonBox}>
           {itemSkeletonArray.map((item,) => (
-            <View style={SkeletonContainer} key={item}>
+            <View style={styles.skeletonContainer} key={item} >
               <View style={styles.skeletonWrapper} />
               <View>
-                <View style={[styles.skeletonStyle, { width: '80%' }]} />
-                <View style={[styles.skeletonStyle, { width: '50%' }]} />
-                <View style={[styles.skeletonStyle, { width: '20%' }]} />
+                <View style={[styles.skeletonItem, { width: '80%' }]} />
+                <View style={[styles.skeletonItem, { width: '50%' }]} />
+                <View style={[styles.skeletonItem, { width: '20%' }]} />
               </View>
-            </View>
-          ))}
+            </View>))}
+
         </View>
       </View>
     </SkeletonLoading>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     gap: 10,
     justifyContent: 'center'
   },
-  SkeletonContainer: {
+  skeletonContainer: {
     width: '48%',
     marginBottom: 10
   },
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
   },
-  skeletonStyle: {
+  skeletonItem: {
     backgroundColor: "#adadad",
     width: "80%",
     height: 10,
@@ -88,4 +88,7 @@ const styles = StyleSheet.create({
   }
 })
 
+
 export default Skeleton;
+
+
