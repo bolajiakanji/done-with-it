@@ -32,7 +32,7 @@ client.get = async (url, data, axiosConfig) => {
   const result = await get(url, data, axiosConfig);
 
   if (result.ok) {
-    cache.store(url, result.data);
+    cache.store(url, data, result.data);
     return result;
   }
 

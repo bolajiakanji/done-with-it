@@ -22,11 +22,15 @@ const updateDp = (updateDpObject) => {
             const output = await client_2.post('/my/profileImage/', data, {
                 headers: { 'content-type': 'multipart/form-data' }
             })
+            if (output.ok) {
             setpi(output.data.image)
             await authStorage.storeToken(output.data)
             login(output.data)
             setLoading(false)
             setShowButton(false)
+            
+            }
+            setLoading(false)
         }
     }
     return postImage()

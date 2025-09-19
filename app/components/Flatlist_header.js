@@ -30,7 +30,7 @@ const Flatlist_header = ({
             <AppButton title="Retry" onPress={loadListings} />
           </>}
 
-        {!!loading && <Skeleton />}
+        {loading && <Skeleton />}
 
         {!error && !loading &&
           <ListingFilterings
@@ -51,13 +51,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
     backgroundColor: colors.primary,
   },
-
   error: {
     color: "red",
     marginTop: 10
   },
 
-  
+
 })
 
 export default Flatlist_header
