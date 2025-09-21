@@ -15,6 +15,7 @@ const useRegister = (apiFunc) => {
         if (!response.ok) {
             if (response.data) setError(response.data.error);
             else setError("An unexpected error occured.")
+            return
         }
         const { email, password } = registerObj
         const { data: authToken } = await authApi.login({

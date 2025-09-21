@@ -30,11 +30,14 @@ function CommentsSection({
     const numberOfComments =
         count.current && comments.length == 0 ? listing.comments : comments.length;
 
-    const sectionHeight = height / 2.2
+    const sectionHeight = '100%'
+
+   const heightLogic = !loadingCommentOnPageVisit && comments.length == 0
+   const commentWrapperHeight = !heightLogic ? '': ''
 
     return (
-        <View style={styles.container}>
-            <View style={[styles.commentWrapper, { height: sectionHeight }]}>
+        <View style={[styles.container, {height: commentWrapperHeight,},]}>
+            <View style={[styles.commentWrapper,  ]}>
 
                 <CommentHighlight numberOfComments={numberOfComments} />
 
@@ -43,12 +46,12 @@ function CommentsSection({
                     comments={comments}
                     loadListing={loadListing}
                     numberOfComments={numberOfComments}
-                    height={sectionHeight}
+heightLogic={heightLogic}
                 />
 
-                {!loadingCommentOnPageVisit && comments.length !== 0 &&
-                    <View style={styles.scrollWrapper}>
-                        <ScrollView style={styles.scrollContainer}>
+                {!heightLogic  &&
+                    <View style={[styles.scrollWrapper, {paddingBottom:loadingCommentOnPageVisit ? 0 : 50 }]}>
+                        <View style={styles.scrollContainer}>
                             {comments.map((comment) => {
                                 const profileImage = myCloud().image(comment.userId.image)
                                 return (
@@ -95,7 +98,7 @@ function CommentsSection({
                                     </View>
                                 )
                             })}
-                        </ScrollView>
+                        </View>
                     </View>
                 }
             </View>
@@ -105,24 +108,33 @@ function CommentsSection({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#aaa"
+        backgroundColor: "#aaa",
+        //height: 300
+        
     },
 
     commentWrapper: {
         position: "relative",
         width: '100%',
-        paddingBottom: 80
+        //height: 300,
+        
+
     },
 
     scrollWrapper: {
         backgroundColor: "#ccc",
         paddingHorizontal: 10,
+                
+
+
+        
     },
 
     scrollContainer: {
         width: "100%",
         paddingRight: 20,
-        paddingBottom: 180,
+        //paddingBottom: 30,
+
     },
 
     scroll: {
@@ -132,6 +144,8 @@ const styles = StyleSheet.create({
         gap: 10,
         flex: "wrap",
         paddingRight: 40,
+        
+        
     },
 
     imageIcon: {

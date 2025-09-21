@@ -19,7 +19,8 @@ function CommentPosting({
     return (
         <View style={styles.container}>
             <View style={styles.postWrapper}>
-                {!loadingCommentOnPageVisit && <View style={styles.textInputWidth}>
+                {!loadingCommentOnPageVisit && 
+                <View style={styles.textInputWidth}>
                     <TextInput
                         height={40}
                         value={postingComments}
@@ -56,9 +57,7 @@ function CommentPosting({
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
         width: '100%',
-        bottom: 5
     },
 
     indicatorWrappper: {
@@ -68,12 +67,13 @@ const styles = StyleSheet.create({
 
     postWrapper: {
         display: "flex",
-        marginTop: 10,
+        //marginTop: 10,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: 'flex-end',
         gap: 10,
         width: '100%'
+        
     },
 
     textInput: {

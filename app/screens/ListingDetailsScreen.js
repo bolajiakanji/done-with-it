@@ -2,7 +2,8 @@ import { useState } from "react";
 import {
   View,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from "react-native";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
@@ -23,7 +24,7 @@ configureReanimatedLogger({
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-const infoTopMargin = height / 3.5;
+const infoTopMargin = height / 2.25;
 
 function ListingDetailsScreen({ route, navigation }) {
   const listing = route.params;
@@ -60,7 +61,7 @@ function ListingDetailsScreen({ route, navigation }) {
   return (
     <Screen
       barStyle='dark-content'
-      style={{ backgroundColor: bg }}
+      style={{ backgroundColor: bg,  }}
       background={bg}
     >
       <ListingDetailCarousel
@@ -69,7 +70,7 @@ function ListingDetailsScreen({ route, navigation }) {
         listing={listing}
         data={data}
       />
-
+      <ScrollView style={{zIndex: 0,}}>
       <ListingInfo listing={listing}
         infoTopMargin={infoTopMargin}
         like_value={like_value}
@@ -78,7 +79,7 @@ function ListingDetailsScreen({ route, navigation }) {
         likes={likes}
       />
 
-      <View>
+      
         <CommentsSection
           comments={comments}
           listing={listing}
@@ -89,6 +90,7 @@ function ListingDetailsScreen({ route, navigation }) {
           loadListing={loadListing}
         />
 
+</ScrollView>
         <CommentPosting
           loadingCommentOnPageVisit={loadingCommentOnPageVisit}
           postingComments={postingComments}
@@ -98,8 +100,8 @@ function ListingDetailsScreen({ route, navigation }) {
           setComments={setComments}
           setPostingComments={setPostingComments}
           setLoadingComment={setLoadingComment}
-        />
-      </View>
+          />
+      
 
       <CommentPostingModal isVisible={isVisible} width={width}
         loadingCommentOnPageVisit={loadingCommentOnPageVisit}

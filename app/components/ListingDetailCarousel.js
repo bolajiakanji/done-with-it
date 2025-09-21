@@ -15,8 +15,8 @@ function ListingDetailCarousel({ width, height, listing, }) {
   const ref = useRef(null);
 
   const uriArray = listing.images;
-  const carouselHeight = height / 3.6;
-  const arrowTopMargin = height / 8;
+  const carouselHeight = height / 2.3;
+  const arrowTopMargin = height / 5;
   const cld = myCloud()
 
   const previous = () => {
@@ -27,16 +27,20 @@ function ListingDetailCarousel({ width, height, listing, }) {
     ref?.current?.next();
   };
 
+  const enableScroll = uriArray.length > 1
+
   return (
     <View style={styles.container}>
       <Carousel
         ref={ref}
         loop
+        enabled={enableScroll}
         width={width}
+        style={{zIndex:10}}
         height={carouselHeight}
         //autoPlay={listing.images.length > 1 ? true : false}
         data={listing.images}
-        scrollAnimationDuration={2000}
+        scrollAnimationDuration={1000}
         onSnapToItem={(index) => setIndex(index)}
         renderItem={(data) => {
           const myImage = cld.image(data.item);
@@ -53,7 +57,7 @@ function ListingDetailCarousel({ width, height, listing, }) {
         </Text>
       </View>
 
-      {uriArray.length > 1 && (
+      {enableScroll&& (
         <>
           <TouchableOpacity
             onPress={() => previous()}
@@ -101,8 +105,9 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    flex: 1,
-    position: "relative"
+    
+    position: "absolute",
+    zIndex:10
   },
 
   image: {
