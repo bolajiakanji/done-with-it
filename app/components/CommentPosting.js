@@ -16,17 +16,22 @@ function CommentPosting({
     setPostingComments,
     setLoadingComment
 }) {
+
+    if (loadingCommentOnPageVisit) return;
     return (
         <View style={styles.container}>
             <View style={styles.postWrapper}>
                 {!loadingCommentOnPageVisit && 
                 <View style={styles.textInputWidth}>
                     <TextInput
-                        height={40}
+                        maxHeight={80}
+                        //height={40}
                         value={postingComments}
                         style={styles.textInput}
-                        multiline={false}
-                        placeholder="Type comment"
+                        //multiline={false}
+                         multiline
+                            numberOfLines={4}
+                        placeholder="Type a comment"
                         onChangeText={(e) => setPostingComments(e)}
                         onPress={() => setVisibility(true)}
                     />
@@ -58,6 +63,11 @@ function CommentPosting({
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        position:'absolute',
+        zIndex: 20,
+        bottom: 0,
+        padding: 5,
+        backgroundColor: '#aaa'
     },
 
     indicatorWrappper: {

@@ -50,7 +50,7 @@ heightLogic={heightLogic}
                 />
 
                 {!heightLogic  &&
-                    <View style={[styles.scrollWrapper, {paddingBottom:loadingCommentOnPageVisit ? 0 : 50 }]}>
+                    <View style={[styles.scrollWrapper, {paddingBottom:loadingCommentOnPageVisit ? 0 : 70 }]}>
                         <View style={styles.scrollContainer}>
                             {comments.map((comment) => {
                                 const profileImage = myCloud().image(comment.userId.image)

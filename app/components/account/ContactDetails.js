@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { View, Text, Modal, StyleSheet } from "react-native";
+import { View, Text, Modal, StyleSheet, Dimensions } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { accountValidationSchema } from "../../utility/validation_schema";
 import { Form, FormField, SubmitButton } from "../forms";
 import client from "../../api/client";
 import authStorage from "../../auth/storage";
+
+const height = Dimensions.get("window").height;
+
 
 function ContactDetails({ openModal, setOpenModal, login, }) {
     const [loading, setLoading] = useState(false);
@@ -24,6 +27,7 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
 
     return (
         <Modal visible={openModal} animationType="slide">
+            <View style={{height: height}}>
             <Text style={styles.contact}>Add Contact Info</Text>
 
             {!loading &&
@@ -57,8 +61,10 @@ function ContactDetails({ openModal, setOpenModal, login, }) {
                     <SubmitButton
                         title="Submit"
                         active={!loading}
+                        style={{bottom: 100, position:'absolute', width:'100%'}}
                     />
                 </Form>
+            </View>
             </View>
         </Modal>
     )
@@ -77,7 +83,8 @@ const styles = StyleSheet.create({
 
     contactModal: {
         marginHorizontal: 10,
-        marginTop: 10
+        marginTop: 10,
+        height:height
     },
 
     image: {

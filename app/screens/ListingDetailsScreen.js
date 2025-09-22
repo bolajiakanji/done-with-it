@@ -103,7 +103,7 @@ function ListingDetailsScreen({ route, navigation }) {
           />
       
 
-      <CommentPostingModal isVisible={isVisible} width={width}
+      {/* <CommentPostingModal isVisible={isVisible} width={width}
         loadingCommentOnPageVisit={loadingCommentOnPageVisit}
         postingComments={postingComments}
         loadingComment={loadingComment}
@@ -112,7 +112,7 @@ function ListingDetailsScreen({ route, navigation }) {
         setComments={setComments}
         setPostingComments={setPostingComments}
         setLoadingComment={setLoadingComment}
-      />
+      /> */}
     </Screen>
   );
 }
