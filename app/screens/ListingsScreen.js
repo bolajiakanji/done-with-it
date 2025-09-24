@@ -9,6 +9,7 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import useListings from "../hooks/useListings";
 import { View } from "react-native";
+import PopUp from "../components/PopUp";
 
 function ListingsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
@@ -30,7 +31,8 @@ function ListingsScreen({ navigation }) {
     loading,
     setData,
     loadListings,
-    loadListings_2
+    loadListings_2,
+    data
   } = listingsObj
 
   const cld = myCloud()
@@ -77,6 +79,8 @@ function ListingsScreen({ navigation }) {
       barStyle='light-content'
       background={colors.primary}
     >
+               <PopUp message='fsss' />
+      
       <View style={styles.underlay}></View>
 
       <FlatList

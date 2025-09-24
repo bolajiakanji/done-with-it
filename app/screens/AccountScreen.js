@@ -43,6 +43,8 @@ function AccountScreen() {
 
         <ItemListing user={user} logOut={logOut} />
 
+        
+
         <Modal visible={showImageModal}>
           <DpUPLoad setImageModal={setImageModal} setpi={setpi} />
         </Modal>

@@ -23,10 +23,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     position: "absolute",
     zIndex: 50,
-    left: 80,
+    
     paddingHorizontal: 10,
+    width: '100%'
   },
   text: {
     color: colors.primary,
+    textAlign: 'center'
   },
 });

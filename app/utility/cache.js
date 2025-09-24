@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 
-const expiryTimeInMinutes = 600;
+const expiryTimeInMinutes = 0;
 
-const store = async (key, data, value) => {
-  const prefix = "cache" + JSON.stringify(data);
+const store = async (key, value) => {
+  const prefix = "cache" ;
   try {
     const item = {
       value,

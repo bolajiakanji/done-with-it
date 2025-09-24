@@ -6,6 +6,7 @@ import ListingFilterings from "../screens/ListingFilterings"
 import useAuth from "../auth/useAuth"
 import AppButton from "./Button"
 import colors from "../config/colors"
+import PopUp from "./PopUp"
 
 const Flatlist_header = ({
   loadListings,
@@ -24,15 +25,12 @@ const Flatlist_header = ({
     <>
       <View style={styles.container}>
         <ListingHeader user={user} />
-        {error &&
-          <>
-            <AppText style={styles.error}>{error}</AppText>
-            <AppButton title="Retry" onPress={loadListings} />
-          </>}
+         <PopUp message={error} /> 
+                    
 
         {loading && <Skeleton />}
 
-        {!error && !loading &&
+        {!loading &&
           <ListingFilterings
             listingsQueryObject={listingsQueryObject}
             setListingsQueryObject={setListingsQueryObject}

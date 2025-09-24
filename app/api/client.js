@@ -30,13 +30,14 @@ export const client_2 = { ...apiClient }
 
 client.get = async (url, data, axiosConfig) => {
   const result = await get(url, data, axiosConfig);
+const storedValue = url + data
 
   if (result.ok) {
-    cache.store(url, data, result.data);
+    cache.store(storedValue, result.data);
     return result;
   }
 
-  const response = await cache.get(url);
+  const response = await cache.get(storedValue);
   return response ? { ok: true, data: response } : response;
 };
 

@@ -9,12 +9,16 @@ import OfflineNotice from "./app/components/OfflineNotice";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ErrorMessage from "./app/provider/error_message";
+import useError from "./app/hooks/useError";
+import PopUp from "./app/components/PopUp";
 
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [appIsReady, setAppIsReady] = useState(false);
+  const {error} = useError()
 
   const getUserObj = { appIsReady, setAppIsReady, setUser }
   const onLayoutRootView = useGetUser(getUserObj)
@@ -26,12 +30,15 @@ const App = () => {
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <GestureHandlerRootView>
-        <AuthContext.Provider value={{ user, setUser }}>
-          <NavigationContainer theme={theme}>
-            {user ? <TabNavigator /> : <AuthNavigator />}
-          </NavigationContainer>
-          <OfflineNotice />
-        </AuthContext.Provider>
+        <ErrorMessage>
+          <AuthContext.Provider value={{ user, setUser }}>
+            <NavigationContainer theme={theme}>
+              {user ? <TabNavigator /> : <AuthNavigator />}
+            </NavigationContainer>
+            <OfflineNotice />
+           {/* <PopUp message={error} /> */}
+          </AuthContext.Provider>
+        </ErrorMessage>
       </GestureHandlerRootView>
     </View>
   );
