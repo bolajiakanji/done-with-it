@@ -1,6 +1,5 @@
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AdvancedImage } from "cloudinary-react-native";
 import colors from "../../config/colors";
 
 function DisplayPicture({
@@ -24,10 +23,12 @@ function DisplayPicture({
             />
           </View>
          : 
-          <AdvancedImage
-            cldImg={profileImage}
-            style={styles.dp}
-          />
+          // <AdvancedImage
+          //   cldImg={profileImage}
+          //   style={styles.dp}
+          // />
+              <View></View>
+
         }
 
         <MaterialCommunityIcons

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native"
 import ListingHeader from "./ListingHeader"
 import AppText from "../../components/Text"
-import Skeleton from "../screens/Skeleton"
+// import Skeleton from "../screens/Skeleton"
 import ListingFilterings from "../screens/ListingFilterings"
 import useAuth from "../auth/useAuth"
 import AppButton from "./Button"
@@ -28,7 +28,7 @@ const Flatlist_header = ({
          <PopUp message={error} /> 
                     
 
-        {loading && <Skeleton />}
+        {/* {loading && <Skeleton />} */}
 
         {!loading &&
           <ListingFilterings

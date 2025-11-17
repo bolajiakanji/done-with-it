@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import useAuth from "../auth/useAuth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AdvancedImage } from "cloudinary-react-native";
 import myCloud from "../utility/cid";
 
 function AccountImage({ screen }) {
@@ -30,7 +29,8 @@ function AccountImage({ screen }) {
       </View>
     );
   return (
-    <AdvancedImage cldImg={myImage} style={styles.advaancedImage} />
+    // <AdvancedImage cldImg={myImage} style={styles.advaancedImage} />
+    <View></View>
   );
 }
 

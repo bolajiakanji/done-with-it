@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Text from "./Text";
 import colors from "../config/colors";
-import { AdvancedImage } from "cloudinary-react-native";
 import myCloud from "../utility/cid";
 
 function UserShortInfo({
@@ -30,10 +29,11 @@ function UserShortInfo({
             style={[styles.icon, iconStyle]}
           />
           :
-            <AdvancedImage
-              cldImg={profileImage}
-              style={[styles.advanceImage, imageStyle]}
-            />
+            // <AdvancedImage
+            //   cldImg={profileImage}
+            //   style={[styles.advanceImage, imageStyle]}
+            // />
+            <View></View>
           
         }
 

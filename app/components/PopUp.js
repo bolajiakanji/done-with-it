@@ -4,7 +4,6 @@ import AppText from "./Text";
 import colors from "../config/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNetInfo } from "@react-native-community/netinfo";
-import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 
 export default function PopUp({message}) {
 const [showErroeMessage, setShowErrorMessage] = useState(true)

@@ -5,8 +5,8 @@ import { jwtDecode } from "jwt-decode";
 
 
 const apiClient = create({
-   baseURL: "https://borji-backend-5.onrender.com/api",
-  //baseURL: "http://10.207.200.87:3000/api",
+  baseURL: "https://borji-backend-5.onrender.com/api",
+  // baseURL: "http://10.138.18.87:3000/api",
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
@@ -59,7 +59,7 @@ client_2.get = async (url, data, axiosConfig) => {
 client_2.post = async (url, data, axiosConfig) => {
   console.log('bullsd')
   const result = await apiClient.post(url, data, axiosConfig);
-
+console.log(result)
   if (result.ok) {
     cache.store(url, result.data)
     return result

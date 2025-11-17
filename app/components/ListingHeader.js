@@ -1,7 +1,6 @@
 import { Text, View } from "react-native"
 import colors from "../config/colors"
 import { Image } from "expo-image"
-import { AdvancedImage } from "cloudinary-react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import myCloud from "../utility/cid";
 import useAuth from "../auth/useAuth";
@@ -52,10 +51,11 @@ const ListingHeader = () => {
           >
             <View style={{ width: 30, height: 30, borderRadius: 25, backgroundColor: '#ccc', overflow: 'hidden' }}>
               {user.image ? (
-                <AdvancedImage
-                  cldImg={profileImage}
-                  style={{ height: '100%', width: '100%' }}
-                />
+                // <AdvancedImage
+                //   cldImg={profileImage}
+                //   style={{ height: '100%', width: '100%' }}
+                // />
+                <View></View>
               ) : (
 
                 <MaterialCommunityIcons name="account" size={28} color="gray" />

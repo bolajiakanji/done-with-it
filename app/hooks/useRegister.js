@@ -11,6 +11,7 @@ const useRegister = (apiFunc) => {
     const request = async (registerObj) => {
         setLoading(true)
         const response = await authApi.register(registerObj)
+        console.log('yes')
         setLoading(false)
         if (!response.ok) {
             if (response.data) setError(response.data.error);

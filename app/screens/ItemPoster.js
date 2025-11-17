@@ -1,4 +1,3 @@
-import { AdvancedImage } from "cloudinary-react-native";
 import {
   ScrollView,
   StyleSheet,
@@ -28,8 +27,8 @@ const ItemPoster = ({ route }) => {
             style={styles.noImageIcon}
           />
         </View>
-        :
-        <AdvancedImage cldImg={myImage} style={styles.advanceImage} />
+        :<View></View>
+
       }
 
       <View style={{ marginHorizontal: 15 }}>

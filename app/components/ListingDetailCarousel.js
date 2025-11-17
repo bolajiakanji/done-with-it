@@ -5,7 +5,6 @@ import {
   Text
 } from "react-native";
 import React, { useRef, useState } from "react";
-import { AdvancedImage } from "cloudinary-react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import myCloud from "../utility/cid";
@@ -46,7 +45,8 @@ function ListingDetailCarousel({ width, height, listing, }) {
           const myImage = cld.image(data.item);
           return (
             <View style={styles.wrapper}>
-              <AdvancedImage cldImg={myImage} style={styles.image} />
+              {/* <AdvancedImage cldImg={myImage} style={styles.image} /> */}
+              <View></View>
             </View>
           );
         }}

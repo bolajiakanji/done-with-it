@@ -10,7 +10,6 @@ import getLikesColor from "../utility/likesColor";
 import getPluralisedWord from "../utility/pluralisedWord";
 import useAuth from "../auth/useAuth";
 import timeAgo from "../utility/timeAgo";
-import { AdvancedImage } from "cloudinary-react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function Card({ item, onPress, myImage }) {
@@ -23,7 +22,11 @@ function Card({ item, onPress, myImage }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
-        {<AdvancedImage cldImg={myImage} style={styles.image} />}
+        {
+          // <AdvancedImage cldImg={myImage} style={styles.image} />
+              <View></View>
+
+          }
 
         <View style={{ padding: 5 }}>
           <Text style={styles.title} numberOfLines={1}>

@@ -9,7 +9,6 @@
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/frame.png",
-      
       "backgroundColor": "#ffffff"
     },
     "ios": {
@@ -26,7 +25,15 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-secure-store"
-    ]
+      "expo-secure-store",
+      "expo-asset",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "197ec50b-0631-40dd-9447-da3383f4afeb"
+      }
+    },
+    "owner": "akanji"
   }
 }

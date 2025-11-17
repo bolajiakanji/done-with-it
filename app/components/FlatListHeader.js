@@ -2,7 +2,7 @@ import { View } from "react-native"
 import ListingHeader from "./ListingHeader"
 import AppText from "../../components/Text"
 import Button from "../../components/Button"
-import Skeleton from "../screens/Skeleton"
+// import Skeleton from "../screens/Skeleton"
 import ListingFilterings from "../screens/ListingFilterings"
 import listingsApi from "../api/listings";
 
@@ -34,7 +34,7 @@ setData
             <Button title="Retry" onPress={loadListings} />
           </>
         )}
-        {loading && <Skeleton />}
+        {/* {loading && <Skeleton />} */}
 
         {!error && !loading && <ListingFilterings
           listingsQueryObject={listingsQueryObject}

@@ -6,7 +6,6 @@ import {
 
 } from "react-native";
 import React, { useRef } from "react";
-import { AdvancedImage } from "cloudinary-react-native";
 import myCloud from "../utility/cid";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import timeAgo from "../utility/timeAgo";
@@ -66,10 +65,11 @@ heightLogic={heightLogic}
                                                 />
                                             )}
                                             {comment.userId.image && (
-                                                <AdvancedImage
-                                                    cldImg={profileImage}
-                                                    style={styles.image}
-                                                />
+                                                // <AdvancedImage
+                                                //     cldImg={profileImage}
+                                                //     style={styles.image}
+                                                // />
+                                                <View></View>
                                             )}
                                         </View>
                                         <View style={styles.commenterNameBox}>
