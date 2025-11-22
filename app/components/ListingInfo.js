@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import Text from "./Text";
 import colors from "../config/colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import UserShortInfo from "./UserShortInfo";
 import getLikesColor from "../utility/likesColor";
 import useAuth from "../auth/useAuth";
@@ -69,7 +69,7 @@ function ListingInfo({
             onPress={() => onPress()}>
             <Text style={[styles.likes, { color: likesColor }]}>
               {numberOfLikes + " "}
-              <MaterialCommunityIcons name="thumb-up" />
+              <Ionicons name="thumbs-down" />
             </Text>
           </TouchableOpacity>
         }

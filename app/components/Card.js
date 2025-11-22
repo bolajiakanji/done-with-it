@@ -18,16 +18,13 @@ function Card({ item, onPress, myImage }) {
   const displayTime = timeAgo(item.createdAt);
   const likesColor = getLikesColor(user._id, item.likes)
   const numberOfLikes = item.likes.length
+  const imageUrl = myImage.toURL()
+
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
-        {
-          // <AdvancedImage cldImg={myImage} style={styles.image} />
-              <View></View>
-
-          }
-
+        <Image source={{ uri: imageUrl }} style={styles.image} />
         <View style={{ padding: 5 }}>
           <Text style={styles.title} numberOfLines={1}>
             {item.title}

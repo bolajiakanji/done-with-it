@@ -2,7 +2,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Text
+  Text,
+  Image
 } from "react-native";
 import React, { useRef, useState } from "react";
 import Carousel from "react-native-reanimated-carousel";
@@ -41,12 +42,13 @@ function ListingDetailCarousel({ width, height, listing, }) {
         data={listing.images}
         scrollAnimationDuration={1000}
         onSnapToItem={(index) => setIndex(index)}
-        renderItem={(data) => {
-          const myImage = cld.image(data.item);
+       renderItem={(data) => {
+          const myImage = cld.image(data.item)
+           const imageUrl = myImage.toURL()
+;
           return (
             <View style={styles.wrapper}>
-              {/* <AdvancedImage cldImg={myImage} style={styles.image} /> */}
-              <View></View>
+              <Image source={{ uri: imageUrl }} style={styles.image} />
             </View>
           );
         }}
